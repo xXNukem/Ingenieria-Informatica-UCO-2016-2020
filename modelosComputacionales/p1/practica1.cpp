@@ -23,18 +23,78 @@ using namespace std;
 int main(int argc, char **argv) {
     // Procesar los argumentos de la línea de comandos
     bool Tflag = 0, wflag = 0, pflag = 0;
-    char *Tvalue = NULL, *wvalue = NULL;
+    char *Tvalue = NULL, *wvalue = NULL, *tvalue=NULL;
     int c;
+
+    //valores iniciales
+
+    float dEta=0.10;
+    float dMu=0.90;
+    float dValidacion=0.0;
+    float dDecremento=1;
+    int numIteraciones=1000;
+    int numCapasOcultas=1;
+    int numNeuronasCapasOcultas=5;
 
     opterr = 0;
 
     // a: opción que requiere un argumento
     // a:: el argumento requerido es opcional
-    while ((c = getopt(argc, argv, "T:w:p")) != -1)
+    while ((c = getopt(argc, argv, "t:i::l::h::e::m::v::d::")) != -1)
     {
         // Se han añadido los parámetros necesarios para usar el modo opcional de predicción (kaggle).
         // Añadir el resto de parámetros que sean necesarios para la parte básica de las prácticas.
         switch(c){
+            case 't': 
+            //fichero con datos de entrenamiento
+            tvalue=optarg;
+                if(tvalue==NULL)
+                {
+                    cout<< " Es olbigatorio el paso de un fichero en el argumento t"<<endl;
+                    exit(0);
+                }
+            break;
+
+            case 'i':
+            //numero de interaciones del bucle externo, sino se especifica vale 1000
+            numIteraciones=atoi(optarg);
+
+            break;
+
+            case 'l':
+            //capas ocultas de la red, si no se especifica utilizamos 1
+            numCapasOcultas=atoi(optarg);
+            break;
+
+            case 'h':
+            //neuronas de las capas ocultas, si no se especifica utilizaar 5
+            numNeuronasCapasOcultas=atoi(optarg);
+            break;
+
+            case 'e':
+            ////valor de eta, sino se especifica utilizar 0.1
+            dEta=atof(optarg);
+            break;
+
+            case 'm':
+            // valor de mu, si no se especifica utilizar 0.9
+            dMu=atof(optarg);
+            break;
+
+            case 'v':
+            //ratio de patrones de entrenamiento a utilizar como patrones de validacion
+            //si no se especifica utilizar 0.0
+            dValidacion=atof(optarg);
+
+            break;
+
+            case 'd':
+            //valor por defecto del decremento, por defecto utilizar 1
+            dDecremento=atoi(optarg);
+            break;
+
+
+        //Parametros opcionales de prediccion
             case 'T':
                 Tflag = true;
                 Tvalue = optarg;
@@ -68,17 +128,19 @@ int main(int argc, char **argv) {
 
         // Objeto perceptrón multicapa
     	PerceptronMulticapa mlp;
-
+ 
         // Parámetros del mlp. Por ejemplo, mlp.dEta = valorQueSea;
-        mlp.dEta=0.10;
-        mlp.dMu=0.90;
-        mlp.dValidacion=0.10;
-        mlp.dDecremento=2;
-
+        mlp.dEta=dEta;
+        mlp.dMu=dMu;
+        mlp.dValidacion=dValidacion;
+        mlp.dDecremento=dDecremento;
+        int iteraciones=numIteraciones;
+        
         // Lectura de datos de entrenamiento y test: llamar a mlp.leerDatos(...)
         Datos *pDatosTrain;
-        pDatosTrain=mlp.leerDatos(Tvalue);
-
+        Datos *pDatosTest;
+        pDatosTrain=mlp.leerDatos(tvalue);
+        
         // Inicializar vector topología
         /*int *topologia = new int[capas+2];
         topologia[0] = pDatosTrain->nNumEntradas;

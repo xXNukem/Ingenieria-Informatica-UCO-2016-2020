@@ -127,13 +127,30 @@ void PerceptronMulticapa::simularRedOnline(double* entrada, double* objetivo) {
 Datos* PerceptronMulticapa::leerDatos(const char *archivo) {
 
 	Datos *datosAux;
+	int entradas,salidas,patrones
 
 		ifstream leer;
 		leer.open(archivo);
 
-	leer >> datosAux->nNumEntradas;
-	leer >> datosAux->nNumSalidas;
-	leer >> datosAux->nNumPatrones;
+	leer >> entradas;
+	leer >> salidas;
+	leer >> patrones;
+
+		datosAux->nNumEntradas=entradas;
+		datosAux->nNumSalidas=salidas;
+		datosAux->nNumPatrones=patrones;
+
+	//Reservando memoria para las filas y columnas
+
+	datosAux->entradas=(double** )malloc(datosAux->nNumPatrones*sizeof(double*));
+
+	for(int i=0;datosAux->nNumPatrones;i++)
+	datosAux->entradas[i]=(double* )malloc(datosAux->nNumPatrones*sizeof(double));
+
+	datosAux->salidas=(double** )malloc(datosAux->nNumPatrones*sizeof(double*));
+
+	for(int i=0;datosAux->nNumPatrones;i++)
+	datosAux->salidas[i]=(double* )malloc(datosAux->nNumPatrones*sizeof(double));
 
 	return datosAux;
 }
