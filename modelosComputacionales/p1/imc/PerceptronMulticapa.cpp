@@ -24,12 +24,50 @@ using namespace util;
 // CONSTRUCTOR: Dar valor por defecto a todos los parámetros
 PerceptronMulticapa::PerceptronMulticapa(){
 
+	dEta=0.1;
+	dMu=0.9;
+	pCapas=NULL;
+	nNumCapas=3;
 }
 
 // ------------------------------
 // Reservar memoria para las estructuras de datos
-int PerceptronMulticapa::inicializar(int nl, int npl[]) {
-	return 1;
+void PerceptronMulticapa::inicializar(int nl, int npl[]) {
+
+	//Reserva de memoria para el vector de capas
+	pCapas=(Capa* )malloc(nl*sizeof(Capa));
+
+	//Reserva de memporia para la capa de entrada, lo hacemos aqui porque esta capa no dispondrá de sesgo
+	pCapas[0].nNumNeuronas=npl[0];
+	pCapas[0].pNeuronas=(Neurona* )malloc(npl[0]*sizeof(Neurona));
+
+		int aux=0,sesgo=1;
+		//Reserva de memoria para las capas ocultas
+		for(int i=1; i<nl;i++)
+		{	
+			//Iniciando de las capas ocultas a la ultima
+			pCapas[i].nNumNeuronas=npl[i];
+			pCapas[i].pNeuronas=(Neurona *)malloc(npl[i]*sizeof(Neurona));
+
+				for(int j=0;j<pCapas[i].nNumNeuronas;j++)
+				{
+						aux=npl[i-1]+sesgo; //guardamos en aux el numero de neuronas de la capa mas el sesgo
+						pCapas[i].pNeuronas[j].w=(double* )malloc(aux*sizeof(double));
+						pCapas[i].pNeuronas[j].deltaW=(double* )malloc(aux*sizeof(double));
+						pCapas[i].pNeuronas[j].ultimoDeltaW=(double* )malloc(aux*sizeof(double));
+						pCapas[i].pNeuronas[j].wCopia=(double* )malloc(aux*sizeof(double));
+
+						for(int k=0;k<aux;k++)
+						{
+							pCapas[i].pNeuronas[j].w[k]=0.0;
+							pCapas[i].pNeuronas[j].deltaW[k]=0.0;
+							pCapas[i].pNeuronas[j].ultimoDeltaW[k]=0.0;
+							pCapas[i].pNeuronas[j].wCopia[k]=0.0;
+						}
+				}
+
+			aux=0;
+		}
 }
 
 

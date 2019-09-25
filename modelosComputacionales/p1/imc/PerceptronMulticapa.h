@@ -97,7 +97,7 @@ public:
 	// Reservar memoria para las estructuras de datos
      // nl tiene el numero de capas y npl es un vector que contiene el número de neuronas por cada una de las capas
      // Rellenar vector Capa* pCapas
-	int inicializar(int nl, int npl[]);
+	void inicializar(int nl, int npl[]);
 
 	// Leer una matriz de datos a partir de un nombre de fichero y devolverla
 	Datos* leerDatos(const char *archivo);

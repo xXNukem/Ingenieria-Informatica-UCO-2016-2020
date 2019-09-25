@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
         switch(c){
             case 't': 
             //fichero con datos de entrenamiento
-            tflag=true
+            tflag=true;
             tvalue=optarg;
        
             break;
@@ -120,7 +120,7 @@ int main(int argc, char **argv) {
     }
 
     if (!pflag) {
-                if(tvalue==NULL) //controlamos que se salga si no se ha introducido el fichero obligatorio
+                if(tflag==false) //controlamos que se salga si no se ha introducido el fichero obligatorio
                 {
                     cout<< " Es olbigatorio el paso de un fichero en el argumento t"<<endl;
                     exit(0);
@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
         // Lectura de datos de entrenamiento y test: llamar a mlp.leerDatos(...)
         Datos *pDatosTrain;
         Datos *pDatosTest;
-         if(Tvalue==NULL)
+        if(Tflag==false)
         {
             Tvalue=tvalue;
         }
