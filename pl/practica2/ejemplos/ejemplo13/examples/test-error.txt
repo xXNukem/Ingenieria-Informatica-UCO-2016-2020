@@ -1,0 +1,17 @@
+a = -9;
+
+print a;
+
+print log10(a); 
+
+print log10(); 
+
+
+print sqrt(-49.0);
+
+print sqrt();
+
+
+read(sqrt);
+
+print sqrt;

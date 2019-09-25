@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 2: Fichero Fuente ClaseTiempo.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 2
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">ClaseTiempo.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// http://man7.org/linux/man-pages/man2/clock_gettime.2.html</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/*</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">Data Type: struct timespec</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"></span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">    The struct timespec structure represents an elapsed time. It is declared in sys/time.h and has the following members:</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    time_t tv_sec</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">       This represents the number of whole seconds of elapsed time.</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">    long  tv_nsec</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">    This is the rest of the elapsed time (a fraction of a second), represented as the number of nanoseconds.  </span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">*/</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// Ojo hay que compilar g++ -Wall main.cpp -lrt para incluir las librerías de tiempos.</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span> <span class="comment">//Para usar memset</span></div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span> <span class="comment">// Para usar uint64_t</span></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classClock.html">   26</a></span>&#160;  <span class="keyword">class </span><a class="code" href="classClock.html">Clock</a></div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  {</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">private</span>:</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    timespec _start;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    timespec _stop;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">bool</span> _isStarted;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classClock.html">Clock</a> ()</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      memset(&amp;_start,0,<span class="keyword">sizeof</span>(timespec));</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      memset(&amp;_stop,0,<span class="keyword">sizeof</span>(timespec));</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      _isStarted=<span class="keyword">false</span>;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    } </div><div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classClock.html#a8a050959dcff11c85d695989e9099a8c">   47</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classClock.html#a8a050959dcff11c85d695989e9099a8c">start</a> ()</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {      </div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      assert (!<a class="code" href="classClock.html#acbe674e5dfd549c003fca1aeea1bd4f2">isStarted</a>());</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      clock_gettime (CLOCK_REALTIME, &amp;_start);   </div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      _isStarted=<span class="keyword">true</span>;</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div><div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classClock.html#a775bf97123b58c768571868341d28b08">   56</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classClock.html#a775bf97123b58c768571868341d28b08">restart</a> ()</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {      </div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      clock_gettime (CLOCK_REALTIME, &amp;_start);   </div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      _isStarted=<span class="keyword">true</span>;</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   </div><div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classClock.html#a0b77c3e7f33eb7ae0f018e469d96a250">   66</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classClock.html#a0b77c3e7f33eb7ae0f018e469d96a250">stop</a> ()</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      assert (_isStarted);</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      clock_gettime (CLOCK_REALTIME, &amp;_stop);   </div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      _isStarted=<span class="keyword">false</span>;</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div><div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classClock.html#acbe674e5dfd549c003fca1aeea1bd4f2">   75</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classClock.html#acbe674e5dfd549c003fca1aeea1bd4f2">isStarted</a>()<span class="keyword"> const</span></div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">    </span>{</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keywordflow">return</span> _isStarted;</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div><div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classClock.html#a21636bfd72caacaeb2aacd5bfdab3b7c">   80</a></span>&#160;    uint64_t <a class="code" href="classClock.html#a21636bfd72caacaeb2aacd5bfdab3b7c">elapsed</a>()<span class="keyword"> const</span></div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">    </span>{</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      assert (!_isStarted);</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      uint64_t startT = (uint64_t)_start.tv_sec * 1000000LL + (uint64_t)_start.tv_nsec / 1000LL;</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      uint64_t stopT = (uint64_t)_stop.tv_sec * 1000000LL + (uint64_t)_stop.tv_nsec / 1000LL;</div><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <span class="keywordflow">return</span> stopT-startT;</div><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  };</div><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div><div class="ttc" id="classClock_html_a21636bfd72caacaeb2aacd5bfdab3b7c"><div class="ttname"><a href="classClock.html#a21636bfd72caacaeb2aacd5bfdab3b7c">Clock::elapsed</a></div><div class="ttdeci">uint64_t elapsed() const</div><div class="ttdoc">Return the elapsed time in mcs. </div><div class="ttdef"><b>Definition:</b> <a href="ClaseTiempo_8cpp_source.html#l00080">ClaseTiempo.cpp:80</a></div></div>
+<div class="ttc" id="classClock_html_a0b77c3e7f33eb7ae0f018e469d96a250"><div class="ttname"><a href="classClock.html#a0b77c3e7f33eb7ae0f018e469d96a250">Clock::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stops the clock. </div><div class="ttdef"><b>Definition:</b> <a href="ClaseTiempo_8cpp_source.html#l00066">ClaseTiempo.cpp:66</a></div></div>
+<div class="ttc" id="classClock_html"><div class="ttname"><a href="classClock.html">Clock</a></div><div class="ttdoc">Models a clock to measure performace. </div><div class="ttdef"><b>Definition:</b> <a href="ClaseTiempo_8cpp_source.html#l00026">ClaseTiempo.cpp:26</a></div></div>
+<div class="ttc" id="classClock_html_acbe674e5dfd549c003fca1aeea1bd4f2"><div class="ttname"><a href="classClock.html#acbe674e5dfd549c003fca1aeea1bd4f2">Clock::isStarted</a></div><div class="ttdeci">bool isStarted() const</div><div class="ttdoc">Is the clock started? </div><div class="ttdef"><b>Definition:</b> <a href="ClaseTiempo_8cpp_source.html#l00075">ClaseTiempo.cpp:75</a></div></div>
+<div class="ttc" id="classClock_html_a775bf97123b58c768571868341d28b08"><div class="ttname"><a href="classClock.html#a775bf97123b58c768571868341d28b08">Clock::restart</a></div><div class="ttdeci">void restart()</div><div class="ttdoc">Re-starts the clock. </div><div class="ttdef"><b>Definition:</b> <a href="ClaseTiempo_8cpp_source.html#l00056">ClaseTiempo.cpp:56</a></div></div>
+<div class="ttc" id="classClock_html_a8a050959dcff11c85d695989e9099a8c"><div class="ttname"><a href="classClock.html#a8a050959dcff11c85d695989e9099a8c">Clock::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Starts the clock. </div><div class="ttdef"><b>Definition:</b> <a href="ClaseTiempo_8cpp_source.html#l00047">ClaseTiempo.cpp:47</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

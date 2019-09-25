@@ -1,0 +1,6 @@
+<map id="lp::Statement" name="lp::Statement">
+<area shape="rect" href="$classlp_1_1AssignmentStmt.html" title="Definition of atributes and methods of AssignmentStmt class. " alt="" coords="5,84,120,111"/>
+<area shape="rect" href="$classlp_1_1EmptyStmt.html" title="Definition of atributes and methods of EmptyStmt class. " alt="" coords="144,84,232,111"/>
+<area shape="rect" href="$classlp_1_1PrintStmt.html" title="Definition of atributes and methods of PrintStmt class. " alt="" coords="256,84,336,111"/>
+<area shape="rect" href="$classlp_1_1ReadStmt.html" title="Definition of atributes and methods of ReadStmt class. " alt="" coords="360,84,445,111"/>
+</map>

@@ -127,7 +127,7 @@ void PerceptronMulticapa::simularRedOnline(double* entrada, double* objetivo) {
 Datos* PerceptronMulticapa::leerDatos(const char *archivo) {
 
 	Datos *datosAux;
-	int entradas,salidas,patrones
+	int entradas,salidas,patrones;
 
 		ifstream leer;
 		leer.open(archivo);
@@ -140,17 +140,40 @@ Datos* PerceptronMulticapa::leerDatos(const char *archivo) {
 		datosAux->nNumSalidas=salidas;
 		datosAux->nNumPatrones=patrones;
 
-	//Reservando memoria para las filas y columnas
+	//Reservando memoria para la matriz de entrada
 
-	datosAux->entradas=(double** )malloc(datosAux->nNumPatrones*sizeof(double*));
+	//Filas	
+	datosAux->entradas=(double** )malloc(patrones*sizeof(double*));
+	//Columnas
+	for(int i=0;patrones;i++)
+	datosAux->entradas[i]=(double* )malloc(entradas*sizeof(double));
 
+	//reservando memoria para la matriz de salida
+	
+	//Filas
+	datosAux->salidas=(double** )malloc(patrones*sizeof(double*));
+	//Columnas
 	for(int i=0;datosAux->nNumPatrones;i++)
-	datosAux->entradas[i]=(double* )malloc(datosAux->nNumPatrones*sizeof(double));
+	datosAux->salidas[i]=(double* )malloc(salidas*sizeof(double));
 
-	datosAux->salidas=(double** )malloc(datosAux->nNumPatrones*sizeof(double*));
+	//Metiendo los datos en la matriz
+	int i=0,j=0;
+	while(!leer.eof())
+	{
+		for(int x=0;x<entradas;x++)
+		{
+			leer>>datosAux->entradas[i][x];
+		}
 
-	for(int i=0;datosAux->nNumPatrones;i++)
-	datosAux->salidas[i]=(double* )malloc(datosAux->nNumPatrones*sizeof(double));
+		for(int y=0;y<salidas;y++)
+		{
+			leer>>datosAux->salidas[j][y];
+		}
+		i++;
+		j++;
+	}
+
+	leer.close();
 
 	return datosAux;
 }

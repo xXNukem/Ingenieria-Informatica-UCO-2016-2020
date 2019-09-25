@@ -1,0 +1,54 @@
+
+
+# Programa que calcula la raíz de un número usando método de Newton
+ 
+(*
+  Descripcion:
+         Raiz cuadrada de Newton
+
+         Se genera la siguiente sucesión de numeros x_n:
+            x_0 = ( numero + 1.0 ) / 2.0
+            x_n = 0.5 * (x_(n-1) + numero / x_(n-1))
+
+         De forma que:
+            lim x_n        =  raiz_cuadrada( numero )
+             n -> infinito
+*)
+
+inicio
+
+# Se pide el numero al que calcular la raíz.
+
+         escribir( 'Introduce un numero positivo: ' );
+
+         leer( numero );
+
+         si ( numero < 0 ) entonces
+            	escribir( 'El numero no puede ser negativo' || '\n' );
+
+	si_no
+        	 # Se pide el número de iteraciones para su cálculo.
+
+        	 escribir( 'Introduce el número de iteraciones: ' );
+
+        	 leer( iteraciones );
+
+       		 # Comienzan las iteraciones.
+
+	         x0 := ( numero + 1.0 ) / 2.0;
+
+        	 i := 1;
+
+	         repetir 
+
+	            x0 := 0.5 * (x0 + numero / x0);
+		    i := i + 1;
+
+		hasta_que ( i > iteraciones );
+	
+	        escribir( 'La aproximacion a la raiz cuadrada de ' );
+        	escribir( numero || ' es ' || x0 || '\n' );
+
+	fin_si;
+fin;
+

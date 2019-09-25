@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 3: Fichero Fuente funcionesbajonivel.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 3
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">funcionesbajonivel.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="funcionesbajonivel_8cpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="funcionesbajonivel_8hpp.html">funcionesbajonivel.hpp</a>&quot;</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="funcionesbajonivel_8hpp.html#ac0e671392230311fc1bcadf05126feb9">   10</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8cpp.html#ac0e671392230311fc1bcadf05126feb9">partirCadena</a>(<span class="keywordtype">string</span> c, <span class="keywordtype">string</span> &amp;c1, <span class="keywordtype">string</span> &amp;c2)</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordtype">int</span> n;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordtype">int</span> n1, n2;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keywordtype">int</span> i;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    n = c.size();</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordflow">if</span> (n % 2 == 0) <span class="comment">//n es par</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    {</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        n1 = n / 2;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        n2 = n1;</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    }</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">else</span></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    {</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        n1 = (n + 1) / 2;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        n2 = n1 - 1;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    c1 = c.substr(0, n1);</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    c2 = c.substr(n1, n);</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">if</span> (c2.size() % 2 != 0 &amp;&amp; c2.size() &gt; 2)</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    {</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="funcionesbajonivel_8cpp.html#afca662d0eb80b24bea5c888c92655042">agregarCerosDelante</a>(c2, 1);</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">if</span> (c1.size() % 2 != 0 &amp;&amp; c1.size() &gt; 2)</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <a class="code" href="funcionesbajonivel_8cpp.html#afca662d0eb80b24bea5c888c92655042">agregarCerosDelante</a>(c1, 1);</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="funcionesbajonivel_8hpp.html#a2e2011e6093a8e4807adca60371a8fbd">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8cpp.html#a2e2011e6093a8e4807adca60371a8fbd">agregarCerosFinal</a>(<span class="keywordtype">string</span> &amp;c, <span class="keywordtype">int</span> nCeros)</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    c.append(nCeros, <span class="charliteral">&#39;0&#39;</span>);</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div><div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="funcionesbajonivel_8hpp.html#afca662d0eb80b24bea5c888c92655042">   50</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8cpp.html#afca662d0eb80b24bea5c888c92655042">agregarCerosDelante</a>(<span class="keywordtype">string</span> &amp;c, <span class="keywordtype">int</span> nCeros)</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">string</span> aux = <span class="stringliteral">&quot;&quot;</span>;</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    aux.append(nCeros, <span class="charliteral">&#39;0&#39;</span>);</div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    aux.append(c);</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    c = aux;</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div><div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="funcionesbajonivel_8hpp.html#ab5caa0dbead3e3c958c4c82ffaf84fa4">   59</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8cpp.html#ab5caa0dbead3e3c958c4c82ffaf84fa4">quitarCerosNoSignificativos</a>(<span class="keywordtype">string</span> &amp;c)</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">int</span> indice  = 0;</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; c.size(); i++)</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    {</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">if</span> (c[i] != <span class="charliteral">&#39;0&#39;</span>)</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        {</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">break</span>;</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">else</span></div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        {</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            indice++;</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    c = c.substr(indice, c.size());</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div><div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="funcionesbajonivel_8hpp.html#a72b635da34bfa6d424f3f38cb5701f88">   79</a></span>&#160;<span class="keywordtype">string</span> <a class="code" href="funcionesbajonivel_8cpp.html#a72b635da34bfa6d424f3f38cb5701f88">multiplicarPotencia10</a>(<span class="keywordtype">string</span> c, <span class="keywordtype">int</span> potencia)</div><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">string</span> aux;</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    aux = c;</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    aux.append(potencia, <span class="charliteral">&#39;0&#39;</span>);</div><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> aux;</div><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div><div class="ttc" id="funcionesbajonivel_8cpp_html_ab5caa0dbead3e3c958c4c82ffaf84fa4"><div class="ttname"><a href="funcionesbajonivel_8cpp.html#ab5caa0dbead3e3c958c4c82ffaf84fa4">quitarCerosNoSignificativos</a></div><div class="ttdeci">void quitarCerosNoSignificativos(string &amp;c)</div><div class="ttdoc">Quita los ceros sin valor de la cadena. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00059">funcionesbajonivel.cpp:59</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8hpp_html"><div class="ttname"><a href="funcionesbajonivel_8hpp.html">funcionesbajonivel.hpp</a></div><div class="ttdoc">fichero hpp para las funciones de bajo nivel </div></div>
+<div class="ttc" id="funcionesbajonivel_8cpp_html_ac0e671392230311fc1bcadf05126feb9"><div class="ttname"><a href="funcionesbajonivel_8cpp.html#ac0e671392230311fc1bcadf05126feb9">partirCadena</a></div><div class="ttdeci">void partirCadena(string c, string &amp;c1, string &amp;c2)</div><div class="ttdoc">Divide la cadena c en dos subcadenas c1 y c2 siendo ambas del mismo tamaño cuando el numero de caract...</div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00010">funcionesbajonivel.cpp:10</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8cpp_html_afca662d0eb80b24bea5c888c92655042"><div class="ttname"><a href="funcionesbajonivel_8cpp.html#afca662d0eb80b24bea5c888c92655042">agregarCerosDelante</a></div><div class="ttdeci">void agregarCerosDelante(string &amp;c, int nCeros)</div><div class="ttdoc">Añade ceros al principio de la cadena c segun el parametro nCeros. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00050">funcionesbajonivel.cpp:50</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8cpp_html_a2e2011e6093a8e4807adca60371a8fbd"><div class="ttname"><a href="funcionesbajonivel_8cpp.html#a2e2011e6093a8e4807adca60371a8fbd">agregarCerosFinal</a></div><div class="ttdeci">void agregarCerosFinal(string &amp;c, int nCeros)</div><div class="ttdoc">Añade ceros al final de la cadena c segun el parametro nCeros. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00042">funcionesbajonivel.cpp:42</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8cpp_html_a72b635da34bfa6d424f3f38cb5701f88"><div class="ttname"><a href="funcionesbajonivel_8cpp.html#a72b635da34bfa6d424f3f38cb5701f88">multiplicarPotencia10</a></div><div class="ttdeci">string multiplicarPotencia10(string c, int potencia)</div><div class="ttdoc">Eleva el numero contenido en una cadena a una potencia de 10. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00079">funcionesbajonivel.cpp:79</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

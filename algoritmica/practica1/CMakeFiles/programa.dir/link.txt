@@ -1,0 +1,1 @@
+/usr/local/opt/gcc-5.3.0-32/bin/c++   -D_GLIBCXX_USE_CXX11_ABI=0 -m32  -rdynamic CMakeFiles/programa.dir/ClaseTiempo.cpp.o CMakeFiles/programa.dir/medicionMetodo.cpp.o CMakeFiles/programa.dir/p1Main.cpp.o CMakeFiles/programa.dir/p1auxiliares.cpp.o sistemaEcuacionesLinuxLocal.o  -o programa 

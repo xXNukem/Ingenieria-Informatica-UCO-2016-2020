@@ -22,7 +22,7 @@ using namespace std;
 
 int main(int argc, char **argv) {
     // Procesar los argumentos de la línea de comandos
-    bool Tflag = 0, wflag = 0, pflag = 0;
+    bool Tflag = 0, wflag = 0, pflag = 0, tflag=0 ;
     char *Tvalue = NULL, *wvalue = NULL, *tvalue=NULL;
     int c;
 
@@ -47,12 +47,9 @@ int main(int argc, char **argv) {
         switch(c){
             case 't': 
             //fichero con datos de entrenamiento
+            tflag=true
             tvalue=optarg;
-                if(tvalue==NULL)
-                {
-                    cout<< " Es olbigatorio el paso de un fichero en el argumento t"<<endl;
-                    exit(0);
-                }
+       
             break;
 
             case 'i':
@@ -98,6 +95,7 @@ int main(int argc, char **argv) {
             case 'T':
                 Tflag = true;
                 Tvalue = optarg;
+
                 break;
             case 'w':
                 wflag = true;
@@ -122,6 +120,11 @@ int main(int argc, char **argv) {
     }
 
     if (!pflag) {
+                if(tvalue==NULL) //controlamos que se salga si no se ha introducido el fichero obligatorio
+                {
+                    cout<< " Es olbigatorio el paso de un fichero en el argumento t"<<endl;
+                    exit(0);
+                }
         ////////////////////////////////////////
         // MODO DE ENTRENAMIENTO Y EVALUACIÓN //
         ///////////////////////////////////////
@@ -139,17 +142,22 @@ int main(int argc, char **argv) {
         // Lectura de datos de entrenamiento y test: llamar a mlp.leerDatos(...)
         Datos *pDatosTrain;
         Datos *pDatosTest;
+         if(Tvalue==NULL)
+        {
+            Tvalue=tvalue;
+        }
         pDatosTrain=mlp.leerDatos(tvalue);
-        
+        pDatosTest=mlp.leerDatos(Tvalue);
+
         // Inicializar vector topología
-        /*int *topologia = new int[capas+2];
+        int *topologia = new int[numCapasOcultas+2]; //sumamos 2 para añadir la entrada y la salida
         topologia[0] = pDatosTrain->nNumEntradas;
-        for(int i=1; i<(capas+2-1); i++)
-        	topologia[i] = neuronas;
-        topologia[capas+2-1] = pDatosTrain->nNumSalidas;
+        for(int i=1; i<(numCapasOcultas+2-1); i++)//Recorremos las capas ocultas
+        	topologia[i] = numNeuronasCapasOcultas;
+        topologia[numCapasOcultas+2-1] = pDatosTrain->nNumSalidas;
 
         // Inicializar red con vector de topología
-        mlp.inicializar(capas+2,topologia);*/
+        mlp.inicializar(numCapasOcultas+2,topologia);
 
 
         // Semilla de los números aleatorios

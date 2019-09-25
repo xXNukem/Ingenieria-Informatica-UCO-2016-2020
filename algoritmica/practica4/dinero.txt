@@ -1,0 +1,15 @@
+1 moneda
+2 moneda
+5 moneda
+10 moneda
+20 moneda
+50 moneda
+100 moneda
+200 moneda
+500 billete
+1000 billete
+2000 billete
+5000 billete
+10000 billete
+20000 billete
+50000 billete

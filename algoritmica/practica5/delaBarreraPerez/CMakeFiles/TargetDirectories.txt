@@ -1,0 +1,3 @@
+/home/i12bapec/practicas/algoritmica/practica5/delaBarreraPerez/CMakeFiles/rebuild_cache.dir
+/home/i12bapec/practicas/algoritmica/practica5/delaBarreraPerez/CMakeFiles/edit_cache.dir
+/home/i12bapec/practicas/algoritmica/practica5/delaBarreraPerez/CMakeFiles/practica5.dir

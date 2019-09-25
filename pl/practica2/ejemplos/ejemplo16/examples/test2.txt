@@ -1,0 +1,35 @@
+a = b = c = 2;
+
+print a;
+print b;
+print c;
+
+read(A);
+read(B);
+
+print A < B;
+print A <= B;
+print A > B;
+print A >= B;
+print A == B;
+
+print A != B;
+
+C = (A>0) && (B > 0)  && (A * B > 10);
+print C;
+
+C = !( (A>0) || (B > 0)) ;
+
+print C;
+
+A = 3;
+
+print sin(A* PI);
+print cos(PI / A);
+
+print A ^ 2;
+print log (A);
+
+print random();
+
+print atan2(PI,3);

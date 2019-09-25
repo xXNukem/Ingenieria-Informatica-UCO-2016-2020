@@ -1,0 +1,9 @@
+for n=nMin hasta n < Nmax
+	iniciar tiempo
+	for k=0 hasta k<=n
+		llamar combina(n,k)
+	fin for
+	paras tiempo
+	sacas media
+	limpiar la tabla
+fin for

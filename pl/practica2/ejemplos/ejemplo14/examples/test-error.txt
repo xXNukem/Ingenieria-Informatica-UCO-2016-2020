@@ -1,0 +1,10 @@
+a = random(2);
+
+print a;
+
+print atan2();
+
+print atan2(PI);
+
+print atan2(PI,2,3);
+

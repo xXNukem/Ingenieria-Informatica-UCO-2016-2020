@@ -1,0 +1,17 @@
+read(A);
+read(B);
+
+print A < B > 3;
+
+print A <= ;
+print A > < B;
+
+C = (A>0) &&& (B > 0);
+print A && B;
+
+C = (A>0) ||& (B > 0);
+
+print C;
+
+
+

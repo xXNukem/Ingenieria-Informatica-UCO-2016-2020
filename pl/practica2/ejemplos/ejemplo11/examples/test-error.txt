@@ -1,0 +1,16 @@
+print PI;
+
+PI = 7;
+
+print PI;
+
+b = PI = a = 7;
+
+print PI;
+print  a;
+print  b;  
+
+read(PI);
+
+print PI;
+

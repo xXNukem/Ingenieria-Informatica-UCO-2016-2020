@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 2: Fichero Fuente hanoi.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 2
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">hanoi.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="hanoi_8hpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef _HANOI_HPP_</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define _HANOI_HPP_</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="macros_8hpp.html">macros.hpp</a>&quot;</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define TORRE_INICIAL 1</span></div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define TORRE_AUXILIAR 2</span></div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define TORRE_FINAL 3</span></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">int</span> <a class="code" href="hanoi_8hpp.html#ae10dbf0e2ea71f37155b84ba2d4ae086">torresHanoi</a>(<span class="keywordtype">int</span> discos);</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> <a class="code" href="hanoi_8hpp.html#a39d7733ebfb3a6f0404c2113f138157d">ejecutarHanoiTexto</a>(<span class="keywordtype">int</span> discos);</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="hanoi_8hpp.html#a6390191531690db1457e7ae8fce35e97">muestra</a>();</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">int</span> <a class="code" href="hanoi_8hpp.html#aa76bfb956ad7e204a29283abdc5acb8f">hanoi</a>(<span class="keywordtype">int</span> numDiscos, <span class="keywordtype">int</span> torreInicial, <span class="keywordtype">int</span> torreAuxiliar, <span class="keywordtype">int</span> torreFinal);</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">//int torresHanoiTexto(int discos, int inicio, int fin, int aux);</span></div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="hanoi_8hpp_html_ae10dbf0e2ea71f37155b84ba2d4ae086"><div class="ttname"><a href="hanoi_8hpp.html#ae10dbf0e2ea71f37155b84ba2d4ae086">torresHanoi</a></div><div class="ttdeci">int torresHanoi(int discos)</div><div class="ttdoc">Funcion que calcula las torres de hanoi en modo recursivo. </div><div class="ttdef"><b>Definition:</b> <a href="hanoi_8cpp_source.html#l00012">hanoi.cpp:12</a></div></div>
+<div class="ttc" id="hanoi_8hpp_html_a6390191531690db1457e7ae8fce35e97"><div class="ttname"><a href="hanoi_8hpp.html#a6390191531690db1457e7ae8fce35e97">muestra</a></div><div class="ttdeci">void muestra()</div><div class="ttdoc">Muestra los discos en las torres. </div><div class="ttdef"><b>Definition:</b> <a href="hanoi_8cpp_source.html#l00049">hanoi.cpp:49</a></div></div>
+<div class="ttc" id="hanoi_8hpp_html_a39d7733ebfb3a6f0404c2113f138157d"><div class="ttname"><a href="hanoi_8hpp.html#a39d7733ebfb3a6f0404c2113f138157d">ejecutarHanoiTexto</a></div><div class="ttdeci">void ejecutarHanoiTexto(int discos)</div><div class="ttdoc">Ejecuta las torres de hanoi en modo texto. </div><div class="ttdef"><b>Definition:</b> <a href="hanoi_8cpp_source.html#l00026">hanoi.cpp:26</a></div></div>
+<div class="ttc" id="hanoi_8hpp_html_aa76bfb956ad7e204a29283abdc5acb8f"><div class="ttname"><a href="hanoi_8hpp.html#aa76bfb956ad7e204a29283abdc5acb8f">hanoi</a></div><div class="ttdeci">int hanoi(int numDiscos, int torreInicial, int torreAuxiliar, int torreFinal)</div><div class="ttdoc">Funcion recursiva que sirve para mostrar hanoi en modo texto. </div><div class="ttdef"><b>Definition:</b> <a href="hanoi_8cpp_source.html#l00073">hanoi.cpp:73</a></div></div>
+<div class="ttc" id="macros_8hpp_html"><div class="ttname"><a href="macros_8hpp.html">macros.hpp</a></div><div class="ttdoc">Macros for the screen. </div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

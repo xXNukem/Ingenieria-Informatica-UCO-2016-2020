@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 2: Fichero Fuente sistemaMatrices.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 2
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">sistemaMatrices.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _SISTEMAMATRICES_HPP_</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _SISTEMAMATRICES_HPP_</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classSistemaMatrices.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSistemaMatrices.html">SistemaMatrices</a></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">private</span>:</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        std::vector&lt;std::vector&lt;double&gt; &gt; _matrizCoeficientes;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        std::vector&lt;std::vector&lt;double&gt; &gt; _matrizIndependientes;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        std::vector&lt;std::vector&lt;double&gt; &gt; _matrizSoluciones;</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">public</span>:</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classSistemaMatrices.html#a796706a38636dfceb741e64e15ba120a">   38</a></span>&#160;        <span class="keyword">inline</span> std::vector&lt;std::vector&lt;double&gt; &gt; <a class="code" href="classSistemaMatrices.html#a796706a38636dfceb741e64e15ba120a">getMatrizCoeficientes</a>(){ <span class="keywordflow">return</span> _matrizCoeficientes;};</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div><div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classSistemaMatrices.html#ad5c9aa53496acdb9e430ac57abe53cbf">   45</a></span>&#160;        <span class="keyword">inline</span> std::vector&lt;std::vector&lt;double&gt; &gt; <a class="code" href="classSistemaMatrices.html#ad5c9aa53496acdb9e430ac57abe53cbf">getMatrizIndependientes</a>(){ <span class="keywordflow">return</span> _matrizIndependientes;};</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div><div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classSistemaMatrices.html#a9c50e88c80f6652bbbb1a70ecc9e9776">   52</a></span>&#160;        <span class="keyword">inline</span> std::vector&lt;std::vector&lt;double&gt; &gt; <a class="code" href="classSistemaMatrices.html#a9c50e88c80f6652bbbb1a70ecc9e9776">getMatrizSoluciones</a>(){ <span class="keywordflow">return</span> _matrizSoluciones;};</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classSistemaMatrices.html#ae4601129999f8f505c33323775ac49c5">setSistema</a>(std::vector&lt;double&gt; n,std::vector&lt;float&gt; t_practico, <span class="keywordtype">int</span> nFil, <span class="keywordtype">int</span> nCol);</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classSistemaMatrices.html#a2861224e07e60c594d83e40110a4ee08">sumatorio</a>(std::vector&lt;double&gt; n, std::vector&lt;float&gt; t_practico, <span class="keywordtype">int</span> a, <span class="keywordtype">int</span> b);</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classSistemaMatrices.html#aa9906261707428dce664265cba35c42c">mostrarMatriz</a>(std::vector&lt;std::vector&lt;double&gt; &gt; m);</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classSistemaMatrices_html_a796706a38636dfceb741e64e15ba120a"><div class="ttname"><a href="classSistemaMatrices.html#a796706a38636dfceb741e64e15ba120a">SistemaMatrices::getMatrizCoeficientes</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; double &gt; &gt; getMatrizCoeficientes()</div><div class="ttdoc">Observadores. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMatrices_8hpp_source.html#l00038">sistemaMatrices.hpp:38</a></div></div>
+<div class="ttc" id="classSistemaMatrices_html_aa9906261707428dce664265cba35c42c"><div class="ttname"><a href="classSistemaMatrices.html#aa9906261707428dce664265cba35c42c">SistemaMatrices::mostrarMatriz</a></div><div class="ttdeci">void mostrarMatriz(std::vector&lt; std::vector&lt; double &gt; &gt; m)</div><div class="ttdoc">Muestra una matriz(Utilizada de forma auxiliar durante las pruebas del programa) </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMatrices_8cpp_source.html#l00041">sistemaMatrices.cpp:41</a></div></div>
+<div class="ttc" id="classSistemaMatrices_html_ad5c9aa53496acdb9e430ac57abe53cbf"><div class="ttname"><a href="classSistemaMatrices.html#ad5c9aa53496acdb9e430ac57abe53cbf">SistemaMatrices::getMatrizIndependientes</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; double &gt; &gt; getMatrizIndependientes()</div><div class="ttdoc">Obtiene la matriz de los terminos independientes. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMatrices_8hpp_source.html#l00045">sistemaMatrices.hpp:45</a></div></div>
+<div class="ttc" id="classSistemaMatrices_html_a2861224e07e60c594d83e40110a4ee08"><div class="ttname"><a href="classSistemaMatrices.html#a2861224e07e60c594d83e40110a4ee08">SistemaMatrices::sumatorio</a></div><div class="ttdeci">double sumatorio(std::vector&lt; double &gt; n, std::vector&lt; float &gt; t_practico, int a, int b)</div><div class="ttdoc">Realiza el sumatorio que se coloca en cada campo de la matriz. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMatrices_8cpp_source.html#l00007">sistemaMatrices.cpp:7</a></div></div>
+<div class="ttc" id="classSistemaMatrices_html_a9c50e88c80f6652bbbb1a70ecc9e9776"><div class="ttname"><a href="classSistemaMatrices.html#a9c50e88c80f6652bbbb1a70ecc9e9776">SistemaMatrices::getMatrizSoluciones</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; double &gt; &gt; getMatrizSoluciones()</div><div class="ttdoc">Obtiene la matriz soluciones. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMatrices_8hpp_source.html#l00052">sistemaMatrices.hpp:52</a></div></div>
+<div class="ttc" id="classSistemaMatrices_html"><div class="ttname"><a href="classSistemaMatrices.html">SistemaMatrices</a></div><div class="ttdoc">Definición de la clase SistemaMatrices. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMatrices_8hpp_source.html#l00019">sistemaMatrices.hpp:19</a></div></div>
+<div class="ttc" id="classSistemaMatrices_html_ae4601129999f8f505c33323775ac49c5"><div class="ttname"><a href="classSistemaMatrices.html#ae4601129999f8f505c33323775ac49c5">SistemaMatrices::setSistema</a></div><div class="ttdeci">void setSistema(std::vector&lt; double &gt; n, std::vector&lt; float &gt; t_practico, int nFil, int nCol)</div><div class="ttdoc">Crea el sistema de ecuaciones. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMatrices_8cpp_source.html#l00019">sistemaMatrices.cpp:19</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

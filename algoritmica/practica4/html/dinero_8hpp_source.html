@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 4: Fichero Fuente dinero.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 4
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">dinero.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="dinero_8hpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _DINERO_HPP_</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _DINERO_HPP_</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="macros_8hpp.html">macros.hpp</a>&quot;</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacestd.html">std</a>;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classDinero.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDinero.html">Dinero</a></div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">private</span>:</div><div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classDinero.html#a0c1adc791ede71644d3e7aad099ca94b">   24</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classDinero.html#a0c1adc791ede71644d3e7aad099ca94b">_valor</a>;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">string</span> _tipo;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">int</span> _cantidadUsada = 0;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classDinero.html#a62745a768d69c371eba26ea22b50b3ba">   39</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDinero.html#a62745a768d69c371eba26ea22b50b3ba">getValor</a>() {<span class="keywordflow">return</span> _valor;};</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div><div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classDinero.html#a9eedd8c6e851dd8e121cd7d62c9a4eea">   46</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classDinero.html#a9eedd8c6e851dd8e121cd7d62c9a4eea">getTipo</a>() {<span class="keywordflow">return</span> _tipo;};</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div><div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classDinero.html#ac818fce735281adf2f4de5067f03b224">   53</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDinero.html#ac818fce735281adf2f4de5067f03b224">getCantidadUsada</a>() {<span class="keywordflow">return</span> _cantidadUsada;};</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div><div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classDinero.html#a628e2b10d505d4d9ff2de208330fe359">   63</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDinero.html#a628e2b10d505d4d9ff2de208330fe359">setCantidadUsada</a>(<span class="keywordtype">int</span> x) {_cantidadUsada = x;};</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div><div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classDinero.html#aa278b3b1dbc540733cf65002c0fdf28c">   70</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDinero.html#aa278b3b1dbc540733cf65002c0fdf28c">setValor</a>(<span class="keywordtype">int</span> x) {_valor = x;};</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div><div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classDinero.html#a0f0c270a2dc1215e2bcfbfc0b76670f2">   77</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDinero.html#a0f0c270a2dc1215e2bcfbfc0b76670f2">setTipo</a>(<span class="keywordtype">string</span> x) {_tipo = x;};</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classDinero_html_a62745a768d69c371eba26ea22b50b3ba"><div class="ttname"><a href="classDinero.html#a62745a768d69c371eba26ea22b50b3ba">Dinero::getValor</a></div><div class="ttdeci">int getValor()</div><div class="ttdoc">Devuelve el valor del dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00039">dinero.hpp:39</a></div></div>
+<div class="ttc" id="classDinero_html_a0c1adc791ede71644d3e7aad099ca94b"><div class="ttname"><a href="classDinero.html#a0c1adc791ede71644d3e7aad099ca94b">Dinero::_valor</a></div><div class="ttdeci">int _valor</div><div class="ttdoc">Atributos privados de la clase Dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00024">dinero.hpp:24</a></div></div>
+<div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="classDinero_html_a0f0c270a2dc1215e2bcfbfc0b76670f2"><div class="ttname"><a href="classDinero.html#a0f0c270a2dc1215e2bcfbfc0b76670f2">Dinero::setTipo</a></div><div class="ttdeci">void setTipo(string x)</div><div class="ttdoc">Modifica el tipo de dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00077">dinero.hpp:77</a></div></div>
+<div class="ttc" id="classDinero_html_aa278b3b1dbc540733cf65002c0fdf28c"><div class="ttname"><a href="classDinero.html#aa278b3b1dbc540733cf65002c0fdf28c">Dinero::setValor</a></div><div class="ttdeci">void setValor(int x)</div><div class="ttdoc">Modifica el valor del dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00070">dinero.hpp:70</a></div></div>
+<div class="ttc" id="macros_8hpp_html"><div class="ttname"><a href="macros_8hpp.html">macros.hpp</a></div><div class="ttdoc">Macros for the screen. </div></div>
+<div class="ttc" id="classDinero_html"><div class="ttname"><a href="classDinero.html">Dinero</a></div><div class="ttdoc">Definición de la clase sistema Dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00020">dinero.hpp:20</a></div></div>
+<div class="ttc" id="classDinero_html_ac818fce735281adf2f4de5067f03b224"><div class="ttname"><a href="classDinero.html#ac818fce735281adf2f4de5067f03b224">Dinero::getCantidadUsada</a></div><div class="ttdeci">int getCantidadUsada()</div><div class="ttdoc">Devuelve la cantidad de esa moneda o billete utilizadas. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00053">dinero.hpp:53</a></div></div>
+<div class="ttc" id="classDinero_html_a9eedd8c6e851dd8e121cd7d62c9a4eea"><div class="ttname"><a href="classDinero.html#a9eedd8c6e851dd8e121cd7d62c9a4eea">Dinero::getTipo</a></div><div class="ttdeci">string getTipo()</div><div class="ttdoc">Devuelve si el dinero es moneda o billete. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00046">dinero.hpp:46</a></div></div>
+<div class="ttc" id="classDinero_html_a628e2b10d505d4d9ff2de208330fe359"><div class="ttname"><a href="classDinero.html#a628e2b10d505d4d9ff2de208330fe359">Dinero::setCantidadUsada</a></div><div class="ttdeci">void setCantidadUsada(int x)</div><div class="ttdoc">Modifica la cantidad de moneda o billete usados. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00063">dinero.hpp:63</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

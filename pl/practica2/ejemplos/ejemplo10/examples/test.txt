@@ -1,0 +1,10 @@
+print PI;
+
+a = 2 * PI;
+
+print  a; 
+
+PI = 7;
+
+print PI;
+

@@ -1,0 +1,12 @@
+
+print atan2(PI,2);
+
+print random();
+
+a = PI/2.0;
+
+print atan(a);
+
+b = random();
+
+print b;

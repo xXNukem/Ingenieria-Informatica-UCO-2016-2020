@@ -1,0 +1,36 @@
+a = b = c = 2;
+print a;
+print b;
+print c;
+
+print  (4 + 5) / (8-2);
+print - 3;
+print  + 4;
+
+print -2 * (-2 + 5);
+print  8%3 ;  print  10%2;
+
+print  -2^4;
+print  (-2)^4;
+
+a = 3 ;
+dato = a + 3;
+
+b = c = a;
+
+print  a; 
+print b; 
+
+read(x);
+print x;
+print (x);
+
+read(y);
+print y;
+
+print x+y;
+
+z = x + y;
+
+print z;
+

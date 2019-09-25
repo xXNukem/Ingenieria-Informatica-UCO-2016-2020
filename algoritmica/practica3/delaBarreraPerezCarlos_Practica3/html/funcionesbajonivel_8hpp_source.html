@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 3: Fichero Fuente funcionesbajonivel.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 3
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">funcionesbajonivel.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="funcionesbajonivel_8hpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef FUNCIONES_BAJO_NIVEL</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define FUNCIONES_BAJO_NIVEL</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacestd.html">std</a>;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//Esta función divide la cadena c en dos subcadenas c1 y c2, siendo ambas del mismo tamaño cuando el número de caracteres de c es par</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//y c1 tendrá un caracter más cuando c tenga un número impar de caracteres.</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8hpp.html#ac0e671392230311fc1bcadf05126feb9">partirCadena</a>(<span class="keywordtype">string</span> c, <span class="keywordtype">string</span> &amp;c1, <span class="keywordtype">string</span> &amp;c2);</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8hpp.html#a2e2011e6093a8e4807adca60371a8fbd">agregarCerosFinal</a>(<span class="keywordtype">string</span> &amp;c, <span class="keywordtype">int</span> nCeros);</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">//Esta función añade tantos ceros como indica nCeros al principio del número almacenado en la cadena c</span></div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8hpp.html#afca662d0eb80b24bea5c888c92655042">agregarCerosDelante</a>(<span class="keywordtype">string</span> &amp;c, <span class="keywordtype">int</span> nCeros);</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> <a class="code" href="funcionesbajonivel_8hpp.html#ab5caa0dbead3e3c958c4c82ffaf84fa4">quitarCerosNoSignificativos</a>(<span class="keywordtype">string</span> &amp;c);</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">string</span> <a class="code" href="funcionesbajonivel_8hpp.html#a72b635da34bfa6d424f3f38cb5701f88">multiplicarPotencia10</a>(<span class="keywordtype">string</span> c, <span class="keywordtype">int</span> potencia);</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif</span></div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div><div class="ttc" id="funcionesbajonivel_8hpp_html_afca662d0eb80b24bea5c888c92655042"><div class="ttname"><a href="funcionesbajonivel_8hpp.html#afca662d0eb80b24bea5c888c92655042">agregarCerosDelante</a></div><div class="ttdeci">void agregarCerosDelante(string &amp;c, int nCeros)</div><div class="ttdoc">Añade ceros al principio de la cadena c segun el parametro nCeros. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00050">funcionesbajonivel.cpp:50</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8hpp_html_a2e2011e6093a8e4807adca60371a8fbd"><div class="ttname"><a href="funcionesbajonivel_8hpp.html#a2e2011e6093a8e4807adca60371a8fbd">agregarCerosFinal</a></div><div class="ttdeci">void agregarCerosFinal(string &amp;c, int nCeros)</div><div class="ttdoc">Añade ceros al final de la cadena c segun el parametro nCeros. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00042">funcionesbajonivel.cpp:42</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8hpp_html_a72b635da34bfa6d424f3f38cb5701f88"><div class="ttname"><a href="funcionesbajonivel_8hpp.html#a72b635da34bfa6d424f3f38cb5701f88">multiplicarPotencia10</a></div><div class="ttdeci">string multiplicarPotencia10(string c, int potencia)</div><div class="ttdoc">Eleva el numero contenido en una cadena a una potencia de 10. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00079">funcionesbajonivel.cpp:79</a></div></div>
+<div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8hpp_html_ac0e671392230311fc1bcadf05126feb9"><div class="ttname"><a href="funcionesbajonivel_8hpp.html#ac0e671392230311fc1bcadf05126feb9">partirCadena</a></div><div class="ttdeci">void partirCadena(string c, string &amp;c1, string &amp;c2)</div><div class="ttdoc">Divide la cadena c en dos subcadenas c1 y c2 siendo ambas del mismo tamaño cuando el numero de caract...</div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00010">funcionesbajonivel.cpp:10</a></div></div>
+<div class="ttc" id="funcionesbajonivel_8hpp_html_ab5caa0dbead3e3c958c4c82ffaf84fa4"><div class="ttname"><a href="funcionesbajonivel_8hpp.html#ab5caa0dbead3e3c958c4c82ffaf84fa4">quitarCerosNoSignificativos</a></div><div class="ttdeci">void quitarCerosNoSignificativos(string &amp;c)</div><div class="ttdoc">Quita los ceros sin valor de la cadena. </div><div class="ttdef"><b>Definition:</b> <a href="funcionesbajonivel_8cpp_source.html#l00059">funcionesbajonivel.cpp:59</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

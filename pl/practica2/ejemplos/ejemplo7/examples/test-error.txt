@@ -1,0 +1,18 @@
+a = 3;
+
+dato;
+
+dato = a + 3;
+
+dato;
+
+b = c = a + 1;
+
+b;
+
+z;
+
+c;
+
+b^c;
+

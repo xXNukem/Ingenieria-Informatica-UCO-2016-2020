@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 4: Fichero Fuente mochila.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 4
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">mochila.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="mochila_8hpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _MOCHILA_HPP_</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _MOCHILA_HPP_</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="macros_8hpp.html">macros.hpp</a>&quot;</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="materiales_8hpp.html">materiales.hpp</a>&quot;</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classMochila.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="classMochila.html">Mochila</a></div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">private</span>:</div><div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classMochila.html#a33d3dc832174313531cea85f82455dbe">   26</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classMochila.html#a33d3dc832174313531cea85f82455dbe">_volumenMochila</a>;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    std::vector&lt;Materiales&gt; _m;</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classMochila.html#adea40754f7be148c0f1e97d78fbaf016">   39</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMochila.html#adea40754f7be148c0f1e97d78fbaf016">getVolumen</a>() {<span class="keywordflow">return</span> <a class="code" href="classMochila.html#a33d3dc832174313531cea85f82455dbe">_volumenMochila</a>;};</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div><div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classMochila.html#a98a380c1c78ff865be1bd7323bf78a26">   46</a></span>&#160;    <span class="keyword">inline</span> std::vector&lt;Materiales&gt; <a class="code" href="classMochila.html#a98a380c1c78ff865be1bd7323bf78a26">getMateriales</a>()<span class="keyword">const </span>{<span class="keywordflow">return</span> _m;};</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classMochila.html#a6736acbbbade5632ab89e9c9658faf91">mostrarMateriales</a>(std::vector&lt;Materiales&gt; v);</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div><div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classMochila.html#a3d3609ab02ed40993f3e90e31789b6cc">   62</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMochila.html#a3d3609ab02ed40993f3e90e31789b6cc">setVolumen</a>(<span class="keywordtype">int</span> x) {_volumenMochila = x;};</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classMochila.html#a92d69577c105ed6a5661ee99d1fa7a99">setMateriales</a>();</div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classMochila_html_a98a380c1c78ff865be1bd7323bf78a26"><div class="ttname"><a href="classMochila.html#a98a380c1c78ff865be1bd7323bf78a26">Mochila::getMateriales</a></div><div class="ttdeci">std::vector&lt; Materiales &gt; getMateriales() const</div><div class="ttdoc">Devuelve el vector de materiales. </div><div class="ttdef"><b>Definition:</b> <a href="mochila_8hpp_source.html#l00046">mochila.hpp:46</a></div></div>
+<div class="ttc" id="macros_8hpp_html"><div class="ttname"><a href="macros_8hpp.html">macros.hpp</a></div><div class="ttdoc">Macros for the screen. </div></div>
+<div class="ttc" id="materiales_8hpp_html"><div class="ttname"><a href="materiales_8hpp.html">materiales.hpp</a></div><div class="ttdoc">descripcion de la clase materiales </div></div>
+<div class="ttc" id="classMochila_html"><div class="ttname"><a href="classMochila.html">Mochila</a></div><div class="ttdoc">Definición de la clase sistema mochila. </div><div class="ttdef"><b>Definition:</b> <a href="mochila_8hpp_source.html#l00022">mochila.hpp:22</a></div></div>
+<div class="ttc" id="classMochila_html_a3d3609ab02ed40993f3e90e31789b6cc"><div class="ttname"><a href="classMochila.html#a3d3609ab02ed40993f3e90e31789b6cc">Mochila::setVolumen</a></div><div class="ttdeci">void setVolumen(int x)</div><div class="ttdoc">Modifica la variable volumen. </div><div class="ttdef"><b>Definition:</b> <a href="mochila_8hpp_source.html#l00062">mochila.hpp:62</a></div></div>
+<div class="ttc" id="classMochila_html_a33d3dc832174313531cea85f82455dbe"><div class="ttname"><a href="classMochila.html#a33d3dc832174313531cea85f82455dbe">Mochila::_volumenMochila</a></div><div class="ttdeci">int _volumenMochila</div><div class="ttdoc">Atributos privados de la clase mochila. </div><div class="ttdef"><b>Definition:</b> <a href="mochila_8hpp_source.html#l00026">mochila.hpp:26</a></div></div>
+<div class="ttc" id="classMochila_html_adea40754f7be148c0f1e97d78fbaf016"><div class="ttname"><a href="classMochila.html#adea40754f7be148c0f1e97d78fbaf016">Mochila::getVolumen</a></div><div class="ttdeci">int getVolumen()</div><div class="ttdoc">Devuelve el volumen de la mochila. </div><div class="ttdef"><b>Definition:</b> <a href="mochila_8hpp_source.html#l00039">mochila.hpp:39</a></div></div>
+<div class="ttc" id="classMochila_html_a92d69577c105ed6a5661ee99d1fa7a99"><div class="ttname"><a href="classMochila.html#a92d69577c105ed6a5661ee99d1fa7a99">Mochila::setMateriales</a></div><div class="ttdeci">void setMateriales()</div><div class="ttdoc">Rellena el vector de materiales con lo que se lee en el fichero. </div><div class="ttdef"><b>Definition:</b> <a href="mochila_8cpp_source.html#l00008">mochila.cpp:8</a></div></div>
+<div class="ttc" id="classMochila_html_a6736acbbbade5632ab89e9c9658faf91"><div class="ttname"><a href="classMochila.html#a6736acbbbade5632ab89e9c9658faf91">Mochila::mostrarMateriales</a></div><div class="ttdeci">void mostrarMateriales(std::vector&lt; Materiales &gt; v)</div><div class="ttdoc">Muestra el vector de materiales. </div><div class="ttdef"><b>Definition:</b> <a href="mochila_8cpp_source.html#l00037">mochila.cpp:37</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

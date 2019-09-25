@@ -1,0 +1,137 @@
+\hypertarget{classed_1_1Vector3D}{}\section{ed\+:\+:Vector3D Class Reference}
+\label{classed_1_1Vector3D}\index{ed\+::\+Vector3D@{ed\+::\+Vector3D}}
+
+
+Definición de la clase \hyperlink{classed_1_1Vector3D}{Vector3D}\+: $ \vec{v} = (v_1, v_2, v_3) = v_1 \vec{i} + v_2 \vec{j} + v_3 \vec{k} $.  
+
+
+
+
+{\ttfamily \#include $<$Vector3\+D.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{Indent}{\bf Constructores de la clase Vector3D}\par
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Vector3D} ()\hypertarget{classed_1_1Vector3D_a6747bbbfd5d1fac542e46315aed209e5}{}\label{classed_1_1Vector3D_a6747bbbfd5d1fac542e46315aed209e5}
+
+\item 
+{\bfseries Vector3D} (double x, double y, double z)\hypertarget{classed_1_1Vector3D_a094c484e0111ab28c5deaa754e928eb0}{}\label{classed_1_1Vector3D_a094c484e0111ab28c5deaa754e928eb0}
+
+\item 
+{\bfseries Vector3D} (const \hyperlink{classed_1_1Vector3D}{Vector3D} \&v)\hypertarget{classed_1_1Vector3D_a36ea6289d040b55a2156c21e4359e861}{}\label{classed_1_1Vector3D_a36ea6289d040b55a2156c21e4359e861}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Observadores\+: funciones de consulta de Vector3D}\par
+\begin{DoxyCompactItemize}
+\item 
+double {\bfseries get1} () const \hypertarget{classed_1_1Vector3D_ad8944bffeecccc9e21669a6a20b2c77d}{}\label{classed_1_1Vector3D_ad8944bffeecccc9e21669a6a20b2c77d}
+
+\item 
+double {\bfseries get2} () const \hypertarget{classed_1_1Vector3D_abc0363d157e7be0fc96b20092db75b6b}{}\label{classed_1_1Vector3D_abc0363d157e7be0fc96b20092db75b6b}
+
+\item 
+double {\bfseries get3} () const \hypertarget{classed_1_1Vector3D_a528e7798677289133a8f69ae6cd4cb89}{}\label{classed_1_1Vector3D_a528e7798677289133a8f69ae6cd4cb89}
+
+\item 
+double {\bfseries modulo} () const \hypertarget{classed_1_1Vector3D_a5e36b71f69237674484afccaf564a70e}{}\label{classed_1_1Vector3D_a5e36b71f69237674484afccaf564a70e}
+
+\item 
+double {\bfseries angulo} (\hyperlink{classed_1_1Vector3D}{Vector3D} v) const \hypertarget{classed_1_1Vector3D_afd67e97085b93ecccf71ebfc704f6d1f}{}\label{classed_1_1Vector3D_afd67e97085b93ecccf71ebfc704f6d1f}
+
+\item 
+double {\bfseries dot\+Product} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&v) const \hypertarget{classed_1_1Vector3D_a635fb5f347c703c8d8797b12b0fced8b}{}\label{classed_1_1Vector3D_a635fb5f347c703c8d8797b12b0fced8b}
+
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} {\bfseries cross\+Product} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&v) const \hypertarget{classed_1_1Vector3D_ac124dbe3b9c4f25e4d398c93c5882223}{}\label{classed_1_1Vector3D_ac124dbe3b9c4f25e4d398c93c5882223}
+
+\item 
+double {\bfseries alfa} () const \hypertarget{classed_1_1Vector3D_a4ccc36acd9521fcbf6722c1a05382174}{}\label{classed_1_1Vector3D_a4ccc36acd9521fcbf6722c1a05382174}
+
+\item 
+double {\bfseries beta} () const \hypertarget{classed_1_1Vector3D_a18a5bc2930896a63f5b2c3f689c14cd4}{}\label{classed_1_1Vector3D_a18a5bc2930896a63f5b2c3f689c14cd4}
+
+\item 
+double {\bfseries gamma} () const \hypertarget{classed_1_1Vector3D_a80862b81883ec306410333f3f5c93d83}{}\label{classed_1_1Vector3D_a80862b81883ec306410333f3f5c93d83}
+
+\item 
+double {\bfseries producto\+Mixto} (\hyperlink{classed_1_1Vector3D}{Vector3D} v1, \hyperlink{classed_1_1Vector3D}{Vector3D} v2) const \hypertarget{classed_1_1Vector3D_a4799486de04e8fbf376bd8e89a2219a7}{}\label{classed_1_1Vector3D_a4799486de04e8fbf376bd8e89a2219a7}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Modificadores\+: funciones de modificación de Vector3D}\par
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries set1} (double x)\hypertarget{classed_1_1Vector3D_a09b5b2f452f7ddfdf77182bc22bcd7e4}{}\label{classed_1_1Vector3D_a09b5b2f452f7ddfdf77182bc22bcd7e4}
+
+\item 
+void {\bfseries set2} (double y)\hypertarget{classed_1_1Vector3D_ac40c05aec63ffbd08aea17e10301f168}{}\label{classed_1_1Vector3D_ac40c05aec63ffbd08aea17e10301f168}
+
+\item 
+void {\bfseries set3} (double z)\hypertarget{classed_1_1Vector3D_a454a235146c579f6e49073bc71d504c1}{}\label{classed_1_1Vector3D_a454a235146c579f6e49073bc71d504c1}
+
+\item 
+void {\bfseries sum\+Const} (double k)\hypertarget{classed_1_1Vector3D_a3536267a5fe8f2a9d18b6fc158c9b0fd}{}\label{classed_1_1Vector3D_a3536267a5fe8f2a9d18b6fc158c9b0fd}
+
+\item 
+void {\bfseries sum\+Vect} (\hyperlink{classed_1_1Vector3D}{Vector3D} v)\hypertarget{classed_1_1Vector3D_a6c31fdc9d7c09481b51626a424bac047}{}\label{classed_1_1Vector3D_a6c31fdc9d7c09481b51626a424bac047}
+
+\item 
+void {\bfseries mult\+Const} (double k)\hypertarget{classed_1_1Vector3D_a1f82fa0f3dce2b74207419097f826827}{}\label{classed_1_1Vector3D_a1f82fa0f3dce2b74207419097f826827}
+
+\item 
+void {\bfseries mult\+Vect} (\hyperlink{classed_1_1Vector3D}{Vector3D} v)\hypertarget{classed_1_1Vector3D_a9952e96f739a4a4f1a9a1c626a3f5ead}{}\label{classed_1_1Vector3D_a9952e96f739a4a4f1a9a1c626a3f5ead}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Operadores de la clase}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} \& {\bfseries operator+} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&v) const \hypertarget{classed_1_1Vector3D_a2621602374ee83370398bf68aabab7dc}{}\label{classed_1_1Vector3D_a2621602374ee83370398bf68aabab7dc}
+
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} \& {\bfseries operator-\/} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&v) const \hypertarget{classed_1_1Vector3D_adc208536fe841f76ad921b385198d996}{}\label{classed_1_1Vector3D_adc208536fe841f76ad921b385198d996}
+
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} \& {\bfseries operator+} () const \hypertarget{classed_1_1Vector3D_ad1074a8514d7e115cd7cd0e095d06aba}{}\label{classed_1_1Vector3D_ad1074a8514d7e115cd7cd0e095d06aba}
+
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} \& {\bfseries operator-\/} () const \hypertarget{classed_1_1Vector3D_afe65721e62e3e59b07a5dfd0ef3b75e3}{}\label{classed_1_1Vector3D_afe65721e62e3e59b07a5dfd0ef3b75e3}
+
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} \& {\bfseries operator$\ast$} (double k) const \hypertarget{classed_1_1Vector3D_a3451f84f6ae3765b576790fd6e38a8a6}{}\label{classed_1_1Vector3D_a3451f84f6ae3765b576790fd6e38a8a6}
+
+\item 
+double {\bfseries operator$\ast$} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&v) const \hypertarget{classed_1_1Vector3D_a8ff476655db397dbb593e1d74271424a}{}\label{classed_1_1Vector3D_a8ff476655db397dbb593e1d74271424a}
+
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} \& {\bfseries operator$^\wedge$} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&v) const \hypertarget{classed_1_1Vector3D_a711662d59e9aceb8f2f8175e85e38b14}{}\label{classed_1_1Vector3D_a711662d59e9aceb8f2f8175e85e38b14}
+
+\item 
+\hyperlink{classed_1_1Vector3D}{Vector3D} \& {\bfseries operator=} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&objeto)\hypertarget{classed_1_1Vector3D_a2441a3f37b47640af3ba904e9b84ff47}{}\label{classed_1_1Vector3D_a2441a3f37b47640af3ba904e9b84ff47}
+
+\item 
+bool {\bfseries operator==} (\hyperlink{classed_1_1Vector3D}{Vector3D} const \&objeto) const \hypertarget{classed_1_1Vector3D_a771d4119e3ab6f17828f4cf194bf8721}{}\label{classed_1_1Vector3D_a771d4119e3ab6f17828f4cf194bf8721}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Funciones lectura y escritura de la clase Vector3D}\par
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries leer\+Vector3D} ()\hypertarget{classed_1_1Vector3D_a383b32d61696badf77dac30aca5211a3}{}\label{classed_1_1Vector3D_a383b32d61696badf77dac30aca5211a3}
+
+\item 
+void {\bfseries escribir\+Vector3D} () const \hypertarget{classed_1_1Vector3D_a1c8716af1cd30d8bf38a0e6bf2dee24f}{}\label{classed_1_1Vector3D_a1c8716af1cd30d8bf38a0e6bf2dee24f}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Definición de la clase \hyperlink{classed_1_1Vector3D}{Vector3D}\+: $ \vec{v} = (v_1, v_2, v_3) = v_1 \vec{i} + v_2 \vec{j} + v_3 \vec{k} $. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Vector3D_8hpp}{Vector3\+D.\+hpp}\item 
+\hyperlink{Vector3D_8cpp}{Vector3\+D.\+cpp}\end{DoxyCompactItemize}

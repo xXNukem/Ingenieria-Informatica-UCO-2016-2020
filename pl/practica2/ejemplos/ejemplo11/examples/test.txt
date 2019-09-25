@@ -1,0 +1,14 @@
+read(a);
+
+b = 2 * PI + a;
+
+print  a; 
+
+print  b; 
+
+print PI;
+
+
+
+
+

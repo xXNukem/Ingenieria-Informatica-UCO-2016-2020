@@ -1,0 +1,11 @@
+read(PI);
+
+print PI;
+
+a = 3 ;
+dato = a + 3;
+
+
+print Dato;
+
+print dato;

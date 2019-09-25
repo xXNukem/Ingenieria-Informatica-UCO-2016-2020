@@ -1,0 +1,16 @@
+print PI;
+PI = 17;
+
+print pi;
+
+print PI;
+
+
+read (PI);
+
+print PI;
+
+read (pi);
+
+print pi;
+

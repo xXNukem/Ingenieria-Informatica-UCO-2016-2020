@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 2: Referencia del Archivo hanoi.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 2
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Referencia del Archivo hanoi.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Se define el TAD Vertice.  
+<a href="#details">Más...</a></p>
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;cstdlib&gt;</code><br />
+<code>#include &lt;cstdio&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="macros_8hpp_source.html">macros.hpp</a>&quot;</code><br />
+</div>
+<p><a href="hanoi_8hpp_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Incializacion de las torres</h2></td></tr>
+<tr class="memitem:afbedcb0868d19193e96a7866cfd860eb"><td class="memItemLeft" align="right" valign="top"><a id="afbedcb0868d19193e96a7866cfd860eb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TORRE_INICIAL</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:afbedcb0868d19193e96a7866cfd860eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a504a8c4a09c7ef885604a9a0cf844102"><td class="memItemLeft" align="right" valign="top"><a id="a504a8c4a09c7ef885604a9a0cf844102"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TORRE_AUXILIAR</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a504a8c4a09c7ef885604a9a0cf844102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85a66265679f89fa9f73ca66eac7e2e0"><td class="memItemLeft" align="right" valign="top"><a id="a85a66265679f89fa9f73ca66eac7e2e0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TORRE_FINAL</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:a85a66265679f89fa9f73ca66eac7e2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae10dbf0e2ea71f37155b84ba2d4ae086"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hanoi_8hpp.html#ae10dbf0e2ea71f37155b84ba2d4ae086">torresHanoi</a> (int discos)</td></tr>
+<tr class="memdesc:ae10dbf0e2ea71f37155b84ba2d4ae086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funcion que calcula las torres de hanoi en modo recursivo.  <a href="#ae10dbf0e2ea71f37155b84ba2d4ae086">Más...</a><br /></td></tr>
+<tr class="separator:ae10dbf0e2ea71f37155b84ba2d4ae086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d7733ebfb3a6f0404c2113f138157d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hanoi_8hpp.html#a39d7733ebfb3a6f0404c2113f138157d">ejecutarHanoiTexto</a> (int discos)</td></tr>
+<tr class="memdesc:a39d7733ebfb3a6f0404c2113f138157d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ejecuta las torres de hanoi en modo texto.  <a href="#a39d7733ebfb3a6f0404c2113f138157d">Más...</a><br /></td></tr>
+<tr class="separator:a39d7733ebfb3a6f0404c2113f138157d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6390191531690db1457e7ae8fce35e97"><td class="memItemLeft" align="right" valign="top"><a id="a6390191531690db1457e7ae8fce35e97"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hanoi_8hpp.html#a6390191531690db1457e7ae8fce35e97">muestra</a> ()</td></tr>
+<tr class="memdesc:a6390191531690db1457e7ae8fce35e97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra los discos en las torres. <br /></td></tr>
+<tr class="separator:a6390191531690db1457e7ae8fce35e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa76bfb956ad7e204a29283abdc5acb8f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hanoi_8hpp.html#aa76bfb956ad7e204a29283abdc5acb8f">hanoi</a> (int numDiscos, int torreInicial, int torreAuxiliar, int torreFinal)</td></tr>
+<tr class="memdesc:aa76bfb956ad7e204a29283abdc5acb8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funcion recursiva que sirve para mostrar hanoi en modo texto.  <a href="#aa76bfb956ad7e204a29283abdc5acb8f">Más...</a><br /></td></tr>
+<tr class="separator:aa76bfb956ad7e204a29283abdc5acb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Se define el TAD Vertice. </p>
+<dl class="section author"><dt>Autor</dt><dd>Carlos de la Barrera Perez </dd></dl>
+
+<p class="definition">Definición en el archivo <a class="el" href="hanoi_8hpp_source.html">hanoi.hpp</a>.</p>
+</div><h2 class="groupheader">Documentación de las funciones</h2>
+<a id="a39d7733ebfb3a6f0404c2113f138157d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39d7733ebfb3a6f0404c2113f138157d">&#9670;&nbsp;</a></span>ejecutarHanoiTexto()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ejecutarHanoiTexto </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>discos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ejecuta las torres de hanoi en modo texto. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">discos</td><td>Numero de discos </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="hanoi_8cpp_source.html#l00026">26</a> del archivo <a class="el" href="hanoi_8cpp_source.html">hanoi.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa76bfb956ad7e204a29283abdc5acb8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa76bfb956ad7e204a29283abdc5acb8f">&#9670;&nbsp;</a></span>hanoi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int hanoi </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>numDiscos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>torreInicial</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>torreAuxiliar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>torreFinal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funcion recursiva que sirve para mostrar hanoi en modo texto. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">numDiscos</td><td>Numero de discos </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">torreInicial</td><td>Valor de la torre inicial </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">torreAuxiliar</td><td>Valor de la torre de en medio </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">torreFinal</td><td>Valor de la torre final</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Numero de movimientos </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="hanoi_8cpp_source.html#l00073">73</a> del archivo <a class="el" href="hanoi_8cpp_source.html">hanoi.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae10dbf0e2ea71f37155b84ba2d4ae086"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae10dbf0e2ea71f37155b84ba2d4ae086">&#9670;&nbsp;</a></span>torresHanoi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int torresHanoi </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>discos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funcion que calcula las torres de hanoi en modo recursivo. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">discos</td><td>Numero de discos</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Numero de movimientos </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="hanoi_8cpp_source.html#l00012">12</a> del archivo <a class="el" href="hanoi_8cpp_source.html">hanoi.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

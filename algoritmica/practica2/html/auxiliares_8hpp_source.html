@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 2: Fichero Fuente auxiliares.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 2
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">auxiliares.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="auxiliares_8hpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef _AUXILIARES_HPP_</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _AUXILIARES_HPP_</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="macros_8hpp.html">macros.hpp</a>&quot;</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="combinatoria_8hpp.html">combinatoria.hpp</a>&quot;</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;sistemaMatrices.hpp&quot;</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;sistemaEcuaciones.hpp&quot;</span></div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="estadistica_8hpp.html">estadistica.hpp</a>&quot;</span></div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="hanoi_8hpp.html">hanoi.hpp</a>&quot;</span></div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">int</span> <a class="code" href="auxiliares_8hpp.html#ae83fcdbeb2b6757fc741ae953b633ee1">menu</a>();</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> <a class="code" href="auxiliares_8hpp.html#ab98d6a9e54540dc93f4b59e02d8f15fe">ejecutarAlgoritmo</a>(<span class="keywordtype">int</span> opcion);</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;std::vector&lt;float&gt; <a class="code" href="auxiliares_8hpp.html#a081fcf4dfce0af273689e00c4268cf07">calcularTiempoTeorico</a>(std::vector&lt;std::vector&lt;double&gt; &gt; &amp; _matrizSoluciones, std::vector&lt;double&gt; &amp; n, <span class="keywordtype">int</span> &amp; opcion);</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="auxiliares_8hpp.html#a4a9ccfd5be71fb5f79e6f1757ba5e399">calcularDias</a>(std::vector&lt;std::vector&lt;double&gt; &gt; _matrizSoluciones, <span class="keywordtype">int</span> o);</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> <a class="code" href="auxiliares_8hpp.html#aaf99de64850579659315a595da00b821">grabarFichero</a>(std::vector&lt;double&gt; <span class="keyword">const</span> &amp;n,std::vector&lt;float&gt; <span class="keyword">const</span> &amp;t_practico, std::vector&lt;float&gt; <span class="keyword">const</span> &amp;t_teorico);</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="auxiliares_8hpp_html_ab98d6a9e54540dc93f4b59e02d8f15fe"><div class="ttname"><a href="auxiliares_8hpp.html#ab98d6a9e54540dc93f4b59e02d8f15fe">ejecutarAlgoritmo</a></div><div class="ttdeci">void ejecutarAlgoritmo(int opcion)</div><div class="ttdoc">Funcion central del programa que se encarga de ejecutar los algoritmos y llamar al resto de funciones...</div><div class="ttdef"><b>Definition:</b> <a href="auxiliares_8cpp_source.html#l00051">auxiliares.cpp:51</a></div></div>
+<div class="ttc" id="estadistica_8hpp_html"><div class="ttname"><a href="estadistica_8hpp.html">estadistica.hpp</a></div><div class="ttdoc">Fichero hpp de las funciones de estadistica. </div></div>
+<div class="ttc" id="hanoi_8hpp_html"><div class="ttname"><a href="hanoi_8hpp.html">hanoi.hpp</a></div><div class="ttdoc">Se define el TAD Vertice. </div></div>
+<div class="ttc" id="combinatoria_8hpp_html"><div class="ttname"><a href="combinatoria_8hpp.html">combinatoria.hpp</a></div><div class="ttdoc">Clase combinatoria. </div></div>
+<div class="ttc" id="auxiliares_8hpp_html_a4a9ccfd5be71fb5f79e6f1757ba5e399"><div class="ttname"><a href="auxiliares_8hpp.html#a4a9ccfd5be71fb5f79e6f1757ba5e399">calcularDias</a></div><div class="ttdeci">void calcularDias(std::vector&lt; std::vector&lt; double &gt; &gt; _matrizSoluciones, int o)</div><div class="ttdoc">Calcula los dias de ejecucion para un determinado valor de n. </div><div class="ttdef"><b>Definition:</b> <a href="auxiliares_8cpp_source.html#l00322">auxiliares.cpp:322</a></div></div>
+<div class="ttc" id="macros_8hpp_html"><div class="ttname"><a href="macros_8hpp.html">macros.hpp</a></div><div class="ttdoc">Macros for the screen. </div></div>
+<div class="ttc" id="auxiliares_8hpp_html_a081fcf4dfce0af273689e00c4268cf07"><div class="ttname"><a href="auxiliares_8hpp.html#a081fcf4dfce0af273689e00c4268cf07">calcularTiempoTeorico</a></div><div class="ttdeci">std::vector&lt; float &gt; calcularTiempoTeorico(std::vector&lt; std::vector&lt; double &gt; &gt; &amp;_matrizSoluciones, std::vector&lt; double &gt; &amp;n, int &amp;opcion)</div><div class="ttdoc">Aplica las ecuaciones correspondientes a cada algoritmo con los valores obtenidos al resolver el sist...</div><div class="ttdef"><b>Definition:</b> <a href="auxiliares_8cpp_source.html#l00298">auxiliares.cpp:298</a></div></div>
+<div class="ttc" id="auxiliares_8hpp_html_ae83fcdbeb2b6757fc741ae953b633ee1"><div class="ttname"><a href="auxiliares_8hpp.html#ae83fcdbeb2b6757fc741ae953b633ee1">menu</a></div><div class="ttdeci">int menu()</div><div class="ttdoc">Funcion que llama al menu principal del programa. </div><div class="ttdef"><b>Definition:</b> <a href="auxiliares_8cpp_source.html#l00009">auxiliares.cpp:9</a></div></div>
+<div class="ttc" id="auxiliares_8hpp_html_aaf99de64850579659315a595da00b821"><div class="ttname"><a href="auxiliares_8hpp.html#aaf99de64850579659315a595da00b821">grabarFichero</a></div><div class="ttdeci">void grabarFichero(std::vector&lt; double &gt; const &amp;n, std::vector&lt; float &gt; const &amp;t_practico, std::vector&lt; float &gt; const &amp;t_teorico)</div><div class="ttdoc">Guarda en un fichero de texto tres columas, la 1º es n, la 2º es el tiempo pratico y la 3º es el tiem...</div><div class="ttdef"><b>Definition:</b> <a href="auxiliares_8cpp_source.html#l00282">auxiliares.cpp:282</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

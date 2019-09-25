@@ -1,0 +1,18 @@
+print dato1;
+
+a = random(2);
+
+print dato2;
+
+print a;
+print dato3;
+print atan2();
+print dato4;
+print atan2(PI);
+print dato5;
+print atan2(PI,2,3);
+
+
+print dato6;
+print dato7;
+print dato8;

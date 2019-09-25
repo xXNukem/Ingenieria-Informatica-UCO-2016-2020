@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ALGORITMICA - PRACTICA 4: Fichero Fuente sistemaMonetario.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ALGORITMICA - PRACTICA 4
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">sistemaMonetario.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="sistemaMonetario_8cpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;sistemaMonetario.hpp&quot;</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classSistemaMonetario.html#ab0c1fd0adddaf8d6c1aa283128782359">    7</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classSistemaMonetario.html#ab0c1fd0adddaf8d6c1aa283128782359">SistemaMonetario::mostrarSistemaMonetario</a>()</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    cout &lt;&lt; <a class="code" href="macros_8hpp.html#a5ca145d49e62082b0aa832a5d7a70104">BIGREEN</a> &lt;&lt; <span class="stringliteral">&quot;SISTEMA MONETARIO LEIDO&quot;</span> &lt;&lt; <a class="code" href="macros_8hpp.html#a4ee9c5eb2479018ea9c86c97ad267118">BIYELLOW</a> &lt;&lt; endl;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; _d.size(); i++)</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    {</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        cout &lt;&lt; <a class="code" href="macros_8hpp.html#a4ee9c5eb2479018ea9c86c97ad267118">BIYELLOW</a> &lt;&lt; <span class="stringliteral">&quot;VALOR: &quot;</span> &lt;&lt; <a class="code" href="macros_8hpp.html#ae4c406ee21289425d0c3b9ca2c8d0b3d">BIBLUE</a> &lt;&lt; (float)_d[i].getValor() / 100 &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; <a class="code" href="macros_8hpp.html#a4ee9c5eb2479018ea9c86c97ad267118">BIYELLOW</a> &lt;&lt;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;             <span class="stringliteral">&quot; TIPO: &quot;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;             &lt;&lt;</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;             <a class="code" href="macros_8hpp.html#ae4c406ee21289425d0c3b9ca2c8d0b3d">BIBLUE</a> &lt;&lt; _d[i].getTipo() &lt;&lt; <a class="code" href="macros_8hpp.html#ab702106cf3b3e96750b6845ded4e0299">RESET</a> &lt;&lt; endl;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    }</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classSistemaMonetario.html#a1b470d789f0083302c09ed170f47c7c5">   20</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classSistemaMonetario.html#a1b470d789f0083302c09ed170f47c7c5">SistemaMonetario::setDinero</a>()</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    ifstream f(<span class="stringliteral">&quot;dinero.txt&quot;</span>, ios::in);</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">if</span> (!f.good())</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    {</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;El fichero no existe\n&quot;</span> &lt;&lt; endl;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">else</span></div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    {</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">int</span> valor;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordtype">string</span> tipo;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">while</span> (f &gt;&gt; valor &gt;&gt; tipo)</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        {</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <a class="code" href="classDinero.html">Dinero</a> aux;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            aux.<a class="code" href="classDinero.html#aa278b3b1dbc540733cf65002c0fdf28c">setValor</a>(valor);</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            aux.<a class="code" href="classDinero.html#a0f0c270a2dc1215e2bcfbfc0b76670f2">setTipo</a>(tipo);</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            _d.push_back(aux);</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    f.close();</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div><div class="ttc" id="classDinero_html_a0f0c270a2dc1215e2bcfbfc0b76670f2"><div class="ttname"><a href="classDinero.html#a0f0c270a2dc1215e2bcfbfc0b76670f2">Dinero::setTipo</a></div><div class="ttdeci">void setTipo(string x)</div><div class="ttdoc">Modifica el tipo de dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00077">dinero.hpp:77</a></div></div>
+<div class="ttc" id="macros_8hpp_html_ab702106cf3b3e96750b6845ded4e0299"><div class="ttname"><a href="macros_8hpp.html#ab702106cf3b3e96750b6845ded4e0299">RESET</a></div><div class="ttdeci">#define RESET</div><div class="ttdoc">Reset. </div><div class="ttdef"><b>Definition:</b> <a href="macros_8hpp_source.html#l00025">macros.hpp:25</a></div></div>
+<div class="ttc" id="classSistemaMonetario_html_ab0c1fd0adddaf8d6c1aa283128782359"><div class="ttname"><a href="classSistemaMonetario.html#ab0c1fd0adddaf8d6c1aa283128782359">SistemaMonetario::mostrarSistemaMonetario</a></div><div class="ttdeci">void mostrarSistemaMonetario()</div><div class="ttdoc">Muestra el sistema monetario leido. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMonetario_8cpp_source.html#l00007">sistemaMonetario.cpp:7</a></div></div>
+<div class="ttc" id="macros_8hpp_html_a4ee9c5eb2479018ea9c86c97ad267118"><div class="ttname"><a href="macros_8hpp.html#a4ee9c5eb2479018ea9c86c97ad267118">BIYELLOW</a></div><div class="ttdeci">#define BIYELLOW</div><div class="ttdoc">Yellow. </div><div class="ttdef"><b>Definition:</b> <a href="macros_8hpp_source.html#l00090">macros.hpp:90</a></div></div>
+<div class="ttc" id="classDinero_html_aa278b3b1dbc540733cf65002c0fdf28c"><div class="ttname"><a href="classDinero.html#aa278b3b1dbc540733cf65002c0fdf28c">Dinero::setValor</a></div><div class="ttdeci">void setValor(int x)</div><div class="ttdoc">Modifica el valor del dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00070">dinero.hpp:70</a></div></div>
+<div class="ttc" id="classSistemaMonetario_html_a1b470d789f0083302c09ed170f47c7c5"><div class="ttname"><a href="classSistemaMonetario.html#a1b470d789f0083302c09ed170f47c7c5">SistemaMonetario::setDinero</a></div><div class="ttdeci">void setDinero()</div><div class="ttdoc">Rellana el vector con los datos leidos del fichero. </div><div class="ttdef"><b>Definition:</b> <a href="sistemaMonetario_8cpp_source.html#l00020">sistemaMonetario.cpp:20</a></div></div>
+<div class="ttc" id="classDinero_html"><div class="ttname"><a href="classDinero.html">Dinero</a></div><div class="ttdoc">Definición de la clase sistema Dinero. </div><div class="ttdef"><b>Definition:</b> <a href="dinero_8hpp_source.html#l00020">dinero.hpp:20</a></div></div>
+<div class="ttc" id="macros_8hpp_html_a5ca145d49e62082b0aa832a5d7a70104"><div class="ttname"><a href="macros_8hpp.html#a5ca145d49e62082b0aa832a5d7a70104">BIGREEN</a></div><div class="ttdeci">#define BIGREEN</div><div class="ttdoc">Green. </div><div class="ttdef"><b>Definition:</b> <a href="macros_8hpp_source.html#l00089">macros.hpp:89</a></div></div>
+<div class="ttc" id="macros_8hpp_html_ae4c406ee21289425d0c3b9ca2c8d0b3d"><div class="ttname"><a href="macros_8hpp.html#ae4c406ee21289425d0c3b9ca2c8d0b3d">BIBLUE</a></div><div class="ttdeci">#define BIBLUE</div><div class="ttdoc">Blue. </div><div class="ttdef"><b>Definition:</b> <a href="macros_8hpp_source.html#l00091">macros.hpp:91</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

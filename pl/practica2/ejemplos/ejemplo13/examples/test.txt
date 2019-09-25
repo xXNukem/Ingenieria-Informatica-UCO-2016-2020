@@ -1,0 +1,16 @@
+
+print sin(PI/2);
+
+print cos(PI);
+
+a = PI/2.0;
+
+print atan(a);
+
+print exp(1);
+
+print log(10);
+
+print log10(10);
+
+print sqrt(2);

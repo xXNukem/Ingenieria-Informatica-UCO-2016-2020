@@ -1,0 +1,91 @@
+c = 4;
+
+print c;
+
+a = b = 7;
+
+
+print b;
+
+print a;
+
+a = b = 9;
+
+
+print b;
+
+print a;
+
+e = true;
+print e;
+
+f = g = false;
+
+print f;
+print g;
+print a;
+print PI;
+
+read(dato);
+print dato;
+read(dato);
+print dato;
+dato = true;
+print dato;
+read(dato);
+print dato;
+
+
+print random();
+
+print sin(PI);
+
+print atan2(PI,2);
+
+
+print random(1);
+
+print sin();
+
+print atan2(PI);
+
+
+a = 1;
+b = 2;
+print 1;
+print a + b;
+print a - b;
+print a * b;
+print a / b;
+print a / 0;
+print a % b;
+print a % 0;
+print a ^ b;
+
+print a > b;
+print a >= b;
+print a < b;
+print a <= b;
+print a == b;
+print a != b;
+
+print E;
+
+print (a > 0) and (a < 10);
+print -E;
+
+
+print PI;
+
+b = true;
+print b;
+
+
+print a + b;
+print a - b;
+print a * b;
+print a / b;
+print a / 0;
+print a % b;
+print a % 0;
+print a ^ b;
