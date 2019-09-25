@@ -30,9 +30,8 @@ private:
 	int _numBanderas;
 
 public:
-	usuario()
-	{
-		_numBanderas = 10;
+	usuario() {
+		_numBanderas=10;
 	};
 
 	inline void setId(int id) {_id = id;}
@@ -41,8 +40,8 @@ public:
 	inline void setEstado(int status) {_estado = status;}
 	inline void setTurno(bool turno) {_turno = turno;}
 	inline void setBandera(string x) {_bandera = x;}
-	inline void setNumBanderas(int x) {_numBanderas = x;}
-
+	inline void setNumBanderas(int x){_numBanderas=x;}
+ 
 
 	inline int getId()const {return _id;}
 	inline string getNombre()const {return _nombre;}
