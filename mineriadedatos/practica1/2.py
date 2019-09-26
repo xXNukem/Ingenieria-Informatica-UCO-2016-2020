@@ -8,6 +8,7 @@ Use el producto escalar para obtener el ángulo formado por dos vectores fila o 
 teclado."""
 
 import numpy as np
+import math as mat
 
 print('Introduce el numero de filas')
 filas = int(input())
@@ -51,7 +52,7 @@ a = []
 for i in range(2):
     print('Producto escalar, introduce la cordenada de los dos vectores:')
     print('Introduce f para vector de fila o c para vector de columna ')
-    opc = input()
+    opc = raw_input()
 
     if opc == "f":
         print('Introduce la fila de la que extraes el vector')
@@ -70,11 +71,11 @@ for i in range(2):
             a.appendm(m[:, col])
 
 print('Obteniendo el angulo de los vectores seleccionados')
-map(int, a)
+
 escalar = np.dot(a[0], a[1])
 norma1=np.linalg.norm(a[0])
 norma2=np.linalg.norm(a[1])
-angulo=escalar/(norma1*norma2)
+angulo=(np.arccos(escalar/(norma1*norma2)))*180/mat.pi
 
 print('Coseno del angulo: ', angulo)
 

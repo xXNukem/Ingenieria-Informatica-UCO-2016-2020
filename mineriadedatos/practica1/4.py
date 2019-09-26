@@ -34,7 +34,6 @@ a=[]
 for i in range(filas):
     for j in range(columnas):
         a.append(m[i][j])
-print(a)
 moda=stats.mode(a)
-print('Resultado: ', moda[0])
+print('Resultado: ', moda[0][0])
 

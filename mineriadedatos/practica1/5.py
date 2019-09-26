@@ -7,13 +7,25 @@ que el cálculo de la inversa es correcto"""
 
 import numpy as np
 
-fichero=open('fichero.txt')
-fichero.read()
+m=np.loadtxt("fichero.txt", delimiter=' ')
 
-x = []
-for line in fichero.readlines():
-    y = [v for v in line.split()]
-    if y != []:
-        x.append(int(y[0]));
+print('Matriz leida del fichero: ')
+print(m)
 
-print (x)
+inv=np.linalg.inv(m)
+
+print('Matriz inversa ')
+
+print(inv)
+
+print('Producto matricial')
+
+prod=np.matmul(m,inv)
+print(prod)
+
+identidad=np.identity(np.size(m,1))
+if np.array_equal(identidad,prod)==True:
+    print('Es correcto')
+else:
+    print('No es correcto')
+

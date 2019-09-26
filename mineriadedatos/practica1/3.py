@@ -59,6 +59,8 @@ for i in range(columnas):
 if filas==columnas:
     print('Calculando determinante de la matriz')
     determinante = np.linalg.det(m)
-    print('Resultado: ', determinante)
+    print('Resultado: ', round(determinante))
 else:
     print('Para calcular el determinante el numero de filas y columnas deben ser iguales')
+
+print('Rango de la matriz: '+str(np.linalg.matrix_rank(m)))
