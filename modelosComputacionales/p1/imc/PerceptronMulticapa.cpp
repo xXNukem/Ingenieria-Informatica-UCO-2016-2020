@@ -83,11 +83,41 @@ PerceptronMulticapa::~PerceptronMulticapa() {
 // Liberar memoria para las estructuras de datos
 void PerceptronMulticapa::liberarMemoria() {
 
+	for(int i=0;i<nNumCapas;i++)//Recorremos todas las capas liberando memoria en todos los arrays que tienen sus estructuras de datos
+	{
+		for(int j=0;j<pCapas[i].nNumNeuronas;j++)
+		{
+			if(i!=0)//La primera capa no se toca porque no tiene nada
+			{
+				free(pCapas[i].pNeuronas[j].w);
+				free(pCapas[i].pNeuronas[j].deltaW);
+				free(pCapas[i].pNeuronas[j].ultimoDeltaW);
+				free(pCapas[i].pNeuronas[j].wCopia);
+			}
+		}
+		free(pCapas[i].pNeuronas);
+	}
+
 }
 
 // ------------------------------
 // Rellenar todos los pesos (w) aleatoriamente entre -1 y 1
 void PerceptronMulticapa::pesosAleatorios() {
+
+	for(int i=1;i<nNumCapas;i++)
+	{
+		for(int j=0;j<pCapas[i].nNumNeuronas;j++)
+		{
+			for(int k=0;k<pCapas[i-1].nNumNeuronas+1;k++)
+			{
+				double RANDOM=(double)rand()/RAND_MAX;//Generacion y asignacion de los pesos aleatorios
+				double numero=(-1.0)+RANDOM*((1.0)-(-1.0));
+
+				pCapas[i].pNeuronas[j].w[k]=numero;
+				pCapas[i].pNeuronas[j].deltaW[k]=numero;
+			}
+		}
+	}
 
 }
 
@@ -108,12 +138,31 @@ void PerceptronMulticapa::recogerSalidas(double* output)
 // Hacer una copia de todos los pesos (copiar w en copiaW)
 void PerceptronMulticapa::copiarPesos() {
 
+	for(int i=1;i<nNumCapas;i++)
+		{
+			for(int j=0;j<pCapas[i].nNumNeuronas;j++)
+			{
+				for(int k=0;k<pCapas[i-1].nNumNeuronas+1;k++)
+				{
+					pCapas[i].pNeuronas[j].wCopia[k]=pCapas[i].pNeuronas[j].w[k];
+				}
+			}
+		}
 }
 
 // ------------------------------
 // Restaurar una copia de todos los pesos (copiar copiaW en w)
 void PerceptronMulticapa::restaurarPesos() {
-
+for(int i=1;i<nNumCapas;i++)
+		{
+			for(int j=0;j<pCapas[i].nNumNeuronas;j++)
+			{
+				for(int k=0;k<pCapas[i-1].nNumNeuronas+1;k++)
+				{
+					pCapas[i].pNeuronas[j].w[k]=pCapas[i].pNeuronas[j].wCopia[k];
+				}
+			}
+		}
 }
 
 // ------------------------------
