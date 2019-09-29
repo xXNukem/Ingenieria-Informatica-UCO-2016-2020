@@ -125,13 +125,23 @@ void PerceptronMulticapa::pesosAleatorios() {
 // Alimentar las neuronas de entrada de la red con un patrón pasado como argumento
 void PerceptronMulticapa::alimentarEntradas(double* input) {
 
+    for(int i=0; i<pCapas[0].nNumNeuronas; i++)
+    {
+        //Tenemos que tener en cuenta que solo es la capa de entrada
+        pCapas[0].pNeuronas[i].x = input[i];
+        pCapas[0].pNeuronas[i].dX = input[i];
+    }
 }
 
 // ------------------------------
 // Recoger los valores predichos por la red (out de la capa de salida) y almacenarlos en el vector pasado como argumento
 void PerceptronMulticapa::recogerSalidas(double* output)
 {
-
+    //La salida "x" se guarda en el vector output
+    for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
+    {
+        output[i] = pCapas[nNumCapas-1].pNeuronas[i].x;
+    }
 }
 
 // ------------------------------
@@ -153,7 +163,8 @@ void PerceptronMulticapa::copiarPesos() {
 // ------------------------------
 // Restaurar una copia de todos los pesos (copiar copiaW en w)
 void PerceptronMulticapa::restaurarPesos() {
-for(int i=1;i<nNumCapas;i++)
+
+        for(int i=1;i<nNumCapas;i++)
 		{
 			for(int j=0;j<pCapas[i].nNumNeuronas;j++)
 			{
@@ -174,6 +185,22 @@ void PerceptronMulticapa::propagarEntradas() {
 // ------------------------------
 // Calcular el error de salida (MSE) del out de la capa de salida con respecto a un vector objetivo y devolverlo
 double PerceptronMulticapa::calcularErrorSalida(double* target) {
+    double aux = 0.0;
+    for(int i=1; i<nNumCapas; i++){
+        for(int j=0; j<pCapas[i].nNumNeuronas; j++)
+        {
+
+            for(int k=1; k<pCapas[i-1].nNumNeuronas+1; k++)
+            {
+                aux += pCapas[i].pNeuronas[j].w[k] * pCapas[i-1].pNeuronas[k-1].x;
+            }
+
+                aux += pCapas[i].pNeuronas[j].w[0];
+
+            pCapas[i].pNeuronas[j].x = (1/(1 + exp((-1)*aux)));
+            aux = 0.0;
+        }
+    }
 	return -1;
 }
 
@@ -181,6 +208,27 @@ double PerceptronMulticapa::calcularErrorSalida(double* target) {
 // ------------------------------
 // Retropropagar el error de salida con respecto a un vector pasado como argumento, desde la última capa hasta la primera
 void PerceptronMulticapa::retropropagarError(double* objetivo) {
+
+    //Primero se hace para cada neurona de salida
+
+    for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++){
+        pCapas[nNumCapas-1].pNeuronas[i].dX =  (-1)*(objetivo[i] - pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[i].x);
+    }
+
+    double sumatorio = 0.0;
+
+    //Despues aplicamos el procedimiento al resto de capas
+    for(int i=nNumCapas-2; i>=0; i--){//Recorremos las capas
+        for(int j=0; j<pCapas[i].nNumNeuronas; j++){//Recorremos las neuronas de cada capa
+            //Calculamos el sumatorio de las entradas y la derivada de la capa siguiente
+            for(int k=0; k<pCapas[i+1].nNumNeuronas; k++){//pasamos por las neuronas de la capa h+1 Calculando el sumatorio de las entradas
+                                                            //Calculamos la derivada de la capa siguiente ya de paso
+                sumatorio += pCapas[i+1].pNeuronas[k].w[j+1] * pCapas[i+1].pNeuronas[k].dX;
+            }
+
+            pCapas[i].pNeuronas[j].dX = sumatorio * pCapas[i].pNeuronas[j].x * (1 -pCapas[i].pNeuronas[j].x);
+        }
+    }
 	
 }
 
@@ -188,25 +236,75 @@ void PerceptronMulticapa::retropropagarError(double* objetivo) {
 // Acumular los cambios producidos por un patrón en deltaW
 void PerceptronMulticapa::acumularCambio() {
 
+    //Recorremos las capas y las neuronas de la misma forma que siempre
+    for(int i=1; i<nNumCapas; i++){
+        for(int j=0; j<pCapas[i].nNumNeuronas; j++){
+            for(int k=1; k<pCapas[i-1].nNumNeuronas+1; k++){
+                pCapas[i].pNeuronas[j].deltaW[k] +=  pCapas[i].pNeuronas[j].dX * pCapas[i-1].pNeuronas[k-1].x;
+            }
+
+            pCapas[i].pNeuronas[j].deltaW[0] += pCapas[i].pNeuronas[j].dX; //Sesgo
+        }
+    }
+
 }
 
 // ------------------------------
 // Actualizar los pesos de la red, desde la primera capa hasta la última
 void PerceptronMulticapa::ajustarPesos() {
+    for(int i=1; i<nNumCapas; i++){
+        for(int j=0; j<pCapas[i].nNumNeuronas; j++){
+
+            for(int k=1; k<pCapas[i-1].nNumNeuronas+1; k++){
+                pCapas[i].pNeuronas[j].w[k] += (-1)*dEta * pCapas[i].pNeuronas[j].deltaW[k] - dMu * (dEta*pCapas[i].pNeuronas[j].ultimoDeltaW[k]);
+            }
+
+            pCapas[i].pNeuronas[j].w[0] += (-1)*dEta * pCapas[i].pNeuronas[j].deltaW[0] - dMu * (dEta*pCapas[i].pNeuronas[j].ultimoDeltaW[0]);//Sesgo
+        }
+    }
 
 }
 
 // ------------------------------
 // Imprimir la red, es decir, todas las matrices de pesos
 void PerceptronMulticapa::imprimirRed() {
+    cout << "Entradas de las neuronas" << endl << endl;
 
+    for(int i=1; i<nNumCapas; i++)
+    {
+        cout << "Capa: " << i << endl;
+        for(int j=0; j<pCapas[i].nNumNeuronas; j++)
+        {
+            for(int k=0; k<pCapas[i-1].nNumNeuronas; k++)
+            {
+                cout << pCapas[i].pNeuronas[j].w[k] << " ";
+            }
+            cout << endl;
+
+        }
+    }
 }
 
 // ------------------------------
 // Simular la red: propagar las entradas hacia delante, retropropagar el error y ajustar los pesos
 // entrada es el vector de entradas del patrón y objetivo es el vector de salidas deseadas del patrón
 void PerceptronMulticapa::simularRedOnline(double* entrada, double* objetivo) {
-
+    for(int i=1; i<nNumCapas; i++)
+    {
+        for(int j=0; j<pCapas[i].nNumNeuronas; j++)
+        {
+            for(int k=0; k<pCapas[i-1].nNumNeuronas; k++)
+            {
+                pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
+                pCapas[i].pNeuronas[j].deltaW[k] = 0.0;
+            }
+        }
+    }
+    alimentarEntradas(entrada);
+    propagarEntradas();
+    retropropagarError(objetivo);
+    acumularCambio();
+    ajustarPesos();
 }
 
 // ------------------------------
