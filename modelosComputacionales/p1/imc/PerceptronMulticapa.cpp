@@ -179,7 +179,33 @@ void PerceptronMulticapa::restaurarPesos() {
 // ------------------------------
 // Calcular y propagar las salidas de las neuronas, desde la primera capa hasta la última
 void PerceptronMulticapa::propagarEntradas() {
-	
+	double c=0.0;
+	for (int i = 1; i <nNumCapas; i++)
+	{
+
+		for (int j = 0; j < pCapas[i].nNumNeuronas; j++)
+		{
+
+			//pCapas[i-1].nNumNeuronas+1 , simboliza capa anterior y su sesgo que es el +1
+			//Este bucle recorre la capa anterior a i, i-1
+			for (int k = 1; k < pCapas[i-1].nNumNeuronas+1; k++)
+			{
+				//cout<<"Neurona capa anterior: "<<pCapas[i-1].nNumNeuronas<<"\n";
+				// [k-1].x , porque de la capa anterior tenemos que empezar por la neurona 0
+				// pNeuronas[j].w[k] , porque en la capa i la neurona j su peso w[0] es el sesgo y no se tiene en cuenta
+
+				c += pCapas[i-1].pNeuronas[k-1].x*pCapas[i].pNeuronas[j].w[k];
+
+			}
+			//SESGO
+			c += pCapas[i].pNeuronas[j].w[0];
+
+			pCapas[i].pNeuronas[j].x = (1/(1 + exp((-1)*c)));
+			c = 0.0;
+		}
+
+
+	}
 }
 
 // ------------------------------
@@ -268,6 +294,7 @@ void PerceptronMulticapa::ajustarPesos() {
 // ------------------------------
 // Imprimir la red, es decir, todas las matrices de pesos
 void PerceptronMulticapa::imprimirRed() {
+
     cout << "Entradas de las neuronas" << endl << endl;
 
     for(int i=1; i<nNumCapas; i++)
@@ -283,6 +310,7 @@ void PerceptronMulticapa::imprimirRed() {
 
         }
     }
+
 }
 
 // ------------------------------
@@ -311,56 +339,59 @@ void PerceptronMulticapa::simularRedOnline(double* entrada, double* objetivo) {
 // Leer una matriz de datos a partir de un nombre de fichero y devolverla
 Datos* PerceptronMulticapa::leerDatos(const char *archivo) {
 
-	Datos *datosAux;
-	int entradas,salidas,patrones;
+	cout<<"Fichero: "<<archivo<<endl;
+	Datos *data = new Datos();
+	std::ifstream leer;
+	leer.open(archivo);
 
-		ifstream leer;
-		leer.open(archivo);
+	leer >> data->nNumEntradas;
 
-	leer >> entradas;
-	leer >> salidas;
-	leer >> patrones;
+	leer >> data->nNumSalidas;
 
-		datosAux->nNumEntradas=entradas;
-		datosAux->nNumSalidas=salidas;
-		datosAux->nNumPatrones=patrones;
+	leer >> data->nNumPatrones;
+	std::cout<<"Entradas:" << data->nNumEntradas<< std::endl;
+	std::cout<<"Salidas:" << data->nNumSalidas<< std::endl;
+	std::cout<<"Patrones:" << data->nNumPatrones<< std::endl;
+	data->entradas = (double **)calloc (data->nNumPatrones,sizeof(double *));
 
-	//Reservando memoria para la matriz de entrada
+	for (int i=0;i<data->nNumPatrones;i++)//Entradas
+		data->entradas[i] = (double *) calloc (data->nNumEntradas,sizeof(double));
 
-	//Filas	
-	datosAux->entradas=(double** )malloc(patrones*sizeof(double*));
-	//Columnas
-	for(int i=0;patrones;i++)
-	datosAux->entradas[i]=(double* )malloc(entradas*sizeof(double));
+	data->salidas = (double **)calloc (data->nNumPatrones,sizeof(double *));
 
-	//reservando memoria para la matriz de salida
-	
-	//Filas
-	datosAux->salidas=(double** )malloc(patrones*sizeof(double*));
-	//Columnas
-	for(int i=0;datosAux->nNumPatrones;i++)
-	datosAux->salidas[i]=(double* )malloc(salidas*sizeof(double));
+	for (int i=0;i<data->nNumPatrones;i++)//Salidas
+		data->salidas[i] = (double *) calloc (data->nNumSalidas,sizeof(double));
+	//Rellenamos matriz de entrada y salida de datos.
+	int i = 0;
+	int j = 0;
 
-	//Metiendo los datos en la matriz
-	int i=0,j=0;
-	while(!leer.eof())
+	//int linea=0;
+	while (!leer.eof())
 	{
-		for(int x=0;x<entradas;x++)
+		//std::cout<<"Linea("<<linea<<"): -- [ ";
+		for(int x = 0; x < data->nNumEntradas; x++)
 		{
-			leer>>datosAux->entradas[i][x];
+			leer >> data->entradas[i][x];
+			//std::cout<<"("<<data->entradas[i][x]<<") ";
 		}
+		//std::cout<<"] <---> [";
+		for(int y = 0; y < data->nNumSalidas; y++)
+		{
+			leer >> data->salidas[j][y];
+			//std::cout<<"("<<data->salidas[j][y]<<") ";
 
-		for(int y=0;y<salidas;y++)
-		{
-			leer>>datosAux->salidas[j][y];
 		}
+		//std::cout<<"]\n";
+
 		i++;
 		j++;
+		//linea++;
 	}
-
 	leer.close();
 
-	return datosAux;
+
+
+	return data;
 }
 
 // ------------------------------
@@ -375,7 +406,18 @@ void PerceptronMulticapa::entrenarOnline(Datos* pDatosTrain) {
 // ------------------------------
 // Probar la red con un conjunto de datos y devolver el error MSE cometido
 double PerceptronMulticapa::test(Datos* pDatosTest) {
-	return -1.0;
+
+	double mediaTestError = 0;
+	for(int i=0; i<pDatosTest->nNumPatrones; i++){
+		// Cargamos las entradas y propagamos el valor
+		alimentarEntradas(pDatosTest->entradas[i]);
+		propagarEntradas();
+		mediaTestError += calcularErrorSalida(pDatosTest->salidas[i]);
+	}
+	mediaTestError /= pDatosTest->nNumPatrones;
+
+	return mediaTestError;
+
 }
 
 // OPCIONAL - KAGGLE
@@ -423,9 +465,9 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 	double validationError;
 
 	// Generar datos de validación
-	if(dValidacion > 0 && dValidacion < 1){
+	/*if(dValidacion > 0 && dValidacion < 1){
 		// .......
-	}
+	}*/
 
 
 	// Aprendizaje del algoritmo
@@ -456,13 +498,13 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 		// Por lo demás, la forma en que se debe comprobar la condición de parada es similar
 		// a la que se ha aplicado más arriba para el error de entrenamiento
 
-		cout << "Iteración " << countTrain << "\t Error de entrenamiento: " << trainError << "\t Error de validación: " << validationError << endl;
+		//cout << "Iteración " << countTrain << "\t Error de entrenamiento: " << trainError << "\t Error de validación: " << validationError << endl;
 
 	} while ( countTrain<maxiter );
 
 	cout << "PESOS DE LA RED" << endl;
 	cout << "===============" << endl;
-	imprimirRed();
+	//*imprimirRed();
 
 	cout << "Salida Esperada Vs Salida Obtenida (test)" << endl;
 	cout << "=========================================" << endl;
