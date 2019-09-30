@@ -1,5 +1,5 @@
 function v=letranumero(texto)
-alfabeto='abcdefghijklmnñopqrstuvwxyz';
+alfabeto='abcdefghijklmnnopqrstuvwxyz';
 texto=lower(texto);
 alfabeto(15)=char(241); %pasando la ñ
 tam=size(texto)
