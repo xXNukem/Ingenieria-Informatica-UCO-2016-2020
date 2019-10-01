@@ -188,6 +188,26 @@ int main(int argc, char **argv) {
         
         // Calcular medias y desviaciones típicas de entrenamiento y test
 
+        //Media
+        for(int i=0; i<5; i++)
+        {
+            mediaErrorTrain += erroresTrain[i];
+            mediaErrorTest += erroresTest[i];
+        }
+            mediaErrorTest /= 5;
+            mediaErrorTrain /= 5;
+
+        //Desviacion tipica
+        double sumatorioTest = 0.0, sumatorioTrain=0.0;
+
+        for(int i=0; i<5; i++)
+        {
+            sumatorioTest += pow(erroresTest[i] - mediaErrorTest,2);
+            sumatorioTrain += pow(erroresTrain[i] - mediaErrorTrain, 2);
+        }
+            desviacionTipicaErrorTest = sqrt(0.25*sumatorioTest);
+            desviacionTipicaErrorTrain = sqrt(0.25*sumatorioTrain);
+
         cout << "INFORME FINAL" << endl;
         cout << "*************" << endl;
         cout << "Error de entrenamiento (Media +- DT): " << mediaErrorTrain << " +- " << desviacionTipicaErrorTrain << endl;
