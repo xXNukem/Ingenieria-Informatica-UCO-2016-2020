@@ -363,6 +363,8 @@ Datos* PerceptronMulticapa::leerDatos(const char *archivo) {
 	std::cout<<"Entradas:" << data->nNumEntradas<< std::endl;
 	std::cout<<"Salidas:" << data->nNumSalidas<< std::endl;
 	std::cout<<"Patrones:" << data->nNumPatrones<< std::endl;
+
+
 	data->entradas = (double **)calloc (data->nNumPatrones,sizeof(double *));
 
 	for (int i=0;i<data->nNumPatrones;i++)//Entradas
@@ -479,7 +481,14 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 	double validationError;
 
 	// Generar datos de validación
-	if(dValidacion > 0 && dValidacion < 1){
+	int numDatosVal=pDatosTrain->nNumPatrones*dValidacion;
+	//cout<<"numDatosVal:"<<numDatosVal<<endl;
+	if(dValidacion > 0 && dValidacion < 1)
+	{
+		//Reservacion de memoria para los datos de test
+
+		
+
 
 	}
 
