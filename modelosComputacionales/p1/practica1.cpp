@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
 
 
         // Semilla de los números aleatorios
-        int semillas[] = {100,200,300,400,500};
+        int semillas[] = {1,2,3,4,5};
         double *erroresTest = new double[5];
         double *erroresTrain = new double[5];
         double mejorErrorTest = 1.0;

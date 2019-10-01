@@ -280,6 +280,8 @@ void PerceptronMulticapa::acumularCambio() {
 // Actualizar los pesos de la red, desde la primera capa hasta la última
 void PerceptronMulticapa::ajustarPesos() {
 
+double deltaWaux,ultimoDeltaWaux;
+
     for(int i=1; i<nNumCapas; i++)
     {
         for(int j=0; j<pCapas[i].nNumNeuronas; j++)
@@ -287,9 +289,13 @@ void PerceptronMulticapa::ajustarPesos() {
 
             for(int k=0; k<pCapas[i-1].nNumNeuronas+1; k++)
             {	
-            	dEta=pow(dDecremento,(nNumCapas-1-i)*dEta);//Sacamos el factor de decremento
+            	deltaWaux = pCapas[i].pNeuronas[j].deltaW[k];
 
-                pCapas[i].pNeuronas[j].w[k] += (-1)*dEta * pCapas[i].pNeuronas[j].deltaW[k] - dMu * (dEta*pCapas[i].pNeuronas[j].ultimoDeltaW[k]);
+				ultimoDeltaWaux = pCapas[i].pNeuronas[j].ultimoDeltaW[k];
+				dEta=pow(dDecremento,(nNumCapas-1-i)*dEta);
+				pCapas[i].pNeuronas[j].w[k] -= dEta * deltaWaux + dMu * dEta * ultimoDeltaWaux;
+
+				pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
             }
 
         }
@@ -473,9 +479,10 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 
 	// Inicialización de pesos
 	pesosAleatorios();
-
+	double minValidationError=0;
 	double minTrainError = 0;
 	int numSinMejorar;
+	int numSinMejorarValidationError;
 	double testError = 0;
 
 	double validationError;
@@ -486,10 +493,51 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 	if(dValidacion > 0 && dValidacion < 1)
 	{
 		//Reservacion de memoria para los datos de test
+		//Obtenemos el vector aleatorio asegurandonos de que los datos no se repiten para el test
+		//Este vector tiene patrones que se utilizaran para el conjunto de validacion en caso de que sea el mismo conjunto de test
+		int * vector = vectorAleatoriosEnterosSinRepeticion(0,pDatosTrain->nNumPatrones,numDatosVal);
 
+		//Creamos los datos de validacion
+		Datos * valData = new Datos();
+
+		//Este conjunto tendra el mismo numero de entradas y de salidas que el conjunto de train, pero su numero de patrones no será el mismo
+		valData->nNumEntradas = pDatosTrain->nNumEntradas;
+		valData->nNumSalidas = pDatosTrain->nNumSalidas;
+		valData->nNumPatrones = numDatosVal;
+
+		//Se reserva memoria para la matriz de entradas
+		valData->entradas = (double **)calloc (valData->nNumPatrones,sizeof(double *));
+
+		for (int i=0;i<valData->nNumPatrones;i++)//Entradas
+			valData->entradas[i] = (double *) calloc (valData->nNumEntradas,sizeof(double));
+
+		//Se reserva memoria para la matriz de salidas
+		valData->salidas = (double **)calloc (valData->nNumPatrones,sizeof(double *));
+	
+		for (int i=0;i<valData->nNumPatrones;i++)//Salidas
+			valData->salidas[i] = (double *) calloc (valData->nNumSalidas,sizeof(double));
+
+		//Rellenamos las matrices con los datos del conjunto de validacion (El vector ese que se ha sacado antes)
+		for(int i = 0; i < valData->nNumPatrones; i++)
+		{
+			
+			//Entradas
+			for(int X = 0; X < valData->nNumEntradas; X++)
+			{
+				valData->entradas[i][X] = pDatosTrain->entradas[vector[i]][X];
+			}
+			
+			//Salidas
+			for(int Y = 0; Y < valData->nNumSalidas; Y++)
+			{
+				valData->salidas[i][Y] = pDatosTrain->salidas[vector[i]][Y];
+			}
+			
+			
+		}
+		validationError =test(valData);
+		getchar(); 
 		
-
-
 	}
 
 
@@ -499,15 +547,29 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 
 		entrenarOnline(pDatosTrain);
 		double trainError = test(pDatosTrain);
-		if(countTrain==0 || trainError < minTrainError){
+		if(countTrain==0 || trainError < minTrainError || validationError < minValidationError ){
 			minTrainError = trainError;
+			validationError=minValidationError;
 			copiarPesos();
 			numSinMejorar = 0;
+			numSinMejorarValidationError=0;
 		}
-		else if( (trainError-minTrainError) < 0.00001)
-			numSinMejorar = 0;
+		if((validationError-minValidationError)<0.00001)
+		{
+			numSinMejorarValidationError=0;
+		}
 		else
+		{
+			numSinMejorarValidationError++;
+		}
+		if( (trainError-minTrainError) < 0.00001)
+		{
+			numSinMejorar = 0;
+		}
+		else
+		{
 			numSinMejorar++;
+		}
 
 		if(numSinMejorar==50){
 			cout << "Salida porque no mejora el entrenamiento!!"<< endl;
