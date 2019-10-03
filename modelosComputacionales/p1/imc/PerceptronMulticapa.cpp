@@ -527,15 +527,14 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 		for(int i = 0; i < nNumVal; i++)
 		{
 			
-			for(int X = 0; X < valData->nNumEntradas; X++)
+			for(int j = 0; j < valData->nNumEntradas; j++)
 			{
-	
-				valData->entradas[i][X] = pDatosTrain->entradas[vector[i]][X];
+				valData->entradas[i][j] = pDatosTrain->entradas[vector[i]][j];
 			}
 
-			for(int Y = 0; Y < valData->nNumSalidas; Y++)
+			for(int k = 0; k < valData->nNumSalidas; k++)
 			{
-				valData->salidas[i][Y] = pDatosTrain->salidas[vector[i]][Y];
+				valData->salidas[i][k] = pDatosTrain->salidas[vector[i]][k];
 			}
 		}
 		
