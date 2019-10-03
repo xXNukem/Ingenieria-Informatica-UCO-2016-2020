@@ -603,8 +603,8 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 		
 		leer<<trainError<<" "<<validationError<<" "<<testError<<endl;
 
-
-		//cout << "Iteración " << countTrain << "\t Error de entrenamiento: " << trainError << "\t Error de validación: " << validationError << endl;
+		//Iteracion - Error de entrenamiento - Eror de validacion - Error de Test
+		cout << countTrain << "\t"<< trainError <<"\t"<< validationError <<"\t"<<testError<< endl;
 
 	} while (countTrain<maxiter);
 	leer.close();
