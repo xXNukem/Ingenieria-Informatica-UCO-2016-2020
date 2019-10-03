@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
 
     // a: opción que requiere un argumento
     // a:: el argumento requerido es opcional
-    while ((c = getopt(argc, argv, "t:i::l::h::e::m::v::d::")) != -1)
+    while ((c = getopt(argc, argv, "t:i:l:h:e:m:v:d:T")) != -1)
     {
         // Se han añadido los parámetros necesarios para usar el modo opcional de predicción (kaggle).
         // Añadir el resto de parámetros que sean necesarios para la parte básica de las prácticas.
