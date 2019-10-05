@@ -22,80 +22,75 @@ using namespace std;
 
 int main(int argc, char **argv) {
     // Procesar los argumentos de la línea de comandos
-    bool Tflag = 0, wflag = 0, pflag = 0, tflag=0 ;
-    char *Tvalue = NULL, *wvalue = NULL, *tvalue=NULL;
+    bool Tflag = 0,tflag = 0, wflag = 0, pflag = 0;
+    char *Tvalue = NULL, *wvalue = NULL,*tvalue = NULL;
     int c;
-
-    //valores iniciales
-
-    float dEta=0.10;
-    float dMu=0.90;
-    float dValidacion=0.0;
-    float dDecremento=1;
-    int numIteraciones=1000;
-    int numCapasOcultas=1;
-    int numNeuronasCapasOcultas=5;
-
+    //Valores Con el valor predeterminado
+        float dEta = 0.10;
+        float dMu = 0.90;
+        float dValidacion = 0.0;
+        float dDecremento = 1;
+        int numIteraciones=1000;
+        int numcapasOcultas=1;
+        int numneucaOcultas=5;
+    //
     opterr = 0;
 
     // a: opción que requiere un argumento
     // a:: el argumento requerido es opcional
-    while ((c = getopt(argc, argv, "t:i:l:h:e:m:v:d:T")) != -1)
+    while ((c = getopt(argc, argv, "t:i:l:h:e:m:v:d:T:")) != -1)
     {
         // Se han añadido los parámetros necesarios para usar el modo opcional de predicción (kaggle).
         // Añadir el resto de parámetros que sean necesarios para la parte básica de las prácticas.
         switch(c){
-            case 't': 
-            //fichero con datos de entrenamiento
-            tflag=true;
-            tvalue=optarg;
-       
-            break;
-
+            case 't':
+            //fichero train
+                tflag = true;
+                tvalue = optarg;
+                break;
             case 'i':
-            //numero de interaciones del bucle externo, sino se especifica vale 1000
-            numIteraciones=atoi(optarg);
-
-            break;
-
+            //numero de iteraciones
+                numIteraciones = atoi(optarg);
+                break;
             case 'l':
-            //capas ocultas de la red, si no se especifica utilizamos 1
-            numCapasOcultas=atoi(optarg);
-            break;
-
+            //numero de capas ocultas
+                numcapasOcultas = atoi(optarg);
+                if(numcapasOcultas < 1)
+                {
+                    cout<<" El numero de capas ocultas no puede ser inferior a 1.\n";
+                    exit(-1);
+                }
+                break;
             case 'h':
-            //neuronas de las capas ocultas, si no se especifica utilizaar 5
-            numNeuronasCapasOcultas=atoi(optarg);
-            break;
-
+            //neuronas en capa oculta
+                numneucaOcultas = atoi(optarg);
+                if(numneucaOcultas < 1)
+                {
+                    cout<<" El numero de nodos en capa oculta no puede ser inferior a 1.\n";
+                    exit(-1);
+                }
+                break;
             case 'e':
-            ////valor de eta, sino se especifica utilizar 0.1
-            dEta=atof(optarg);
-            break;
-
+            //valor parametro eta
+                dEta = atof(optarg);
+                break;
             case 'm':
-            // valor de mu, si no se especifica utilizar 0.9
-            dMu=atof(optarg);
-            break;
-
+            //valor parametro mu
+                dMu = atof(optarg);;
+                break;
             case 'v':
-            //ratio de patrones de entrenamiento a utilizar como patrones de validacion
-            //si no se especifica utilizar 0.0
-            dValidacion=atof(optarg);
-
-            break;
-
+            //conjunto de validacion a utilizar
+                dValidacion = atof(optarg);;
+                break;
+                
             case 'd':
-            //valor por defecto del decremento, por defecto utilizar 1
-            dDecremento=atoi(optarg);
-            break;
-
-
-        //Parametros opcionales de prediccion
+            //factor de decremento
+                dDecremento = atof(optarg);;
+                break; 
+            //Conjunto de test  
             case 'T':
                 Tflag = true;
                 Tvalue = optarg;
-
                 break;
             case 'w':
                 wflag = true;
@@ -105,7 +100,7 @@ int main(int argc, char **argv) {
                 pflag = true;
                 break;
             case '?':
-                if (optopt == 'T' || optopt == 'w' || optopt == 'p')
+                if (optopt == 'T' || optopt == 'w' || optopt == 'p' || optopt == 't' || optopt == 'i')
                     fprintf (stderr, "La opción -%c requiere un argumento.\n", optopt);
                 else if (isprint (optopt))
                     fprintf (stderr, "Opción desconocida `-%c'.\n", optopt);
@@ -118,47 +113,55 @@ int main(int argc, char **argv) {
                 return EXIT_FAILURE;
         }
     }
-
     if (!pflag) {
-                if(tflag==false) //controlamos que se salga si no se ha introducido el fichero obligatorio
-                {
-                    cout<< " Es olbigatorio el paso de un fichero en el argumento t"<<endl;
-                    exit(0);
-                }
         ////////////////////////////////////////
         // MODO DE ENTRENAMIENTO Y EVALUACIÓN //
         ///////////////////////////////////////
 
+        if(tflag == false)
+        {
+            exit(-1);
+        } 
+    
+        if(Tflag==false){
+            Tvalue=tvalue;
+        }
         // Objeto perceptrón multicapa
-    	PerceptronMulticapa mlp;
- 
+        PerceptronMulticapa mlp;
         // Parámetros del mlp. Por ejemplo, mlp.dEta = valorQueSea;
-        mlp.dEta=dEta;
-        mlp.dMu=dMu;
-        mlp.dValidacion=dValidacion;
-        mlp.dDecremento=dDecremento;
-        int iteraciones=numIteraciones;
-        
+        mlp.dEta = dEta;
+        mlp.dMu = dMu;
+        mlp.dValidacion = dValidacion;
+        mlp.dDecremento = dDecremento;
         // Lectura de datos de entrenamiento y test: llamar a mlp.leerDatos(...)
         Datos *pDatosTrain;
         Datos *pDatosTest;
-        if(Tflag==false)
+    
+        pDatosTrain = mlp.leerDatos(tvalue);
+        pDatosTest = mlp.leerDatos(Tvalue);
+   
+        if(pDatosTrain == NULL || pDatosTest == NULL)
         {
-            Tvalue=tvalue;
+            cerr << "El conjunto de datos de test no es válido. No se puede continuar." << endl;
+            exit(-1);
         }
-        pDatosTrain=mlp.leerDatos(tvalue);
-        pDatosTest=mlp.leerDatos(Tvalue);
-
         // Inicializar vector topología
-        int *topologia = new int[numCapasOcultas+2]; //sumamos 2 para añadir la entrada y la salida
+        //La topologia es el modelo de capas que la red tendra,
+        //por ejemplo si tiene una sola capa oculta 
+        //por defecto de 5 neuronas, tendriamos:
+        //          'Entrada' - topologia[0] = 'Tantas entradas como existan'
+        //          'Ocultas' - topologia[1] = '5'
+        //          'Salida'  - topologia[2] = 'Tantas salidas como existan'
+     
+        int *topologia = new int[numcapasOcultas+2];//2 porque las capas de entrada+salida=2
         topologia[0] = pDatosTrain->nNumEntradas;
-        for(int i=1; i<(numCapasOcultas+2-1); i++)//Recorremos las capas ocultas
-        	topologia[i] = numNeuronasCapasOcultas;
-        topologia[numCapasOcultas+2-1] = pDatosTrain->nNumSalidas;
-
+        for(int i=1; i<(numcapasOcultas+1); i++)
+            topologia[i] = numneucaOcultas;
+        topologia[numcapasOcultas+1] = pDatosTrain->nNumSalidas;
         // Inicializar red con vector de topología
-        mlp.inicializar(numCapasOcultas+2,topologia);
+        mlp.inicializar(numcapasOcultas+2,topologia);        //------>
 
+       
 
         // Semilla de los números aleatorios
         int semillas[] = {1,2,3,4,5};
@@ -166,12 +169,13 @@ int main(int argc, char **argv) {
         double *erroresTrain = new double[5];
         double mejorErrorTest = 1.0;
         for(int i=0; i<5; i++){
-        	cout << "**********" << endl;
-        	cout << "SEMILLA " << semillas[i] << endl;
-        	cout << "**********" << endl;
-    		srand(semillas[i]);
-    		mlp.ejecutarAlgoritmoOnline(pDatosTrain,pDatosTest,iteraciones,&(erroresTrain[i]),&(erroresTest[i]));
-    		cout << "Finalizamos => Error de test final: " << erroresTest[i] << endl;
+            cout << "**********" << endl;
+            cout << "SEMILLA " << semillas[i] << endl;
+            cout << "**********" << endl;
+            srand(semillas[i]);
+        
+            mlp.ejecutarAlgoritmoOnline(pDatosTrain,pDatosTest,numIteraciones,&(erroresTrain[i]),&(erroresTest[i]));
+            cout << "Finalizamos => Error de test final: " << erroresTest[i] << endl;
 
             // (Opcional - Kaggle) Guardamos los pesos cada vez que encontremos un modelo mejor.
             if(wflag && erroresTest[i] <= mejorErrorTest)
@@ -179,7 +183,7 @@ int main(int argc, char **argv) {
                 mlp.guardarPesos(wvalue);
                 mejorErrorTest = erroresTest[i];
             }
-    	}
+        }
 
         cout << "HEMOS TERMINADO TODAS LAS SEMILLAS" << endl;
 
@@ -188,25 +192,23 @@ int main(int argc, char **argv) {
         
         // Calcular medias y desviaciones típicas de entrenamiento y test
 
-        //Media
-        for(int i=0; i<5; i++)
-        {
-            mediaErrorTrain += erroresTrain[i];
-            mediaErrorTest += erroresTest[i];
-        }
-            mediaErrorTest /= 5;
-            mediaErrorTrain /= 5;
+            for(int i=0; i<5; i++)
+            {
+                mediaErrorTrain += erroresTrain[i];
+                mediaErrorTest += erroresTest[i];
+            }
+                mediaErrorTest /= 5;
+                mediaErrorTrain /= 5;
 
-        //Desviacion tipica
-        double sumatorioTest = 0.0, sumatorioTrain=0.0;
+            //Desviacion tipica
+            double auxTest = 0.0, auxTrain=0.0;
 
-        for(int i=0; i<5; i++)
-        {
-            sumatorioTest += pow(erroresTest[i] - mediaErrorTest,2);
-            sumatorioTrain += pow(erroresTrain[i] - mediaErrorTrain, 2);
-        }
-            desviacionTipicaErrorTest = sqrt(0.25*sumatorioTest);
-            desviacionTipicaErrorTrain = sqrt(0.25*sumatorioTrain);
+            for(int i=0; i<5; i++){
+                auxTest += pow(erroresTest[i] - mediaErrorTest,2);
+                auxTrain += pow(erroresTrain[i] - mediaErrorTrain, 2);
+            }
+                desviacionTipicaErrorTest = sqrt(auxTest);
+                desviacionTipicaErrorTrain = sqrt(auxTrain);
 
         cout << "INFORME FINAL" << endl;
         cout << "*************" << endl;
@@ -214,36 +216,5 @@ int main(int argc, char **argv) {
         cout << "Error de test (Media +- DT):          " << mediaErrorTest << " +- " << desviacionTipicaErrorTest << endl;
         return EXIT_SUCCESS;
     }
-    else {
-
-        /////////////////////////////////
-        // MODO DE PREDICCIÓN (KAGGLE) //
-        ////////////////////////////////
-
-        // Desde aquí hasta el final del fichero no es necesario modificar nada.
-        
-        // Objeto perceptrón multicapa
-        PerceptronMulticapa mlp;
-
-        // Inicializar red con vector de topología
-        if(!wflag || !mlp.cargarPesos(wvalue))
-        {
-            cerr << "Error al cargar los pesos. No se puede continuar." << endl;
-            exit(-1);
-        }
-
-        // Lectura de datos de entrenamiento y test: llamar a mlp.leerDatos(...)
-        Datos *pDatosTest;
-        pDatosTest = mlp.leerDatos(Tvalue);
-        if(pDatosTest == NULL)
-        {
-            cerr << "El conjunto de datos de test no es válido. No se puede continuar." << endl;
-            exit(-1);
-        }
-
-        mlp.predecir(pDatosTest);
-
-        return EXIT_SUCCESS;
     }
-}
 
