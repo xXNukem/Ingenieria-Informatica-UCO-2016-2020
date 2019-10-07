@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
         float dDecremento = 1;
         int numIteraciones=1000;
         int numcapasOcultas=1;
-        int numneucaOcultas=5;
+        int numNeuronasCapaOculta=5;
     //
     opterr = 0;
 
@@ -57,16 +57,16 @@ int main(int argc, char **argv) {
                 numcapasOcultas = atoi(optarg);
                 if(numcapasOcultas < 1)
                 {
-                    cout<<" El numero de capas ocultas no puede ser inferior a 1.\n";
+                    cout<<" El numero de capa oculta tiene que ser mayor que 1.\n";
                     exit(-1);
                 }
                 break;
             case 'h':
             //neuronas en capa oculta
-                numneucaOcultas = atoi(optarg);
-                if(numneucaOcultas < 1)
+                numNeuronasCapaOculta = atoi(optarg);
+                if(numNeuronasCapaOculta < 1)
                 {
-                    cout<<" El numero de nodos en capa oculta no puede ser inferior a 1.\n";
+                    cout<<" El numero de neuronas en capa oculta tiene que ser mayor que 1.\n";
                     exit(-1);
                 }
                 break;
@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
         } 
     
         if(Tflag==false){
-            Tvalue=tvalue;
+            Tvalue=tvalue; //Si no se mete un T le pasamos la t
         }
         // Objeto perceptrón multicapa
         PerceptronMulticapa mlp;
@@ -156,12 +156,10 @@ int main(int argc, char **argv) {
         int *topologia = new int[numcapasOcultas+2];//2 porque las capas de entrada+salida=2
         topologia[0] = pDatosTrain->nNumEntradas;
         for(int i=1; i<(numcapasOcultas+1); i++)
-            topologia[i] = numneucaOcultas;
+            topologia[i] = numNeuronasCapaOculta;
         topologia[numcapasOcultas+1] = pDatosTrain->nNumSalidas;
         // Inicializar red con vector de topología
-        mlp.inicializar(numcapasOcultas+2,topologia);        //------>
-
-       
+        mlp.inicializar(numcapasOcultas+2,topologia);       
 
         // Semilla de los números aleatorios
         int semillas[] = {1,2,3,4,5};

@@ -303,16 +303,12 @@ void PerceptronMulticapa::ajustarPesos() {
 			for(int k=0; k<pCapas[i-1].nNumNeuronas+1; k++)
 			{
 				_deltaW = pCapas[i].pNeuronas[j].deltaW[k];
-
 				_ultimoDeltaW = pCapas[i].pNeuronas[j].ultimoDeltaW[k];
-
 				pCapas[i].pNeuronas[j].w[k] -= etaAux * _deltaW + dMu * etaAux * _ultimoDeltaW;
-
 				pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
 
 			}
 			
-
 		}
 	}
 }
@@ -492,16 +488,18 @@ void PerceptronMulticapa::predecir(Datos* pDatosTest)
 void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * pDatosTest, int maxiter, double *errorTrain, double *errorTest)
 {
 	int countTrain = 0;
-	Datos * valData=new Datos();
+	Datos * valData=new Datos(); //Esctructuras de datos para el conjunto de validacion
+
 	// Inicialización de pesos
 	pesosAleatorios();
 
-	double minTrainError = 0;
 	double minValError = 0;
-	int numSinMejorar;
+	double minTrainError = 0;
+	
 	int numsinMejorarValidationError;
+	int numSinMejorar;
+	
 	double testError = 0;
-
 	double validationError=0.0;
 
 	// Generar datos de validación
@@ -604,7 +602,7 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 		leer<<trainError<<" "<<validationError<<" "<<testError<<endl;
 
 		//Iteracion - Error de entrenamiento - Eror de validacion - Error de Test
-		cout << countTrain << "\t"<< trainError <<"\t"<< validationError <<"\t"<<testError<< endl;
+		//cout << countTrain << "\t"<< trainError <<"\t"<< validationError <<"\t"<<testError<< endl;
 
 	} while (countTrain<maxiter);
 	leer.close();
