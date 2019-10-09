@@ -263,6 +263,7 @@ void PerceptronMulticapa::retropropagarError(double* objetivo) {
 			}
 
 			pCapas[i].pNeuronas[j].dX = sumatorio * pCapas[i].pNeuronas[j].x * (1-pCapas[i].pNeuronas[j].x);
+			//ojo cuidao sumatorio=0;
 		}
 	}
 	
@@ -295,7 +296,6 @@ void PerceptronMulticapa::ajustarPesos() {
 	float etaAux = 0.0;
 	for(int i=1; i<nNumCapas; i++)
 	{
-		
 		for(int j=0; j<pCapas[i].nNumNeuronas; j++)
 		{
 			//eta la hacemos auxiliar porque sino no va el decremento, a saber el motivo
@@ -306,9 +306,7 @@ void PerceptronMulticapa::ajustarPesos() {
 				_ultimoDeltaW = pCapas[i].pNeuronas[j].ultimoDeltaW[k];
 				pCapas[i].pNeuronas[j].w[k] -= etaAux * _deltaW + dMu * etaAux * _ultimoDeltaW;
 				pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
-
 			}
-			
 		}
 	}
 }
@@ -503,7 +501,8 @@ void PerceptronMulticapa::ejecutarAlgoritmoOnline(Datos * pDatosTrain, Datos * p
 	double validationError=0.0;
 
 	// Generar datos de validación
-	if(dValidacion > 0 && dValidacion < 1){
+	if(dValidacion > 0 && dValidacion < 1)
+	{
 		int nNumVal = dValidacion * pDatosTrain->nNumPatrones;
 		int * vector = vectorAleatoriosEnterosSinRepeticion(0,pDatosTrain->nNumPatrones-1,nNumVal);
 		valData->nNumEntradas = pDatosTrain->nNumEntradas;

@@ -196,32 +196,190 @@ void PerceptronMulticapa::restaurarPesos() {
 // Calcular y propagar las salidas de las neuronas, desde la primera capa hasta la última
 void PerceptronMulticapa::propagarEntradas() {
 
+//Hay que cambiar esta funcion para la ultima capa
+double aux = 0.0;
+double sumatorioNet = 0.0;
+double net[pCapas[nNumCapas-1].nNumNeuronas];
+	for(int i=1; i<nNumCapas; i++)
+	{
+		for(int j=0; j<pCapas[i].nNumNeuronas; j++)
+		{
+			for(int k=1; k<pCapas[i-1].nNumNeuronas+1; k++)
+			{
+					aux += pCapas[i].pNeuronas[j].w[k] * pCapas[i-1].pNeuronas[k-1].x;
+			}
+
+				aux += pCapas[i].pNeuronas[j].w[0];//Sesgo
+
+			if(i == nNumCapas-1 && pCapas[nNumCapas-1].tipo == 1)//Consideramos que la ultima capa sea softmax
+			{
+				net[j] = exp(aux);
+				sumatorioNet += exp(aux);
+			}
+			else //Sino es softmax pues la hacemos sigmoide como toda la vida
+			{
+				pCapas[i].pNeuronas[j].x = (1/(1 + exp((-1)*aux)));
+			}
+			aux = 0.0;
+		}
+	}
+
+	//Operaciones para cuando la ultima capa es softmax
+	if(pCapas[nNumCapas-1].tipo == 1){
+		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++){
+			pCapas[nNumCapas-1].pNeuronas[i].x = net[i]/sumatorioNet;
+		}
+	}
+
 }
 
 // ------------------------------
 // Calcular el error de salida del out de la capa de salida con respecto a un vector objetivo y devolverlo
 // funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
 double PerceptronMulticapa::calcularErrorSalida(double* target, bool funcionError) {
-	return 0.0;
+
+double error = 0.0;
+
+	if(funcionError == 0) //Se calcula MSE
+	{
+
+		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
+		{
+			error += pow(target[i] - pCapas[nNumCapas-1].pNeuronas[i].x, 2);
+		}
+		error = error/pCapas[nNumCapas-1].nNumNeuronas;
+	}
+	else //Se calcula entropia cruzada
+	{
+		//Se calcula el error por entropiacruzada
+		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
+		{
+			error += target[i] * log(pCapas[nNumCapas-1].pNeuronas[i].x);
+		}
+	}
+
+	return error;
+
 }
 
 
 // ------------------------------
 // Retropropagar el error de salida con respecto a un vector pasado como argumento, desde la última capa hasta la primera
 // funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
-void PerceptronMulticapa::retropropagarError(double* objetivo, int funcionError) {
+void PerceptronMulticapa::retropropagarError(double* objetivo, bool funcionError) {
+
+	double sumatorio2=0.0;
+	//Si la capa de salida es softmax habra que cambiar las derivadas
+	//Tenemos en cuenta la funcion de error
+	
+	if(pCapas[nNumCapas-1].tipo == 0) //SALIDA TIPO SIGMOIDE
+	{
+		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
+		{
+			if(funcionError == 0)//MSE
+			{
+				pCapas[nNumCapas-1].pNeuronas[i].dX =  (-1)*(objetivo[i] - pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[i].x);
+			}
+			else //ENTROPIA CRUZADA
+			{
+				pCapas[nNumCapas-1].pNeuronas[i].dX =  (-1)*(objetivo[i]/pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[i].x);
+			}
+		}
+	}
+	else //SALIDA TIPO SOFTMAX
+	{
+		for(int j=0; j<pCapas[nNumCapas-1].nNumNeuronas; j++)
+		{
+			for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
+			{
+				if(i==j)
+				{
+					if(funcionError == 0)//ERROR MSE
+					{
+						sumatorio2 += (objetivo[i]-pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[j].x * (1 - pCapas[nNumCapas-1].pNeuronas[i].x);
+					}
+					else //ENTROPIA CRUZADA
+					{
+						sumatorio2 += (objetivo[i]/pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[j].x * (1 - pCapas[nNumCapas-1].pNeuronas[i].x);
+					}
+				}
+				else
+				{
+					if(funcionError == 0)//ERROR MSE
+					{
+						sumatorio2 += (objetivo[i]-pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[j].x * (0 - pCapas[nNumCapas-1].pNeuronas[i].x);
+					}
+					else //ENTROPIA CRUZADA
+					{
+						sumatorio2 += (objetivo[i]/pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[j].x * (0 - pCapas[nNumCapas-1].pNeuronas[i].x);
+					}
+				}
+			}
+			pCapas[nNumCapas-1].pNeuronas[j].dX = (-1)*sumatorio2;
+			sumatorio2 = 0.0;
+		}
+	}
+
+
+	double sumatorio = 0.0;
+
+	//Una vez tenemos el error sea sigmoide o softmax lo pasamos hacia las otras capas
+	for(int i=nNumCapas-2; i>=0; i--)
+	{
+		for(int j=0; j<pCapas[i].nNumNeuronas; j++)
+		{
+			for(int k=0; k<pCapas[i+1].nNumNeuronas; k++) //Calculamos sumatorio de las capas y derivada de la salida producida por esa neurona
+			{
+				sumatorio += pCapas[i+1].pNeuronas[k].w[j+1] * pCapas[i+1].pNeuronas[k].dX;
+			}
+
+			pCapas[i].pNeuronas[j].dX = sumatorio * pCapas[i].pNeuronas[j].x * (1 -pCapas[i].pNeuronas[j].x);
+			sumatorio = 0.0;
+		}
+	}
 
 }
 
 // ------------------------------
 // Acumular los cambios producidos por un patrón en deltaW
 void PerceptronMulticapa::acumularCambio() {
+//HAcemos el sumatorio del cambiio recorriendo la red como siempre
 
+	for(int i=1; i<nNumCapas; i++)
+	{
+		for(int j=0; j<pCapas[i].nNumNeuronas; j++)
+		{
+			for(int k=1; k<pCapas[i-1].nNumNeuronas+1; k++)
+			{
+				pCapas[i].pNeuronas[j].deltaW[k] +=  pCapas[i].pNeuronas[j].dX * pCapas[i-1].pNeuronas[k-1].x;
+			}
+			pCapas[i].pNeuronas[j].deltaW[0] += pCapas[i].pNeuronas[j].dX;//Aqui el sesgo
+
+		}
+	}
 }
 
 // ------------------------------
 // Actualizar los pesos de la red, desde la primera capa hasta la última
 void PerceptronMulticapa::ajustarPesos() {
+
+	double _deltaW,_ultimoDeltaW;
+	float etaAux = 0.0;
+	for(int i=1; i<nNumCapas; i++)
+	{
+		for(int j=0; j<pCapas[i].nNumNeuronas; j++)
+		{
+			//eta la hacemos auxiliar porque sino no va el decremento, a saber el motivo
+			etaAux=this->dEta*pow(this->dDecremento, -(this->nNumCapas-1-i));
+			for(int k=0; k<pCapas[i-1].nNumNeuronas+1; k++)
+			{
+				_deltaW = pCapas[i].pNeuronas[j].deltaW[k];
+				_ultimoDeltaW = pCapas[i].pNeuronas[j].ultimoDeltaW[k];
+				pCapas[i].pNeuronas[j].w[k] -= etaAux * _deltaW + dMu * etaAux * _ultimoDeltaW;
+				pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
+			}
+		}
+	}
 
 }
 
@@ -303,17 +461,17 @@ Datos* PerceptronMulticapa::leerDatos(const char *archivo) {
 	//std::cout<<"  -->Patrones:" << data->nNumPatrones<< std::endl;
 
 	//Reserva de memoria para las entrads
-	data->entradas = (double **)malloc (data->nNumPatrones*sizeof(double *));
+	data->entradas = (double **)calloc (data->nNumPatrones,sizeof(double *));
 
 	for (int i=0;i<data->nNumPatrones;i++)
-		data->entradas[i] = (double *) malloc (data->nNumEntradas*sizeof(double));
+		data->entradas[i] = (double *) calloc (data->nNumEntradas,sizeof(double));
 
 
 	//Reserva de memoria para las salidas
-	data->salidas = (double **)malloc (data->nNumPatrones*sizeof(double *));
+	data->salidas = (double **)calloc (data->nNumPatrones,sizeof(double *));
 
 	for (int i=0;i<data->nNumPatrones;i++)
-		data->salidas[i] = (double *) malloc (data->nNumSalidas*sizeof(double));
+		data->salidas[i] = (double *) calloc (data->nNumSalidas,sizeof(double));
 	//Rellenamos matriz de entrada y salida de datos.
    int i = 0;
    int j = 0;
@@ -423,7 +581,51 @@ void PerceptronMulticapa::predecir(Datos* pDatosTest)
 // Probar la red con un conjunto de datos y devolver el CCR
 double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
 
-	return 0.0;
+	double ccr = 0.0;
+
+	//Tenemos que mirar las salidas tanto de nuestra red neuronal como del test y quedarnos con la mas grande
+	//si dicha neurona es la misma entonces aumentamos el ccr
+
+	int indiceDatosTest = 0;
+	int indiceNeuronas = 0;
+	double maximoTest = 0.0, maximoNeuronas =0.0;
+
+	for(int i=0; i<pDatosTest->nNumPatrones; i++)
+	{
+		indiceNeuronas = 0;
+		indiceDatosTest = 0;
+		maximoTest = 0.0;
+		maximoNeuronas = 0.0;
+		alimentarEntradas(pDatosTest->entradas[i]);
+		propagarEntradas();
+
+		for(int j=0; j<pCapas[nNumCapas-1].nNumNeuronas; j++)
+		{
+
+			//Nos vamos quedando con el mayor indice
+			if(pCapas[nNumCapas-1].pNeuronas[j].x > maximoNeuronas)
+			{
+				maximoNeuronas = pCapas[nNumCapas-1].pNeuronas[j].x;
+				indiceNeuronas = j;
+			}
+
+			if(pDatosTest->salidas[i][j] > maximoTest)
+			{
+				maximoTest = pDatosTest->salidas[i][j];
+				indiceDatosTest = j;
+			}
+		}
+
+		//Ahora comprobamos si son el mismo y actuamos en consecuencia
+		if(indiceNeuronas == indiceDatosTest)
+		{
+			ccr++;
+		}
+	}
+	//Aplicamos al ccr el efecto porcentaje
+	ccr = 100 * ccr/pDatosTest->nNumPatrones;
+
+	return ccr;
 }
 
 // ------------------------------
@@ -433,38 +635,100 @@ double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
 // funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
 void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosTest, int maxiter, double *errorTrain, double *errorTest, double *ccrTrain, double *ccrTest,bool funcionError)
 {
+
 	int countTrain = 0;
+	Datos * valData=new Datos(); //Esctructuras de datos para el conjunto de validacion
 
 	// Inicialización de pesos
 	pesosAleatorios();
 
+	double minValError = 0;
 	double minTrainError = 0;
-	int numSinMejorar = 0;
-	double testError = 0;
-	nNumPatronesTrain = pDatosTrain->nNumPatrones;
-
-	Datos * pDatosValidacion = NULL;
-	double validationError = 0, previousValidationError = 0;
-	int numSinMejorarValidacion = 0;
+	
+	int numsinMejorarValidationError;
+	int numSinMejorar;
+	
+	double validationError=0.0;
 
 	// Generar datos de validación
-	if(dValidacion > 0 && dValidacion < 1){
+	if(dValidacion > 0 && dValidacion < 1)
+	{
+		int nNumVal = dValidacion * pDatosTrain->nNumPatrones;
+		int * vector = vectorAleatoriosEnterosSinRepeticion(0,pDatosTrain->nNumPatrones-1,nNumVal);
+		valData->nNumEntradas = pDatosTrain->nNumEntradas;
+		valData->nNumSalidas = pDatosTrain->nNumSalidas;
+		valData->nNumPatrones = nNumVal;
+		
+		//Para el conjunto de validacion se generan las matrices como anteriormente
+		valData->entradas = (double **)calloc (valData->nNumPatrones,sizeof(double *));
 
+		for (int i=0;i<valData->nNumPatrones;i++)
+			valData->entradas[i] = (double *) calloc (valData->nNumEntradas,sizeof(double));
+
+		valData->salidas = (double **)calloc (valData->nNumPatrones,sizeof(double *));
+	
+		for (int i=0;i<valData->nNumPatrones;i++)
+			valData->salidas[i] = (double *) calloc (valData->nNumSalidas,sizeof(double));
+
+		
+		for(int i = 0; i < nNumVal; i++)
+		{
+			
+			for(int j = 0; j < valData->nNumEntradas; j++)
+			{
+				valData->entradas[i][j] = pDatosTrain->entradas[vector[i]][j];
+			}
+
+			for(int k = 0; k < valData->nNumSalidas; k++)
+			{
+				valData->salidas[i][k] = pDatosTrain->salidas[vector[i]][k];
+			}
+		}
+		
+		
+		validationError = test(valData,funcionError);
 	}
 
+		std::ofstream leer;
+		leer.open("log.txt",ios::app);
 	// Aprendizaje del algoritmo
 	do {
 
 		entrenar(pDatosTrain,funcionError);
-
 		double trainError = test(pDatosTrain,funcionError);
+
+	   //Condicion de parada del conjunto de validacion
+		if(dValidacion > 0.0 && dValidacion < 1.0){
+			entrenar(valData,funcionError);
+			validationError = test(valData,funcionError);
+			if( countTrain==0 || validationError < minValError){
+				copiarPesos();
+				minValError = validationError;
+				numsinMejorarValidationError = 0;
+			}else if( (validationError-minValError) < 0.00001)
+			{
+				numsinMejorarValidationError=0;
+			}
+			else{
+				numsinMejorarValidationError=numsinMejorarValidationError+1;
+			}
+
+			if(numsinMejorarValidationError==50){
+				cout << "Salida porque no mejora el entrenamiento!!"<< endl;
+				restaurarPesos();
+				countTrain = maxiter;
+				break;
+			}
+		}
+
+
+		//Condicion de parada train Error
 		if(countTrain==0 || trainError < minTrainError){
 			minTrainError = trainError;
 			copiarPesos();
 			numSinMejorar = 0;
-		}
-		else if( (trainError-minTrainError) < 0.00001)
-			numSinMejorar = 0;
+		}else if( (trainError-minTrainError) < 0.00001)
+			numSinMejorar=0;
 		else
 			numSinMejorar++;
 
@@ -472,23 +736,28 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 			cout << "Salida porque no mejora el entrenamiento!!"<< endl;
 			restaurarPesos();
 			countTrain = maxiter;
+			break;
 		}
 
-		testError = test(pDatosTest,funcionError);
 		countTrain++;
 
 		// Comprobar condiciones de parada de validación y forzar
+		// OJO: en este caso debemos guardar el error de validación anterior, no el mínimo
+		// Por lo demás, la forma en que se debe comprobar la condición de parada es similar
+		// a la que se ha aplicado más arriba para el error de entrenamiento
+		double testError = test(pDatosTest,funcionError);
+		
+		leer<<trainError<<" "<<validationError<<" "<<testError<<endl;
 
-		cout << "Iteración " << countTrain << "\t Error de entrenamiento: " << trainError << "\t Error de test: " << testError << "\t Error de validacion: " << validationError << endl;
+		//Iteracion - Error de entrenamiento - Eror de validacion - Error de Test
+		cout << countTrain << "\t"<< trainError <<"\t"<< validationError <<"\t"<<testError<< endl;
 
-	} while ( countTrain<maxiter );
+	} while (countTrain<maxiter);
 
-	if ( (numSinMejorarValidacion!=50) && (numSinMejorar!=50))
-		restaurarPesos();
-
+	leer.close();
 	cout << "PESOS DE LA RED" << endl;
 	cout << "===============" << endl;
-	imprimirRed();
+	//imprimirRed();
 
 	cout << "Salida Esperada Vs Salida Obtenida (test)" << endl;
 	cout << "=========================================" << endl;
@@ -500,7 +769,7 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 		propagarEntradas();
 		recogerSalidas(prediccion);
 		for(int j=0; j<pDatosTest->nNumSalidas; j++)
-			cout << pDatosTest->salidas[i][j] << " -- " << prediccion[j] << " \\\\ " ;
+			cout << pDatosTest->salidas[i][j] << " -- " << prediccion[j] << " ";
 		cout << endl;
 		delete[] prediccion;
 

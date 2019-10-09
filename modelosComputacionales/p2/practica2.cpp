@@ -149,7 +149,8 @@ int main(int argc, char **argv) {
         }
     }
 
-    if (!pflag) {
+    if (!pflag) 
+    {
 
         ////////////////////////////////////////
         // MODO DE ENTRENAMIENTO Y EVALUACIÓN //
@@ -203,71 +204,78 @@ int main(int argc, char **argv) {
         double *ccrsTest = new double[5];
         double *ccrsTrain = new double[5];
         //double mejorErrorTest = 1.0;
-        for(int i=0; i<5; i++){
-        	cout << "**********" << endl;
-        	cout << "SEMILLA " << semillas[i] << endl;
-        	cout << "**********" << endl;
-    		srand(semillas[i]);
-    		mlp.ejecutarAlgoritmo(pDatosTrain,pDatosTest,numIteraciones,&(erroresTrain[i]),&(erroresTest[i]),&(ccrsTrain[i]),&(ccrsTest[i]),funcError);
-    		cout << "Finalizamos => CCR de test final: " << ccrsTest[i] << endl;
-
-            // (Opcional - Kaggle) Guardamos los pesos cada vez que encontremos un modelo mejor.
-           /* if(wflag && erroresTest[i] <= mejorErrorTest)
-            {
-                mlp.guardarPesos(wvalue);
-                mejorErrorTest = erroresTest[i];
-            }
-
-        }*/
-
-
-        double mediaErrorTest = 0, desviacionTipicaErrorTest = 0;
-        double mediaErrorTrain = 0, desviacionTipicaErrorTrain = 0;
-        double mediaCCRTest = 0, desviacionTipicaCCRTest = 0;
-        double mediaCCRTrain = 0, desviacionTipicaCCRTrain = 0;
-
-        // Calcular medias y desviaciones típicas de entrenamiento y test
-
-            //medias
+        int contVueltas=0;
             for(int i=0; i<5; i++)
             {
-                mediaErrorTrain += erroresTrain[i];
-                mediaErrorTest += erroresTest[i];
-                mediaCCRTest += ccrsTest[i];
-                mediaCCRTrain += ccrsTrain[i];
-            }
-                mediaErrorTest /= 5;
-                mediaErrorTrain /= 5;
-                mediaCCRTest/=5;
-                mediaCCRTrain /=5;
+            	cout << "**********" << endl;
+            	cout << "SEMILLA " << semillas[i] << endl;
+            	cout << "**********" << endl;
+        		srand(semillas[i]);
+        		mlp.ejecutarAlgoritmo(pDatosTrain,pDatosTest,numIteraciones,&(erroresTrain[i]),&(erroresTest[i]),&(ccrsTrain[i]),&(ccrsTest[i]),funcError);
+        		cout << "Finalizamos => CCR de test final: " << ccrsTest[i] << endl;
 
-            //Desviacion tipica
-            double auxTest = 0.0, auxTrain=0.0, auxCCRtrain=0.0, auxCCRtest=0.0;
+                    // (Opcional - Kaggle) Guardamos los pesos cada vez que encontremos un modelo mejor.
+                   /* if(wflag && erroresTest[i] <= mejorErrorTest)
+                    {
+                        mlp.guardarPesos(wvalue);
+                        mejorErrorTest = erroresTest[i];
+                    }
 
-            for(int i=0; i<5; i++)
-            {
-                auxTest += pow(erroresTest[i] - mediaErrorTest,2);
-                auxTrain += pow(erroresTrain[i] - mediaErrorTrain, 2);
-                auxCCRtest+=pow(ccrsTest[i]-mediaCCRTest,2);
-                auxCCRtrain+=pow(ccrsTrain[i]-mediaCCRTrain,2);
-            }
-                desviacionTipicaErrorTest = sqrt(auxTest);
-                desviacionTipicaErrorTrain = sqrt(auxTrain);
-                desviacionTipicaCCRTest=sqrt(auxCCRtest);
-                desviacionTipicaCCRTrain=sqrt(auxCCRtrain);
+                }*/
 
 
-        cout << "HEMOS TERMINADO TODAS LAS SEMILLAS" << endl;
+                double mediaErrorTest = 0, desviacionTipicaErrorTest = 0;
+                double mediaErrorTrain = 0, desviacionTipicaErrorTrain = 0;
+                double mediaCCRTest = 0, desviacionTipicaCCRTest = 0;
+                double mediaCCRTrain = 0, desviacionTipicaCCRTrain = 0;
 
-    	cout << "INFORME FINAL" << endl;
-    	cout << "*************" << endl;
-        cout << "Error de entrenamiento (Media +- DT): " << mediaErrorTrain << " +- " << desviacionTipicaErrorTrain << endl;
-        cout << "Error de test (Media +- DT): " << mediaErrorTest << " +- " << desviacionTipicaErrorTest << endl;
-        cout << "CCR de entrenamiento (Media +- DT): " << mediaCCRTrain << " +- " << desviacionTipicaCCRTrain << endl;
-        cout << "CCR de test (Media +- DT): " << mediaCCRTest << " +- " << desviacionTipicaCCRTest << endl;
-    	return EXIT_SUCCESS;
-    }
-    } else {
+                // Calcular medias y desviaciones típicas de entrenamiento y test
+
+                //medias
+                for(int i=0; i<5; i++)
+                {
+                    mediaErrorTrain += erroresTrain[i];
+                    mediaErrorTest += erroresTest[i];
+                    mediaCCRTest += ccrsTest[i];
+                    mediaCCRTrain += ccrsTrain[i];
+                }
+                    mediaErrorTest /= 5;
+                    mediaErrorTrain /= 5;
+                    mediaCCRTest/=5;
+                    mediaCCRTrain /=5;
+
+                //Desviacion tipica
+                double auxTest = 0.0, auxTrain=0.0, auxCCRtrain=0.0, auxCCRtest=0.0;
+
+                for(int i=0; i<5; i++)
+                {
+                    auxTest += pow(erroresTest[i] - mediaErrorTest,2);
+                    auxTrain += pow(erroresTrain[i] - mediaErrorTrain, 2);
+                    auxCCRtest+=pow(ccrsTest[i]-mediaCCRTest,2);
+                    auxCCRtrain+=pow(ccrsTrain[i]-mediaCCRTrain,2);
+                }
+                    desviacionTipicaErrorTest = sqrt(auxTest);
+                    desviacionTipicaErrorTrain = sqrt(auxTrain);
+                    desviacionTipicaCCRTest=sqrt(auxCCRtest);
+                    desviacionTipicaCCRTrain=sqrt(auxCCRtrain);
+
+
+            cout << "HEMOS TERMINADO TODAS LAS SEMILLAS" << endl;
+
+        	cout << "INFORME FINAL" << endl;
+        	cout << "*************" << endl;
+            cout << "Error de entrenamiento (Media +- DT): " << mediaErrorTrain << " +- " << desviacionTipicaErrorTrain << endl;
+            cout << "Error de test (Media +- DT): " << mediaErrorTest << " +- " << desviacionTipicaErrorTest << endl;
+            cout << "CCR de entrenamiento (Media +- DT): " << mediaCCRTrain << " +- " << desviacionTipicaCCRTrain << endl;
+            cout << "CCR de test (Media +- DT): " << mediaCCRTest << " +- " << desviacionTipicaCCRTest << endl;
+            contVueltas++;
+            cout<<"Se han hecho hasta la semilla: "<<contVueltas<<endl;
+        	//return EXIT_SUCCESS;
+        }
+
+    } 
+    else 
+    {
 
         /////////////////////////////////
         // MODO DE PREDICCIÓN (KAGGLE) //
