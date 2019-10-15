@@ -857,7 +857,7 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 		propagarEntradas();
 		recogerSalidas(prediccion);
 		for(int j=0; j<pDatosTest->nNumSalidas; j++)
-			cout << pDatosTest->salidas[i][j] << " -- " << prediccion[j] << " \\\\ " ;
+			cout << pDatosTest->salidas[i][j] << " -- " << prediccion[j] << " -- " ;
 		cout << endl;
 		delete[] prediccion;
 
