@@ -3,7 +3,6 @@
  * Date  : 2018
  *********************************************************************/
 
-
 #ifndef _PERCEPTRONMULTICAPA_H_
 #define _PERCEPTRONMULTICAPA_H_
 
@@ -63,11 +62,11 @@ private:
 
 	// Calcular el error de salida del out de la capa de salida con respecto a un vector objetivo y devolverlo
 	// funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
-	double calcularErrorSalida(double* objetivo, bool funcionError);
+	double calcularErrorSalida(double* objetivo, int funcionError);
 
 	// Retropropagar el error de salida con respecto a un vector pasado como argumento, desde la última capa hasta la primera
 	// funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
-	void retropropagarError(double* objetivo, bool funcionError);
+	void retropropagarError(double* objetivo, int funcionError);
 
 	// Acumular los cambios producidos por un patrón en deltaW
 	void acumularCambio();
@@ -83,7 +82,7 @@ private:
 	// El paso de ajustar pesos solo deberá hacerse si el algoritmo es on-line
 	// Si no lo es, el ajuste de pesos hay que hacerlo en la función "entrenar"
 	// funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
-	void simularRed(double* entrada, double* objetivo, bool funcionError);
+	void simularRed(double* entrada, double* objetivo, int funcionError);
 
 
 public:
@@ -104,16 +103,16 @@ public:
 
 	// Reservar memoria para las estructuras de datos
     // nl tiene el numero de capas y npl es un vector que contiene el número de neuronas por cada una de las capas
-	// tipo contiene el tipo de cada capa (0 => sigmoide, 1 => softmax)
+	// tipo contiene el tipo de la ultima capa (0 => sigmoide, 1 => softmax)
     // Rellenar vector Capa* pCapas
-	int inicializar(int nl, int npl[],bool tipo);
+	void inicializar(int nl, int npl[],bool tipo);
 
 	// Leer una matriz de datos a partir de un nombre de fichero y devolverla
 	Datos* leerDatos(const char *archivo);
 
 	// Probar la red con un conjunto de datos y devolver el error cometido
 	// funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
-	double test(Datos* pDatosTest, bool funcionError);
+	double test(Datos* pDatosTest, int funcionError);
 
 	// Obtener las salidas predichas para un conjunto de datos
 	void predecir(Datos* pDatosTest);
@@ -122,13 +121,13 @@ public:
 	double testClassification(Datos* pDatosTest);
 
 	// Entrenar la red para un determinado fichero de datos (pasar una vez por todos los patrones)
-	void entrenar(Datos* pDatosTrain, bool funcionError);
+	void entrenar(Datos* pDatosTrain, int funcionError);
 
 	// Ejecutar el algoritmo de entrenamiento durante un número de iteraciones, utilizando pDatosTrain
     // Una vez terminado, probar como funciona la red en pDatosTest
     // Tanto el error MSE de entrenamiento como el error MSE de test debe calcularse y almacenarse en errorTrain y errorTest
 	// funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
-	void ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosTest, int maxiter, double *errorTrain, double *errorTest, double *ccrTrain, double *ccrTest, bool funcionError);
+	void ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosTest, int maxiter, double *errorTrain, double *errorTest, double *ccrTrain, double *ccrTest, int funcionError);
 
 	//Guardar los pesos del modelo en un fichero de texto.
 	bool guardarPesos(const char * archivo);

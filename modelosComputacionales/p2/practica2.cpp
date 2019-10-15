@@ -35,15 +35,15 @@ int main(int argc, char **argv) {
         int numcapasOcultas=1;
         int numNeuronasCapaOculta=5;
         //Parametros por defecto de la practica2
-        bool online=0;
-        bool funcError=0;
-        bool funcActiv=0;
+        bool online=false;
+        bool funcError=false;
+        bool funcActiv=false;
 
     opterr = 0;
 
     // a: opción que requiere un argumento
     // a:: el argumento requerido es opcional
-    while ((c = getopt(argc, argv, "t:i:l:h:e:m:v:d:T:o:f:s")) != -1)
+    while ((c = getopt(argc, argv, "t:i:l:h:e:m:v:d:T:f::o::s::")) != -1)
     {
         // Se han añadido los parámetros necesarios para usar el modo opcional de predicción (kaggle).
         // Añadir el resto de parámetros que sean necesarios para la parte básica de las prácticas.
@@ -88,7 +88,6 @@ int main(int argc, char **argv) {
             //conjunto de validacion a utilizar
                 dValidacion = atof(optarg);;
                 break;
-                
             case 'd':
             //factor de decremento
                 dDecremento = atof(optarg);;
@@ -100,32 +99,16 @@ int main(int argc, char **argv) {
                 break;
             case 'o':
                 //Booleano que indica si se utiliza entrenamiento online y offline por defecto offline (FALSE)
-                online=atoi(optarg);
-                if(online !=0 || online!= 1)
-                {
-                    cout<<"Indica 1 para entrenamiento online y 0 para entrenamiento offline"<<endl;
-                    exit(-1);
-                }
+                online=true;
                 break;
 
             case 'f':
                 //Boleano que indica que funcion de error se va a utilizar 0 para MSE y 1 para ENtropia, por defecto MSE(FALSE)
-                funcError=atoi(optarg);
-                if(online !=0 || online!= 1)
-                {
-                    cout<<"Indica 1 para entropia cruzada y 0 para MSE"<<endl;
-                    exit(-1);
-                }
+                funcError=true;
                 break;
-
             case 's':
                 //Boleano que indica la funcion de activacion si es softmax o sigmoide. por defecto sigmoide (FALSE)
-                funcActiv=atoi(optarg);
-                if(online !=0 || online!= 1)
-                {
-                    cout<<"Indica 1 para softmax y 0 para sigmoide"<<endl;
-                    exit(-1);
-                }
+                funcActiv=true;
                 break;
             case 'w':
                 wflag = true;
