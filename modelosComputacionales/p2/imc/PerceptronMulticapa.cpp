@@ -35,33 +35,34 @@ PerceptronMulticapa::PerceptronMulticapa(){
 // tipo contiene el tipo de la ultima capa (0 => sigmoide, 1 => softmax)
 // Rellenar vector Capa* pCapas
 void PerceptronMulticapa::inicializar(int nl, int npl[], bool tipo) {
+
 	nNumCapas = nl;
-	//Reservamos memoria para el vector que tendra las capas.
+	//Reserva de memoria para el vector de capas
 	pCapas = (Capa *)calloc(nl,sizeof(Capa));
-	//Primera capa con el numero de neuronas y su reserva de memoria, es la unica que no dispondra de sesgo.
+
+	//Reserva para la primera capa y su numero de neuroas, que se hace independiente porque no tendra sesgo
 	pCapas[0].nNumNeuronas = npl[0];
 	pCapas[0].pNeuronas = (Neurona *)calloc(npl[0],sizeof(Neurona));
 
-	int TEMP = 0;
-	int sesgo = 1;
+    int aux=0,sesgo=1;
 	for(int i = 1; i <nl; i++)//Bucle que usaremos para iniciar las i capas ocultas
 	{	
 		pCapas[i].nNumNeuronas = npl[i];
 		pCapas[i].pNeuronas = (Neurona *)calloc(npl[i],sizeof(Neurona));
-		pCapas[i].tipo = 0;	
-			for(int j = 0; j < pCapas[i].nNumNeuronas; j++)//Bucle que usaremos para iniciar el tamaño de la capa oculta i
-			{
-				// En temp se guarda el numero de neuronas+sesgo de la cada capa oculta i.
-				//Si por ejemplo estamos en la capa oculta numero 1 
-				//esta tendra sus vectores de pesos a NumdeEntradas+1(+1 del Sesgo)
-				TEMP = npl[i-1]+sesgo;
-				pCapas[i].pNeuronas[j].w = (double*)calloc(TEMP,sizeof(double));           
-				pCapas[i].pNeuronas[j].deltaW = (double*)calloc(TEMP,sizeof(double));        
-				pCapas[i].pNeuronas[j].ultimoDeltaW = (double*)calloc(TEMP,sizeof(double));  
-				pCapas[i].pNeuronas[j].wCopia = (double*)calloc(TEMP,sizeof(double)); 
+		pCapas[i].tipo = 0;//Sigmoide
 
-					
-					for(int k = 0; k < TEMP; k++)//Bucle que usaremos para iniciar el valor de la capa oculta i
+            //Se recorren las neuronas de la capa oculta i
+			for(int j = 0; j < pCapas[i].nNumNeuronas; j++)
+			{
+			     //Guardamos en aux el numero de neuronas de la capa mas el sesgo, luego se reserva memoria
+				aux = npl[i-1]+sesgo;
+				pCapas[i].pNeuronas[j].w = (double*)calloc(aux,sizeof(double));           
+				pCapas[i].pNeuronas[j].deltaW = (double*)calloc(aux,sizeof(double));        
+				pCapas[i].pNeuronas[j].ultimoDeltaW = (double*)calloc(aux,sizeof(double));  
+				pCapas[i].pNeuronas[j].wCopia = (double*)calloc(aux,sizeof(double)); 
+
+					//Se rrecorren todas las neuronas mas el sesgo
+					for(int k = 0; k < aux; k++)
 					{
 						pCapas[i].pNeuronas[j].w[k] = 0.0;           
 						pCapas[i].pNeuronas[j].deltaW[k] = 0.0;        
@@ -70,12 +71,11 @@ void PerceptronMulticapa::inicializar(int nl, int npl[], bool tipo) {
 					}
 					
 			}
-			TEMP = 0;
-			//Reiniciamos el temporal por si acaso se quedan datos basura.
-			
+			aux = 0;
 	}
 
-	if(tipo){
+    //Al terminar le decimos a la ultima capa si es de tipo softmax
+	if(tipo==true){
 		pCapas[nNumCapas-1].tipo = 1;
 	}
 }
@@ -93,21 +93,21 @@ PerceptronMulticapa::~PerceptronMulticapa() {
 void PerceptronMulticapa::liberarMemoria() {
 
 	for(int i = 0;i<nNumCapas;i++){
-		//Vamos recorriendo todas las capas i para liberar memoria
+
 		for(int j = 0;j<pCapas[i].nNumNeuronas;j++)
 		{
-			if(i!=0){//La primera capa no tiene inicializado ningun vector puesto que no hay neuronas predecesoras
-			//Cada capa tiene un array de neuronas, las recorremos con j y liberamos cada vector
-			free(pCapas[i].pNeuronas[j].w);
-			free(pCapas[i].pNeuronas[j].deltaW);
-			free(pCapas[i].pNeuronas[j].ultimoDeltaW);
-			free(pCapas[i].pNeuronas[j].wCopia);
+			if(i!=0)
+            {   //Como la primera capa no tiene inicializado ningun vector la ignoramos aqui
+    			free(pCapas[i].pNeuronas[j].w);
+    			free(pCapas[i].pNeuronas[j].deltaW);
+    			free(pCapas[i].pNeuronas[j].ultimoDeltaW);
+    			free(pCapas[i].pNeuronas[j].wCopia);
 			}
 		}
-		//Se libera el vector de neuronas de la capa i
+		//Liberamos el vector de la capa i
 		free(pCapas[i].pNeuronas);
 	}
-	//Se livera el vector de capas
+	//Liberamos el vector de capas
 	free(pCapas);
 
 }
@@ -115,27 +115,21 @@ void PerceptronMulticapa::liberarMemoria() {
 // ------------------------------
 // Rellenar todos los pesos (w) aleatoriamente entre -1 y 1
 void PerceptronMulticapa::pesosAleatorios() {
-
+//La red se recorre siempre igual
 	for(int i = 1; i <nNumCapas; i++)
-	{	
-	//Recorremos las capas desde la 1 hasta la nNumcapas
-	//La capa 1 no tiene conexiones anteriores por ello no se inicalizan datos.		
+	{		
 		for(int j = 0; j < pCapas[i].nNumNeuronas; j++)
 		{
-		//Cada capa tiene un vector de neuronas donde cada una tiene un vector de pesos
-		//pCapas[i-1].nNumNeuronas+1 guarda la cantidad de neuronas de la capa anterior + el sesgo
-					
-			for(int k = 0; k < pCapas[i-1].nNumNeuronas+1; k++)//Bucle que usaremos para iniciar el valor de la capa oculta i
+			//Recorremos los vectores de las neuronas de la capa oculta i + el sesgo
+			for(int k = 0; k < pCapas[i-1].nNumNeuronas+1; k++)
 			{
-			//Por cada neurona j de la capa i recorremos con k los vectores de pesos w y su copia
-			//Metemos valores aleatorios en estos arrays.
-				double X = (double)rand() / RAND_MAX;
-    			double Y = (-1.0) + X * ((1.0) - (-1.0));
-				pCapas[i].pNeuronas[j].w[k] = Y;           
-				pCapas[i].pNeuronas[j].wCopia[k] = Y; 
+				double random = (double)rand() / RAND_MAX;
+    			double random2 = (-1.0) + random * ((1.0) - (-1.0));
+				pCapas[i].pNeuronas[j].w[k] = random2;           
+				pCapas[i].pNeuronas[j].wCopia[k] = random2; 
 			}
 					
-			}
+		}
 			
 	}
 
@@ -157,10 +151,10 @@ void PerceptronMulticapa::alimentarEntradas(double* input) {
 // Recoger los valores predichos por la red (out de la capa de salida) y almacenarlos en el vector pasado como argumento
 void PerceptronMulticapa::recogerSalidas(double* output){
 
-	//La ultima capa es la nNumCapas-1
+    //nNumCapas-1 es la ultima
+    //Se recorre la ultima capa y recojemos sus salidas
 	for (int i = 0; i < pCapas[nNumCapas-1].nNumNeuronas; i++)
 	{
-		//Recogemos los valores out de la ultima capa por cada una de sus neuronas
 		output[i] = pCapas[nNumCapas-1].pNeuronas[i].x;
 	}
 
@@ -171,23 +165,14 @@ void PerceptronMulticapa::recogerSalidas(double* output){
 void PerceptronMulticapa::copiarPesos() {
 
 	for(int i = 1; i <nNumCapas; i++)
-	{	
-	//Recorremos las capas desde la 1 hasta la nNumcapas
-	//La capa 1 no tiene conexiones anteriores por ello no se inicalizan datos.		
+	{		
 		for(int j = 0; j < pCapas[i].nNumNeuronas; j++)
-		{
-		//Cada capa tiene un vector de neuronas donde cada una tiene un vector de pesos
-		//pCapas[i-1].nNumNeuronas+1 guarda la cantidad de neuronas de la capa anterior + el sesgo
-					
-			for(int k = 0; k < pCapas[i-1].nNumNeuronas+1; k++)//Bucle que usaremos para iniciar el valor de la capa oculta i
+		{			
+			for(int k = 0; k < pCapas[i-1].nNumNeuronas+1; k++)
 			{
-				//Por cada neurona j de la capa i recorremos con k los vectores de pesos w y su copia
-				//Metemos valores de w en copia por si hace falta restaurar.
 				pCapas[i].pNeuronas[j].wCopia[k] = pCapas[i].pNeuronas[j].w[k]; 
-			}
-					
-			}
-			
+			}			
+		}
 	}
 
 }
@@ -197,73 +182,65 @@ void PerceptronMulticapa::copiarPesos() {
 void PerceptronMulticapa::restaurarPesos() {
 
 	for(int i = 1; i <nNumCapas; i++)
-	{	
-	//Recorremos las capas desde la 1 hasta la nNumcapas
-	//La capa 1 no tiene conexiones anteriores por ello no se inicalizan datos.		
+	{		
 		for(int j = 0; j < pCapas[i].nNumNeuronas; j++)
 		{
-		//Cada capa tiene un vector de neuronas donde cada una tiene un vector de pesos
-		//pCapas[i-1].nNumNeuronas+1 guarda la cantidad de neuronas de la capa anterior + el sesgo
-					
-			for(int k = 0; k < pCapas[i-1].nNumNeuronas+1; k++)//Bucle que usaremos para iniciar el valor de la capa oculta i
+			for(int k = 0; k < pCapas[i-1].nNumNeuronas+1; k++)
 			{
-				//Por cada neurona j de la capa i recorremos con k los vectores de pesos w y su copia
-				//Metemos valores de copia en w para su restauracion.
 				pCapas[i].pNeuronas[j].w[k] = pCapas[i].pNeuronas[j].wCopia[k];
-			}
-					
-			}
-			
+			}		
+		}
 	}
-
 }
 
 // ------------------------------
 // Calcular y propagar las salidas de las neuronas, desde la primera capa hasta la última
 void PerceptronMulticapa::propagarEntradas() {
 
-	double c=0.0;
-	double accNet = 0.0;
-	double net[pCapas[nNumCapas-1].nNumNeuronas];
+	double sumatorio=0.0;
+	double acumuladorSoftmax = 0.0; //Varaible acumuladora para el sumatorio de softmax
+	double capaSoftmax[pCapas[nNumCapas-1].nNumNeuronas]; //Se declara un vector para el tipo softmax con el numero de neuronas de la ultima capa
+
 	for (int i = 1; i <nNumCapas; i++)
 	{
 		
 		for (int j = 0; j < pCapas[i].nNumNeuronas; j++)
 		{
 		
-			//pCapas[i-1].nNumNeuronas+1 , simboliza capa anterior y su sesgo que es el +1
-			//Este bucle recorre la capa anterior a i, i-1
 			for (int k = 1; k < pCapas[i-1].nNumNeuronas+1; k++)
 			{
-				//cout<<"Neurona capa anterior: "<<pCapas[i-1].nNumNeuronas<<"\n";
 				// [k-1].x , porque de la capa anterior tenemos que empezar por la neurona 0
-				// pNeuronas[j].w[k] , porque en la capa i la neurona j su peso w[0] es el sesgo y no se tiene en cuenta
-		
-				c += pCapas[i-1].pNeuronas[k-1].x*pCapas[i].pNeuronas[j].w[k];
+
+                //hacemos [k-1].x para empezar por la salida de la neurona 0 de la capa anterior
+
+		                                                                          //Aqui empezamos en k=1 par ano tener en cuenta el peso del sesgo w[0]
+				sumatorio += pCapas[i-1].pNeuronas[k-1].x*pCapas[i].pNeuronas[j].w[k];
 
 			}
-			//SESGO
-			c += pCapas[i].pNeuronas[j].w[0];
+			//Aqui tenemos en cuenta el sesgo
+			sumatorio += pCapas[i].pNeuronas[j].w[0];
 			
-			//Si estamos en la ultima iteracion y la ultima capa es de sipo softmax, hacemos el calculo segun visto en clase
-			if(i == nNumCapas-1 && pCapas[nNumCapas-1].tipo == 1){
-				net[j] = exp(c);
-				accNet += exp(c);
-			}else{
-				pCapas[i].pNeuronas[j].x = (1/(1 + exp((-1)*c)));
+			//Realizamos el calculo de la presentacion de la practica en caso de que estemos en la ultima capa y sea softmax
+			if(i == nNumCapas-1 && pCapas[nNumCapas-1].tipo == 1)
+            {
+				capaSoftmax[j] = exp(sumatorio);
+				acumuladorSoftmax += exp(sumatorio);
+			}
+            else
+            {
+				pCapas[i].pNeuronas[j].x = (1/(1 + exp((-1)*sumatorio)));
 			}
 			
-			c = 0.0;
+			sumatorio = 0.0;
 		}
-		
-		
 	}
 
-	//Comprobamos fuera de los bucles de propagacion si la ultima capa es de tipo softmax
-	//Si es asi calculamos el valor de la neurona usando la formula explicada en clase
-	if(pCapas[nNumCapas-1].tipo == 1){
-		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++){
-			pCapas[nNumCapas-1].pNeuronas[i].x = net[i]/accNet;
+	//Calculamos la salida de la capa softmax
+	if(pCapas[nNumCapas-1].tipo == 1)
+    {
+		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
+        {
+			pCapas[nNumCapas-1].pNeuronas[i].x = capaSoftmax[i]/acumuladorSoftmax;
 		}
 	}
 
@@ -274,30 +251,26 @@ void PerceptronMulticapa::propagarEntradas() {
 // funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
 double PerceptronMulticapa::calcularErrorSalida(double* target, int funcionError) {
 
-	double ERROR=0.0;
+    //El error puede ser entropia cruzada o mse, se utilizan los calculos de la presentacion de la practica
+	double error=0.0;
 
-	//Comprobamos que tipo de funcion es la de error
-	if(funcionError==0){
-		
-		//nNumCapas-1, por que la notacion vector es tenemos 5 capas pero en vector es la capa 4
-
+	if(funcionError==0)//MSE
+    {
 		for (int i = 0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
 		{
-
-			ERROR += pow(target[i] - pCapas[nNumCapas-1].pNeuronas[i].x, 2);
+			error += pow(target[i] - pCapas[nNumCapas-1].pNeuronas[i].x, 2);
 		}
-		ERROR=ERROR/pCapas[nNumCapas-1].nNumNeuronas;
-	
-
-	}else{
-		//Se utilizara la entropia cruzada que viene en la exposicion de clase
-		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++){
-			ERROR += target[i] * log(pCapas[nNumCapas-1].pNeuronas[i].x);
+		error=error/pCapas[nNumCapas-1].nNumNeuronas;
+	}
+    else //Entropia cruzada
+    {
+		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
+        {
+			error += target[i] * log(pCapas[nNumCapas-1].pNeuronas[i].x);
 		}
-
 	}
 	
-	return ERROR;
+	return error;
 }
 
 
@@ -306,12 +279,12 @@ double PerceptronMulticapa::calcularErrorSalida(double* target, int funcionError
 // funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
 void PerceptronMulticapa::retropropagarError(double* objetivo, int funcionError) {
 
-	//Hay que tener en cuenta el tipo de funcion de error a usar y sobre todo el tipo de salida que tiene la ultimna capa (Softmax u sigmoide)
-	//funcion tipo 0 sigmoide, 1 softmax
-	//funcionError tipo 0 MSE , 1 Entropia cruzada
-	double ACC1 = 0.0;
-	double ACC2 = 0.0;
-	//Explicacion diapositiva 26 de la presentación
+	//tipo 0 sigmoide, 1 softmax
+	//funcionError 0 MSE , 1 Entropia cruzada
+
+	double sumatorioEntradas =0.0,sumatorioSoftmax=0.0;
+
+
 	if(pCapas[nNumCapas-1].tipo == 0)//Sigmoide
 	{
 		for(int i=0; i<pCapas[nNumCapas-1].nNumNeuronas; i++)
@@ -319,52 +292,53 @@ void PerceptronMulticapa::retropropagarError(double* objetivo, int funcionError)
 			if(funcionError == 0)//MSE
 			{
 				pCapas[nNumCapas-1].pNeuronas[i].dX =  (-1)*(objetivo[i] - pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[i].x);
-			}else//Entropia Cruzada
+			}
+            else//Entropia Cruzada
 			{
 				pCapas[nNumCapas-1].pNeuronas[i].dX =  (-1)*(objetivo[i]/pCapas[nNumCapas-1].pNeuronas[i].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[i].x);
 			}
 		}
-	}else//Softmax
+	}
+    else//Softmax 
 	{
-		//La explicacion en las diapositivas de clase 15 y 16
-		//Debemos de considerar dos casos y dentro de estos otros dos casos
-		//Primero se considerara si i=j y luego i!=j , luego por cada comprobacion hay que hacer la funcion de error correspondiente
-		//Esto es para la capa de salida unicamente
+
 		for(int i = 0; i < pCapas[nNumCapas-1].nNumNeuronas; i++)
 		{
 			for(int j = 0; j < pCapas[nNumCapas-1].nNumNeuronas; j++)
 			{
 				
-				if (i==j)//Derivada de la salida (o j ) respecto a algo que est ́a por detras de la neurona j
+				if (i==j)//Derivada de la salida Oj respecto a algo que esta por detras de la neurona j(diapositiva 16)
 				{
-					if(funcionError==0)
+					if(funcionError==0)//mse
 					{
-						ACC2 += (objetivo[j]-pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[j].x);
-					}else
+						sumatorioSoftmax += (objetivo[j]-pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[j].x);
+					}
+                    else//Entropia cruzada
 					{
-						ACC2 += (objetivo[j]/pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[j].x);
+						sumatorioSoftmax += (objetivo[j]/pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (1 - pCapas[nNumCapas-1].pNeuronas[j].x);
 					}
 
-				}else//Derivada de la salida (o j ) respecto a algo que est ́a por detras de cualquier neurona i que no sea j
+				}
+                else//Derivada de la salida Oj respecto a algo que est ́a por detras de cualquier neurona i que no sea j (diapositiva 17)
 				{
-					if(funcionError==0)
+					if(funcionError==0)//mse
 					{
-						ACC2 += (objetivo[j]-pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (0 - pCapas[nNumCapas-1].pNeuronas[j].x);
-					}else
+						sumatorioSoftmax += (objetivo[j]-pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (0 - pCapas[nNumCapas-1].pNeuronas[j].x);
+					}
+                    else//entropia cruzada
 					{
-						ACC2 += (objetivo[j]/pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (0 - pCapas[nNumCapas-1].pNeuronas[j].x);
+						sumatorioSoftmax += (objetivo[j]/pCapas[nNumCapas-1].pNeuronas[j].x) * pCapas[nNumCapas-1].pNeuronas[i].x * (0 - pCapas[nNumCapas-1].pNeuronas[j].x);
 					}
 
 				}
 				
 			}
 
-			pCapas[nNumCapas-1].pNeuronas[i].dX = (-1)*ACC2;
-			//OJO es posible que haya que quitarlo
-			ACC2 = 0.0;
+			pCapas[nNumCapas-1].pNeuronas[i].dX = (-1)*sumatorioSoftmax; //importante el signo de la derivada
+
+			sumatorioSoftmax = 0.0;
 		}
 		
-
 	}
 
 	for(int i=nNumCapas-2; i>=0; i--)
@@ -374,18 +348,14 @@ void PerceptronMulticapa::retropropagarError(double* objetivo, int funcionError)
 			//Se calcula el sumatorio de las entradas y su derivada en la siguiente capa
 			for(int k=0; k<pCapas[i+1].nNumNeuronas; k++)
 			{
-				ACC1 += pCapas[i+1].pNeuronas[k].w[j+1] * pCapas[i+1].pNeuronas[k].dX;
+				sumatorioEntradas += pCapas[i+1].pNeuronas[k].w[j+1] * pCapas[i+1].pNeuronas[k].dX;
 			}
 
-			pCapas[i].pNeuronas[j].dX = ACC1 * pCapas[i].pNeuronas[j].x * (1-pCapas[i].pNeuronas[j].x);
+			pCapas[i].pNeuronas[j].dX = sumatorioEntradas * pCapas[i].pNeuronas[j].x * (1-pCapas[i].pNeuronas[j].x);
 
-			//OJO es posible que haya que quitarlo
-			ACC1 = 0.0;
+			sumatorioEntradas = 0.0;
 		}
 	}
-
-
-
 }
 
 // ------------------------------
@@ -400,8 +370,6 @@ void PerceptronMulticapa::acumularCambio() {
 				pCapas[i].pNeuronas[j].deltaW[k] +=  pCapas[i].pNeuronas[j].dX * pCapas[i-1].pNeuronas[k-1].x;
 			}
 			pCapas[i].pNeuronas[j].deltaW[0] += pCapas[i].pNeuronas[j].dX;
-				
-
 		}
 	}
 
@@ -411,34 +379,31 @@ void PerceptronMulticapa::acumularCambio() {
 // Actualizar los pesos de la red, desde la primera capa hasta la última
 void PerceptronMulticapa::ajustarPesos() {
 	
-	double _deltaW,_ultimoDeltaW;
+	double deltaWaux,ultimoDetalWaux;
 	float eta = 0.0;
 	for(int i=1; i<nNumCapas; i++)
 	{
 		
 		for(int j=0; j<pCapas[i].nNumNeuronas; j++)
 		{
-			eta=this->dEta*pow(this->dDecremento, -(this->nNumCapas-1-i));
+			eta=this->dEta*pow(this->dDecremento, -(this->nNumCapas-1-i)); //Hacerla auxiliar porque no funciona la validacion 
 			for(int k=0; k<pCapas[i-1].nNumNeuronas+1; k++)
 			{
-				_deltaW = pCapas[i].pNeuronas[j].deltaW[k];
+				deltaWaux = pCapas[i].pNeuronas[j].deltaW[k];
 
-				_ultimoDeltaW = pCapas[i].pNeuronas[j].ultimoDeltaW[k];
+				ultimoDetalWaux = pCapas[i].pNeuronas[j].ultimoDeltaW[k];
 				
-				if(bOnline)//Ajuste de pesos para metodo online
+				if(bOnline)//Online
 				{
-					pCapas[i].pNeuronas[j].w[k] -= eta * _deltaW + dMu * eta * _ultimoDeltaW;
-					pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
-				}else{//Ajuste de pesos para metodo off-line, Como el error usado es un error medio,dividimos  el cambio realizado por el nmero de patrones de entrenamiento
-
-					pCapas[i].pNeuronas[j].w[k] -= eta * (_deltaW/int(nNumPatronesTrain)) + dMu * eta * (_ultimoDeltaW/int(nNumPatronesTrain));
+					pCapas[i].pNeuronas[j].w[k] -= eta * deltaWaux + dMu * eta * ultimoDetalWaux;
 					pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
 				}
-				
-
+                else
+                {
+					pCapas[i].pNeuronas[j].w[k] -= eta * (deltaWaux/int(nNumPatronesTrain)) + dMu * eta * (ultimoDetalWaux/int(nNumPatronesTrain)); //Hay que dividir por el numero de patrones (media de error)
+					pCapas[i].pNeuronas[j].ultimoDeltaW[k] = pCapas[i].pNeuronas[j].deltaW[k];
+				}
 			}
-			
-
 		}
 	}
 }
@@ -490,11 +455,8 @@ void PerceptronMulticapa::simularRed(double* entrada, double* objetivo, int func
 					pCapas[capa].pNeuronas[neurona].deltaW[k]=0;
 				}
 
-				
-					pCapas[capa].pNeuronas[neurona].ultimoDeltaW[pCapas[capa-1].nNumNeuronas]=pCapas[capa].pNeuronas[neurona].deltaW[pCapas[capa-1].nNumNeuronas];
-					pCapas[capa].pNeuronas[neurona].deltaW[pCapas[capa-1].nNumNeuronas]=0;
-				
-
+				pCapas[capa].pNeuronas[neurona].ultimoDeltaW[pCapas[capa-1].nNumNeuronas]=pCapas[capa].pNeuronas[neurona].deltaW[pCapas[capa-1].nNumNeuronas];
+				pCapas[capa].pNeuronas[neurona].deltaW[pCapas[capa-1].nNumNeuronas]=0;
 			}
 		}
 	}
@@ -503,6 +465,8 @@ void PerceptronMulticapa::simularRed(double* entrada, double* objetivo, int func
 	propagarEntradas();
 	retropropagarError(objetivo,funcionError);
 	acumularCambio();
+
+
 	if(bOnline)
 	{
 		ajustarPesos();
@@ -540,27 +504,27 @@ Datos* PerceptronMulticapa::leerDatos(const char *archivo) {
    int i = 0;
    int j = 0;
    
-   //int linea=0;
+
    while (!leer.eof())
    {
-     //std::cout<<"Linea("<<linea<<"): -- [ ";
+
 	 for(int x = 0; x < data->nNumEntradas; x++)
 	 {
 		 leer >> data->entradas[i][x];
-		 //std::cout<<"("<<data->entradas[i][x]<<") ";
+
 	 }
-	//std::cout<<"] <---> [";
+
 	 for(int y = 0; y < data->nNumSalidas; y++)
 	 {
 		 leer >> data->salidas[j][y];
-		 //std::cout<<"("<<data->salidas[j][y]<<") ";
+
 		 
 	 }
-	 //std::cout<<"]\n";
+
       
       i++;
 	  j++;
-	  //linea++;
+
    }
    leer.close(); 
 
@@ -608,26 +572,27 @@ void PerceptronMulticapa::entrenar(Datos* pDatosTrain, int funcionError) {
 // funcionError=1 => EntropiaCruzada // funcionError=0 => MSE
 double PerceptronMulticapa::test(Datos* pDatosTest, int funcionError) {
 
-	double ERROR = 0.0;
+	double error = 0.0;
 
 	for(int i=0; i<pDatosTest->nNumPatrones; i++)
 	{
 		// Cargamos las entradas y propagamos el valor
 		alimentarEntradas(pDatosTest->entradas[i]);
 		propagarEntradas();
-		ERROR += calcularErrorSalida(pDatosTest->salidas[i],funcionError);
+		error += calcularErrorSalida(pDatosTest->salidas[i],funcionError);
 
 	}
 
-	if(funcionError == 0)
+	if(funcionError == 0)//MSE
 	{
-		ERROR /= pDatosTest->nNumPatrones;
-	}else
+		error /= pDatosTest->nNumPatrones;
+	}
+    else//ENtropia cruzada
 	{
-		ERROR /= (-1)*pDatosTest->nNumPatrones * pCapas[nNumCapas-1].nNumNeuronas;
+		error /= (-1)*pDatosTest->nNumPatrones * pCapas[nNumCapas-1].nNumNeuronas;
 	}
 	
-	return ERROR;
+	return error;
 	
 }
 
@@ -725,14 +690,15 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 	// Inicialización de pesos
 	pesosAleatorios();
 
-	double minTrainError = 0.0;
-	double minValError = 0.0;
+    Datos * pDatosValidacion = new Datos(); 
+
 	int numSinMejorar = 0;
-	int numSinMejorarValidacion = 0;
+	int numSinMejorarValidationError = 0;
+
 	double testError = 0.0;
-	Datos * pDatosValidacion = new Datos(); 
 	double validationError = 0.0;
-	
+    double minTrainError = 0.0;
+    double minValError = 0.0;	
 
 	// Generar datos de validación
 	if(dValidacion > 0 && dValidacion < 1){
@@ -797,16 +763,16 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 			if( countTrain==0 || validationError < minValError){
 				copiarPesos();
 				minValError = validationError;
-				numSinMejorarValidacion = 0;
+				numSinMejorarValidationError = 0;
 			}else if( (validationError-minValError) < 0.00001)
 			{
-				numSinMejorarValidacion=0;
+				numSinMejorarValidationError=0;
 			}
 			else{
-				numSinMejorarValidacion=numSinMejorarValidacion+1;
+				numSinMejorarValidationError++;
 			}
 
-			if(numSinMejorarValidacion==50){
+			if(numSinMejorarValidationError==50){
 				cout << "Salida porque no mejora el entrenamiento!!"<< endl;
 				restaurarPesos();
 				countTrain = maxiter;
@@ -840,7 +806,7 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 
 	} while ( countTrain<maxiter );
 
-	if ( (numSinMejorarValidacion!=50) && (numSinMejorar!=50))
+	if ( (numSinMejorarValidationError!=50) && (numSinMejorar!=50))
 		restaurarPesos();
 
 	cout << "PESOS DE LA RED" << endl;
