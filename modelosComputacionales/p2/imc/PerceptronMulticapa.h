@@ -5,7 +5,7 @@
 
 #ifndef _PERCEPTRONMULTICAPA_H_
 #define _PERCEPTRONMULTICAPA_H_
-
+#include <vector>
 namespace imc{
 
 // Estructuras sugeridas
@@ -94,6 +94,7 @@ public:
 	                    // si dValidacion=0.2, un 20% de los datos de entrenamiento,
 	                    // se usan para valición; si dValidacion=0, no hay validación)
 	double dDecremento; // Factor de decremento por capas para eta
+	 std::vector<std::vector<int> > matrizConfusion;
 
 	// CONSTRUCTOR: Dar valor por defecto a todos los parámetros (dEta, dMu, dValidacion y dDecremento)
 	PerceptronMulticapa();

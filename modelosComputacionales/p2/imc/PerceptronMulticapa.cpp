@@ -10,7 +10,7 @@
 #include <cstdlib>  // Para establecer la semilla srand() y generar números aleatorios rand()
 #include <limits>
 #include <math.h>
-
+#include <vector>
 #include "PerceptronMulticapa.h"
 #include "util.h"
 
@@ -628,6 +628,7 @@ void PerceptronMulticapa::predecir(Datos* pDatosTest)
 // Probar la red con un conjunto de datos y devolver el CCR
 double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
 
+    matrizConfusion=std::vector<std::vector<int> >(pDatosTest->nNumSalidas, std::vector< int >(pDatosTest->nNumSalidas,0)); //MATRIZ DE CONFUSION
 	double ccr = 0.0;
 
 	//Se debe comparar el indice del valor maximo del vector dP,
@@ -666,13 +667,24 @@ double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
 				indiceDp = j;
 			}
 		}
-
+        matrizConfusion[indiceOp][indiceDp]++;
 		//Si son el mismo se demuesra que la neurona con mayor activacion e indiceOP es igual a la salida del test con indiceDP
 		//La red neuronal ha sido capaz de acertar con la clasificación.
 		if(indiceOp == indiceDp){
 			ccr++;
 		}
 	}
+
+    cout << "Matriz de confusion" << endl;
+    cout << "=========================================" << endl;
+    for(int i=0;i<pDatosTest->nNumSalidas;i++)
+    {
+        for(int j=0;j<pDatosTest->nNumSalidas;j++)
+        {
+            cout<<"["<<matrizConfusion[i][j]<<"]"<<"\t";
+        }
+        cout<<endl;
+    }
 	//Aplicamos al ccr el efecto porcentaje
 	ccr = 100 * ccr/pDatosTest->nNumPatrones;
 	return ccr;
@@ -828,6 +840,7 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 		delete[] prediccion;
 
 	}
+  
 
 	*errorTest=test(pDatosTest,funcionError);;
 	*errorTrain=minTrainError;
