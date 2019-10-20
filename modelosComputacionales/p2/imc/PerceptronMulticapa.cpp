@@ -543,7 +543,7 @@ void PerceptronMulticapa::entrenar(Datos* pDatosTrain, int funcionError) {
 		
 			for (int j = 0; j < pCapas[i].nNumNeuronas; j++)
 			{
-				//pCapas[i-1].nNumNeuronas, porque en la capa 1, tendra un vector de pesos de tantas entradas en la capa 0
+
 				for (int k = 0; k < pCapas[i-1].nNumNeuronas+1; k++)
 				{
 					pCapas[i].pNeuronas[j].deltaW[k] = 0.0;
@@ -674,7 +674,7 @@ double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
 			ccr++;
 		}
 	}
-
+    /*
     cout << "Matriz de confusion" << endl;
     cout << "=========================================" << endl;
     for(int i=0;i<pDatosTest->nNumSalidas;i++)
@@ -685,6 +685,7 @@ double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
         }
         cout<<endl;
     }
+    */
 	//Aplicamos al ccr el efecto porcentaje
 	ccr = 100 * ccr/pDatosTest->nNumPatrones;
 	return ccr;
@@ -814,7 +815,8 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 
 		// Comprobar condiciones de parada de validación y forzar
 		//Iteracion, error entrenamiento, error test, error validacion. 
-		cout << countTrain << "\t" << trainError << "\t" << testError << "\t" << validationError << endl;
+		//cout << countTrain << "\t" << trainError << "\t" << testError << "\t" << validationError << endl;
+        cout<<testClassification(pDatosTrain)<<"\t"<<testClassification(pDatosTest)<<"\t"<<testClassification(pDatosValidacion)<<endl;
 
 	} while ( countTrain<maxiter );
 
@@ -823,7 +825,7 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 
 	cout << "PESOS DE LA RED" << endl;
 	cout << "===============" << endl;
-	imprimirRed();
+	//imprimirRed();
 
 	cout << "Salida Esperada Vs Salida Obtenida (test)" << endl;
 	cout << "=========================================" << endl;
@@ -840,7 +842,7 @@ void PerceptronMulticapa::ejecutarAlgoritmo(Datos * pDatosTrain, Datos * pDatosT
 		delete[] prediccion;
 
 	}
-  
+
 
 	*errorTest=test(pDatosTest,funcionError);;
 	*errorTrain=minTrainError;
