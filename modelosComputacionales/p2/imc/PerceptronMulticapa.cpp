@@ -630,49 +630,52 @@ double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
 
     matrizConfusion=std::vector<std::vector<int> >(pDatosTest->nNumSalidas, std::vector< int >(pDatosTest->nNumSalidas,0)); //MATRIZ DE CONFUSION
 	double ccr = 0.0;
+    std::vector<int> patronesMalClasificados;
+    double maximoTest = 0.0;
+    double maximoNeurona = 0.0;
 
-	//Se debe comparar el indice del valor maximo del vector dP,
-	// y el indice de del valor maximo de oP (Neurona neurona de salida que obtiene la maxima probabilidad para el patron p)
-	// Si los indices de ambos concuerdan sicnifica que la neurona de salida con maxima probabilidad e indice 'j' 
-	// ha sido capaz de predecir con los datos de test de manera correcta y por ello el valor CCR debe aumentar
+    //Compararemos los indices declarados a continuacion y cuando concuerden el patron estará bien clasificado
+	int indiceVectorTestSalidas = 0;
+	int indiceNeuronaMayorSalida = 0;
 
-	int indiceDp = 0;//Indice del vector de test de salidas
-	int indiceOp = 0;//Indice de la neurona con mayor salida
-	double maxTest = 0.0;
-	double maxNeurona = 0.0;
 
-	for(int i=0; i<pDatosTest->nNumPatrones; i++){
-		indiceOp = 0;
-		indiceDp = 0;
-		maxTest = 0.0;
-		maxNeurona = 0.0;
+	for(int i=0; i<pDatosTest->nNumPatrones; i++)
+    {
+		indiceNeuronaMayorSalida = 0;
+		indiceVectorTestSalidas = 0;
+		maximoTest = 0.0;
+		maximoNeurona = 0.0;
 		alimentarEntradas(pDatosTest->entradas[i]);
 		propagarEntradas();
 		
 
-		// Una vez propagadas las entradas necesitamos buscar en la capa de salida cual es el mayor indice para la comparacion posterior.
-		for(int j=0; j<pCapas[nNumCapas-1].nNumNeuronas; j++){
 
-			//Buscamos el maximo de las salidas de la neurona y almacenamos su indice y su valor para seguir comparando
-			//Este indice se usara para para comparar si la salida devuelve el mismo indice, donde en tal caso es un acierto CCR++
-			if(pCapas[nNumCapas-1].pNeuronas[j].x > maxNeurona){
-				maxNeurona = pCapas[nNumCapas-1].pNeuronas[j].x;
-				indiceOp = j;
+		for(int j=0; j<pCapas[nNumCapas-1].nNumNeuronas; j++)
+        {
+            //Busqueda de la maxima salida de las neuronas, que se comparará con el indice que devuelve la salida
+			if(pCapas[nNumCapas-1].pNeuronas[j].x > maximoNeurona)
+            {
+				maximoNeurona = pCapas[nNumCapas-1].pNeuronas[j].x;
+				indiceNeuronaMayorSalida = j;
 			}
-			//Buscamos el maximo de las salidas del test para comparar despues los indices, esto sicnifica que la
-			//neurona con mayor activación sera comparada con la salida activada a 1 en el test
-			//si esto sucede sicnifica que el acierto ha sido correcto
-			if(pDatosTest->salidas[i][j] > maxTest){
-				maxTest = pDatosTest->salidas[i][j];
-				indiceDp = j;
+            //Busqueda del maximo de la salida de test para comparar con el indice anterior
+			if(pDatosTest->salidas[i][j] > maximoTest)
+            {
+				maximoTest = pDatosTest->salidas[i][j];
+				indiceVectorTestSalidas = j;
 			}
 		}
-        matrizConfusion[indiceOp][indiceDp]++;
-		//Si son el mismo se demuesra que la neurona con mayor activacion e indiceOP es igual a la salida del test con indiceDP
-		//La red neuronal ha sido capaz de acertar con la clasificación.
-		if(indiceOp == indiceDp){
+        matrizConfusion[indiceNeuronaMayorSalida][indiceVectorTestSalidas]++;
+
+        //Si los indices coinciden ese patron esta bien clasificado
+		if(indiceNeuronaMayorSalida == indiceVectorTestSalidas)
+        { 
 			ccr++;
 		}
+        else
+        {
+            patronesMalClasificados.push_back(i);
+        }
 	}
     /*
     cout << "Matriz de confusion" << endl;
@@ -685,8 +688,13 @@ double PerceptronMulticapa::testClassification(Datos* pDatosTest) {
         }
         cout<<endl;
     }
+    for (int i = 0; i < patronesMalClasificados.size(); ++i)
+    {
+        cout<<"["<<patronesMalClasificados[i]<<"]";
+    }
+    cout<<endl;
     */
-	//Aplicamos al ccr el efecto porcentaje
+
 	ccr = 100 * ccr/pDatosTest->nNumPatrones;
 	return ccr;
 }
