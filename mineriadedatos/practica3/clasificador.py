@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from scipy.io import arff
 import numpy as np
 import sklearn
 from sklearn.datasets import load_iris
@@ -15,14 +15,18 @@ import matplotlib.pyplot as plt
 from sklearn.externals.six import StringIO
 from IPython.display import Image
 import pydotplus
-
+import pandas as pd
 
 iris=load_iris()
 
-iris.keys()
-
+dataset=arff.loadarff('iris.arff')
+df=pd.DataFrame(dataset[0])
+print(df.keys())
+data=df.iloc[:,0:4]
+target=df.iloc[:,4:]
+#print(target)
 #hold out 60 train 40 test
-X_train,X_test,Y_train,Y_test=train_test_split(iris['data'],iris['target'], test_size=0.4)
+X_train,X_test,Y_train,Y_test=train_test_split(data,target, test_size=0.4)
 
 #Llamada y entrenamiento del algoritmo KNN
 knn=KNeighborsClassifier(n_neighbors=25)
