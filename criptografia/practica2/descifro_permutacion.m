@@ -1,3 +1,11 @@
+% Función para descifrar un texto cifrado conociendo la permutación y sabiendo que se ha cifrado
+% con el método Hill a partir de ésta.
+% Entradas:
+% p: vector que debe ser una permutación. El programa debe comprobarlo.
+% cifrado: el criptograma.
+% Salida: El texto llano descifrado usando Hill y la permutación si es posible, o un mensaje
+% de error en caso contrario.
+
 function [cifrado, llano] = descifro_permutacion(p, cifrado)
 
 %Hay que pasarle la inversa al cifrado hill
