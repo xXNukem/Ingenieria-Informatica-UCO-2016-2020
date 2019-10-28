@@ -2,7 +2,7 @@ function cifradoafin = afin(clave, d, texto)
 numero = letranumero(texto);
 cifradoafin = [];
 
-if mod(clave,1) ~= 0 || mod(d,1) ~=0 || d<0 || clave<0 %Comprobar que los numeos son enteros y positivos y sino salirse
+if mod(clave,1) ~= 0 || mod(d,1) ~=0
      error('ErrrorTest:convertTest', 'No se han introducido numeros enteros y positivos')
      return
 end
