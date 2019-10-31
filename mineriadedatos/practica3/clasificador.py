@@ -6,9 +6,14 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
 from sklearn.metrics import mean_squared_error
+from scipy.stats import wilcoxon
 from os import listdir
+import numpy as np
 
 datasets=listdir('./datasets')
+
+scoreWilKNN=[]
+scoreWilSVM=[]
 
 for i in datasets:
 
@@ -20,15 +25,14 @@ for i in datasets:
     X_train,X_test,Y_train,Y_test=train_test_split(data, target, test_size=0.4)
 
     #Llamada y entrenamiento del algoritmo KNN
-    knn=KNeighborsClassifier(n_neighbors=25)
+    knn=KNeighborsClassifier(n_neighbors=5)
     knn.fit(X_train,Y_train)
     print('Porcentaje de bien clasificados KNN:')
     print(knn.score(X_test,Y_test))
+    scoreWilKNN.append(knn.score(X_test,Y_test))
     array=knn.predict([df.iloc[5,  df.columns != 'class']])
     print('Clase predicha KNN')
     print(array)
-    print('MSE')
-    mean_squared_error(df.iloc[5,  df.columns != 'class'], array)
     print('----------------')
 
     #llamada y entrenamiento algoritmo SVM
@@ -36,6 +40,7 @@ for i in datasets:
     svm.fit(X_train,Y_train)
     print('Porcentaje de bien clasificados SVM')
     print(svm.score(X_test,Y_test))
+    scoreWilSVM.append(knn.score(X_test, Y_test))
     array=knn.predict([df.iloc[5,  df.columns != 'class']])
     print('Clase predicha SVM')
     print(array)
@@ -52,3 +57,7 @@ for i in datasets:
     print(array)
 
     print('-----------------------------------------------')
+
+
+print('Test de Wilcoxon para SVM y KNN de todos los datasets')
+print(wilcoxon(x=scoreWilKNN, y=scoreWilSVM, zero_method='wilcox', correction=False))
