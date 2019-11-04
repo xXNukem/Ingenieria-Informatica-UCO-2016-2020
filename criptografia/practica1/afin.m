@@ -18,7 +18,7 @@ if gcd(clave, length(alfabeto)) == 1
 
     cifradoafin = numeroletra(numero);
 else
-    error('ErrrorTest:convertTest', 'El MCD de la clave y el tamaño del alfabeto debe ser 1')
+    error('ErrorTest:convertTest', 'El MCD de la clave y el tamaño del alfabeto debe ser 1')
     
     
 end

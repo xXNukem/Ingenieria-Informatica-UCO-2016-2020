@@ -1,0 +1,16 @@
+% Función que usa el algoritmo de potenciación rápida para calcular las
+% potencias modulares.
+% Entradas:
+% c: base de la potencia. Un número natural.
+% d: exponente de la potencia. Un número natural.
+% n: módulo. Un número natural.
+% Salida: pote es la potencia c d módulo n.
+function pote = potencia(c,d,n)
+
+    if c<1 || mod(c,1)~=0
+        error('ErrorTest:convertTest', 'El MCD de la clave y el tamaño del alfabeto debe ser 1')
+        return
+    end
+    if d<1 || mod(d,1)~
+
+end
