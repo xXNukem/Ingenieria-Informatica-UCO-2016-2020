@@ -26221,9 +26221,8 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/vision/practica6/delaBarreraPerez/src/tclap-1.2.1/tests/test9.sh" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vision/practica6/delaBarreraPerez/src/test_bovw.cpp" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vision/practica6/delaBarreraPerez/src/train_bovw.cpp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/PracticasUni.iml" afterPath="$PROJECT_DIR$/.idea/PracticasUni.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modelosComputacionales/p3/rbf.py" afterPath="$PROJECT_DIR$/modelosComputacionales/p3/rbf.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26237,8 +26236,8 @@
       <file leaf-file-name="rbf.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modelosComputacionales/p3/rbf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="-342">
+              <caret line="29" column="47" lean-forward="false" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
               <folding>
                 <element signature="e#156#169#0" expanded="true" />
               </folding>
@@ -26618,8 +26617,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modelosComputacionales/p3/rbf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        <state relative-caret-position="-342">
+          <caret line="29" column="47" lean-forward="false" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
           <folding>
             <element signature="e#156#169#0" expanded="true" />
           </folding>

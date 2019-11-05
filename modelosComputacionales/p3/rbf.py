@@ -27,7 +27,7 @@ import pandas as pd
 @click.option('--classification', '-c', default=0, required=False,
               help=u'Booleano que indica si es clasificacion o regresion(Por defecto regresion).')
 
-@click.option('--ratio_rbf', '-rb', default=None, required=False,
+@click.option('--ratio_rbf', '-rb', default=0.1, required=False,
               help=u'Fichero con los datos de entrenamiento.')
 
 @click.option('--eta', '-e', default=1*math.exp(-2), required=False,
@@ -184,12 +184,6 @@ def lectura_datos(fichero_train, fichero_test, outputs):
     train_outputs = train.values[:, 0:-outputs]
     test_inputs = test.values[:, -outputs]
     test_outputs = test.values[:, 0:-outputs]
-
-    print('Train inputs')
-    print(train_inputs)
-    print('Train_outputs')
-    print(train_outputs)
-
 
     return train_inputs, train_outputs, test_inputs, test_outputs
 
