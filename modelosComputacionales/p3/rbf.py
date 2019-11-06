@@ -14,31 +14,25 @@ import click as click
 import math
 import numpy as np
 import pandas as pd
+import random
+from scipy.spatial import distance
+from sklearn.cluster import KMeans
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 
 @click.command()
 
 #Parametros obligatorios
-@click.option('--train_file', '-t', default=None, required=True,
-              help=u'Fichero con los datos de entrenamiento.')
+@click.option('--train_file', '-t', default=None, required=True, help=u'Fichero con los datos de entrenamiento.')
+@click.option('--test_file', '-T', default=None, required=True, help=u'Fichero con los datos de test.')
+@click.option('--classification', '-c', default=0, is_Flag=True, help=u'Booleano clasificacion o regresion')
+@click.option('--ratio_rbf', '-rb', default=0.1, required=False, help=u'Fichero con los datos de entrenamiento.')
+@click.option('--eta', '-e', default=1*math.exp(-2), required=False, help=u'parametro eta (n). por defecto 1e^-2')
+@click.option('--outputs', '-o', default=1, required=False, help=u'Numero de columnas de salida (por defecto 1).')
 
-@click.option('--test_file', '-T', default=None, required=True,
-              help=u'Fichero con los datos de test.')
-
-@click.option('--classification', '-c', default=0, required=False,
-              help=u'Booleano que indica si es clasificacion o regresion(Por defecto regresion).')
-
-@click.option('--ratio_rbf', '-rb', default=0.1, required=False,
-              help=u'Fichero con los datos de entrenamiento.')
-
-@click.option('--eta', '-e', default=1*math.exp(-2), required=False,
-              help=u'Valor del parametro eta (n). por defecto 1e^-2')
-
-@click.option('--outputs', '-o', default=1, required=False,
-              help=u'Numero de columnas de salida (por defecto 1).')
-
-
-
-def entrenar_rbf_total(train_file, test_file, classification, ratio_rbf, l2, eta, outputs, model_file, pred):
+def entrenar_rbf_total(train_file, test_file, classification, ratio_rbf, l2, eta, outputs):
     """ Modelo de aprendizaje supervisado mediante red neuronal de tipo RBF.
         Ejecución de 5 semillas.
     """
@@ -58,8 +52,7 @@ def entrenar_rbf_total(train_file, test_file, classification, ratio_rbf, l2, eta
         print("-----------")
         np.random.seed(s)
         train_mses[s - 1], test_mses[s - 1], train_ccrs[s - 1], test_ccrs[s - 1] = \
-            entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outputs, \
-                         model_file and "{}/{}.pickle".format(model_file, s // 100) or "")
+            entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outputs)
         print("MSE de entrenamiento: %f" % train_mses[s - 1])
         print("MSE de test: %f" % test_mses[s - 1])
         print("CCR de entrenamiento: %.2f%%" % train_ccrs[s - 1])
@@ -106,6 +99,9 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
                                                                            outputs)
 
     #TODO: Obtener num_rbf a partir de ratio_rbf
+    # Solo hay una capa de entrada con tantas neuronas como entradas tiene la base de datos
+    num_rbf = int(np.size(train_inputs, 0) * ratio_rbf)
+
     print("Número de RBFs utilizadas: %d" %(num_rbf))
     kmedias, distancias, centros = clustering(classification, train_inputs,
                                               train_outputs, num_rbf)
@@ -123,39 +119,35 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
     TODO: Calcular las distancias de los centroides a los patrones de test
           y la matriz R de test
     """
-
-    # # # # KAGGLE # # # #
-    if model_file != "":
-        save_obj = {
-            'classification': classification,
-            'radios': radios,
-            'kmedias': kmedias
-        }
-        if not classification:
-            save_obj['coeficientes'] = coeficientes
-        else:
-            save_obj['logreg'] = logreg
-
-        dir = os.path.dirname(model_file)
-        if not os.path.isdir(dir):
-            os.makedirs(dir)
-
-        with open(model_file, 'wb') as f:
-            pickle.dump(save_obj, f)
-
-    # # # # # # # # # # #
+    distancias_test = calcular_distancias(test_inputs, centros, num_rbf)
+    matriz_r_test = calcular_matriz_r(distancias_test, radios)
 
     if not classification:
         """
         TODO: Obtener las predicciones de entrenamiento y de test y calcular
               el MSE
         """
+        matriz_y_estimada_train = np.dot(matriz_r, coeficientes)
+        matriz_y_estimada_test = np.dot(matriz_r_test, coeficientes)
+        train_mse = mean_squared_error(train_outputs, matriz_y_estimada_train)
+        test_mse = mean_squared_error(test_outputs, matriz_y_estimada_test)
+        train_ccr = 0
+        test_ccr = 0
     else:
         """
         TODO: Obtener las predicciones de entrenamiento y de test y calcular
               el CCR. Calcular también el MSE, comparando las probabilidades 
               obtenidas y las probabilidades objetivo
         """
+        train_ccr = logreg.score(matriz_r, train_outputs) * 100
+        test_ccr = logreg.score(matriz_r_test, test_outputs) * 100
+
+        train_predict = logreg.predict(matriz_r)
+        test_predict = logreg.predict(matriz_r_test)
+        train_mse = mean_squared_error(train_predict, train_outputs)
+        test_mse = mean_squared_error(test_predict, test_outputs)
+
+        matriz_confusion = confusion_matrix(test_outputs, test_predict)
 
     return train_mse, test_mse, train_ccr, test_ccr
 
@@ -203,7 +195,28 @@ def inicializar_centroides_clas(train_inputs, train_outputs, num_rbf):
     """
     
     #TODO: Completar el código de la función
+
+    num_clases = np.unique(train_outputs).shape[0]
+    num_entradas = train_inputs.shape[1]
+    centroides = np.empty([num_rbf, num_entradas])
+    clases = np.empty([num_rbf])
+
+    for i in range(num_rbf):
+        j = i % num_clases
+        clases[i] = np.unique(train_outputs)[j]
+
+    for i in range(num_rbf):
+        # Metemos 'num_rbf' patrones en la matriz centroides
+        while 1:
+            rand = random.randint(0, train_outputs.shape[0] - 1)
+            if train_outputs[rand] == clases[i]:
+                centroides[i] = train_inputs[rand]
+                np.delete(train_inputs, [rand])
+                np.delete(train_outputs, [rand])
+                break
+
     return centroides
+
 
 def clustering(clasificacion, train_inputs, train_outputs, num_rbf):
     """ Realiza el proceso de clustering. En el caso de la clasificación, se
@@ -225,7 +238,32 @@ def clustering(clasificacion, train_inputs, train_outputs, num_rbf):
     """
 
     #TODO: Completar el código de la función
+
+    if clasificacion == True:
+        centros = inicializar_centroides_clas(train_inputs, train_outputs, num_rbf)
+        kmedias = KMeans(n_clusters=num_rbf, init=centros, n_init=1, max_iter=500)
+    else:
+        # Obtenemos num_brf numeros aleatorios
+        kmedias = KMeans(n_clusters=num_rbf, init='random', max_iter=500)
+
+    kmedias.fit(train_inputs, train_outputs)
+
+    centros = kmedias.cluster_centers_
+
+    # Ahora vamos a calcular las distancias de cada patron a su cluster mas cercano
+    distancias = calcular_distancias(train_inputs, centros, num_rbf)
+
     return kmedias, distancias, centros
+
+
+def calcular_distancias(inputs, centros, num_rbf):
+    distancias = np.empty([inputs.shape[0], num_rbf])
+    for i in range(0, inputs.shape[0]):
+        for j in range(0, centros.shape[0]):
+            # Calculamos la matriz distancia euclidea de cada patron para cada rbf
+            distancias[i, j] = distance.euclidean(inputs[i, :], centros[j, :])
+    return distancias
+
 
 def calcular_radios(centros, num_rbf):
     """ Calcula el valor de los radios tras el clustering.
@@ -237,6 +275,17 @@ def calcular_radios(centros, num_rbf):
     """
 
     #TODO: Completar el código de la función
+
+    radios = np.empty(num_rbf)
+    aux = 0.0
+    # Para cada elemento de los radios calculamos el radio que será el sumatorio
+    for i in range(0, num_rbf):
+        for j in range(0, num_rbf):
+            if i != j:
+                aux += distance.euclidean(centros[i], centros[j])
+        radios[i] = aux / (2 * num_rbf - 1)
+        aux = 0.0
+
     return radios
 
 def calcular_matriz_r(distancias, radios):
@@ -254,6 +303,16 @@ def calcular_matriz_r(distancias, radios):
     """
 
     #TODO: Completar el código de la función
+    #+1 es el sesgo, todo el sesogo se pone a 1
+    matriz_r = np.empty([distancias.shape[0], distancias.shape[1] + 1])
+    matriz_r[:, 0] = 1
+
+    #Distancia>radio ->Salida 0
+    #Distancia<radio ->Salida 1
+    for i in range(0, matriz_r.shape[0]):
+        for j in range(0, matriz_r.shape[1] - 1):
+            matriz_r[i][j + 1] = math.exp(-(distancias[i][j] ** 2) / (2 * radios[j] ** 2))
+
     return matriz_r
 
 def invertir_matriz_regresion(matriz_r, train_outputs):
@@ -272,6 +331,11 @@ def invertir_matriz_regresion(matriz_r, train_outputs):
     """
 
     #TODO: Completar el código de la función
+
+    # Matriz de Moore-Penrose
+    moore = np.linalg.pinv(matriz_r)
+
+    coeficientes = np.dot(moore, train_outputs)  # Esta operacion lo que nos da es la transpuesta
     return coeficientes
 
 def logreg_clasificacion(matriz_r, train_outputs, eta, l2):
@@ -294,6 +358,16 @@ def logreg_clasificacion(matriz_r, train_outputs, eta, l2):
     """
 
     #TODO: Completar el código de la función
+    pen = ''
+    if l2 == True:
+        pen = 'l2'
+    else:
+        pen = 'l1'
+
+    logreg = LogisticRegression(penalty=pen, C=1 / eta, fit_intercept=False)
+    # En esta habria que pasarle R o los train_inputs, pero claro eso no lo tenemos
+    logreg.fit(matriz_r, train_outputs)
+
     return logreg
 
 
