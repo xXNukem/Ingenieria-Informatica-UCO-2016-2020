@@ -1,5 +1,0 @@
-airplanes 800
-bonsai 128
-butterfly 91
-car_side 123
-chandelier 107

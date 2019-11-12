@@ -1,4 +1,0 @@
-/home/i12bapec/practicas/vision/practica5/image_classifier_moodle/CMakeFiles/rebuild_cache.dir
-/home/i12bapec/practicas/vision/practica5/image_classifier_moodle/CMakeFiles/edit_cache.dir
-/home/i12bapec/practicas/vision/practica5/image_classifier_moodle/CMakeFiles/test_bovw.dir
-/home/i12bapec/practicas/vision/practica5/image_classifier_moodle/CMakeFiles/train_bovw.dir

@@ -27,10 +27,12 @@ from sklearn.metrics import accuracy_score
 #Parametros obligatorios
 @click.option('--train_file', '-t', default=None, required=True, help=u'Fichero con los datos de entrenamiento.')
 @click.option('--test_file', '-T', default=None, required=True, help=u'Fichero con los datos de test.')
-@click.option('--classification', '-c', default=0, is_Flag=True, help=u'Booleano clasificacion o regresion')
+@click.option('--classification', '-c', is_flag=True, help=u'Booleano clasificacion o regresion')
 @click.option('--ratio_rbf', '-rb', default=0.1, required=False, help=u'Fichero con los datos de entrenamiento.')
 @click.option('--eta', '-e', default=1*math.exp(-2), required=False, help=u'parametro eta (n). por defecto 1e^-2')
 @click.option('--outputs', '-o', default=1, required=False, help=u'Numero de columnas de salida (por defecto 1).')
+@click.option('--l2', '-l', is_flag=True, help=u'Parámetro de regularizacion (por defecto L1')
+
 
 def entrenar_rbf_total(train_file, test_file, classification, ratio_rbf, l2, eta, outputs):
     """ Modelo de aprendizaje supervisado mediante red neuronal de tipo RBF.
@@ -103,8 +105,7 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
     num_rbf = int(np.size(train_inputs, 0) * ratio_rbf)
 
     print("Número de RBFs utilizadas: %d" %(num_rbf))
-    kmedias, distancias, centros = clustering(classification, train_inputs,
-                                              train_outputs, num_rbf)
+    kmedias, distancias, centros = clustering(classification, train_inputs, train_outputs, num_rbf)
     
     radios = calcular_radios(centros, num_rbf)
     
@@ -148,6 +149,7 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
         test_mse = mean_squared_error(test_predict, test_outputs)
 
         matriz_confusion = confusion_matrix(test_outputs, test_predict)
+        """print(matriz_confusion)"""
 
     return train_mse, test_mse, train_ccr, test_ccr
 
@@ -172,10 +174,11 @@ def lectura_datos(fichero_train, fichero_test, outputs):
     train = pd.read_csv(fichero_train, header=None)
     test = pd.read_csv(fichero_test, header=None)
 
-    train_inputs = train.values[:, -outputs]
-    train_outputs = train.values[:, 0:-outputs]
-    test_inputs = test.values[:, -outputs]
-    test_outputs = test.values[:, 0:-outputs]
+    train_inputs = train.values[:, 0:-outputs]
+    train_outputs = train.values[:, -outputs]
+    test_inputs = test.values[:, 0:-outputs]
+    test_outputs = test.values[:, -outputs]
+
 
     return train_inputs, train_outputs, test_inputs, test_outputs
 
@@ -247,7 +250,6 @@ def clustering(clasificacion, train_inputs, train_outputs, num_rbf):
         kmedias = KMeans(n_clusters=num_rbf, init='random', max_iter=500)
 
     kmedias.fit(train_inputs, train_outputs)
-
     centros = kmedias.cluster_centers_
 
     # Ahora vamos a calcular las distancias de cada patron a su cluster mas cercano
@@ -309,6 +311,7 @@ def calcular_matriz_r(distancias, radios):
 
     #Distancia>radio ->Salida 0
     #Distancia<radio ->Salida 1
+
     for i in range(0, matriz_r.shape[0]):
         for j in range(0, matriz_r.shape[1] - 1):
             matriz_r[i][j + 1] = math.exp(-(distancias[i][j] ** 2) / (2 * radios[j] ** 2))
@@ -364,7 +367,7 @@ def logreg_clasificacion(matriz_r, train_outputs, eta, l2):
     else:
         pen = 'l1'
 
-    logreg = LogisticRegression(penalty=pen, C=1 / eta, fit_intercept=False)
+    logreg = LogisticRegression(penalty=pen, C=1 / eta, fit_intercept=False,multi_class='auto',solver='liblinear',max_iter=500)
     # En esta habria que pasarle R o los train_inputs, pero claro eso no lo tenemos
     logreg.fit(matriz_r, train_outputs)
 

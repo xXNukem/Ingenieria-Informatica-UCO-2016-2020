@@ -1,3 +1,0 @@
-/home/i12bapec/practicas/vision/practica4/CMakeFiles/rebuild_cache.dir
-/home/i12bapec/practicas/vision/practica4/CMakeFiles/edit_cache.dir
-/home/i12bapec/practicas/vision/practica4/CMakeFiles/vseg.dir

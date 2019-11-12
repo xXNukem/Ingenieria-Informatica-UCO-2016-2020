@@ -1,3 +1,0 @@
-/home/i12bapec/practicas/vision/practica3/build/CMakeFiles/rebuild_cache.dir
-/home/i12bapec/practicas/vision/practica3/build/CMakeFiles/edit_cache.dir
-/home/i12bapec/practicas/vision/practica3/build/CMakeFiles/augRe.dir

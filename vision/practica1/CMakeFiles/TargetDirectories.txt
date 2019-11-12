@@ -1,3 +1,0 @@
-/home/i12bapec/Dropbox/vision/practica1/CMakeFiles/rebuild_cache.dir
-/home/i12bapec/Dropbox/vision/practica1/CMakeFiles/edit_cache.dir
-/home/i12bapec/Dropbox/vision/practica1/CMakeFiles/programa.dir

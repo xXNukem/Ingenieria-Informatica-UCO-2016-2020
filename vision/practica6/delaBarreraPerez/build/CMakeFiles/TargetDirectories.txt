@@ -1,4 +1,0 @@
-/home/i12bapec/practicas/vision/practica6/delaBarreraPerez/build/CMakeFiles/rebuild_cache.dir
-/home/i12bapec/practicas/vision/practica6/delaBarreraPerez/build/CMakeFiles/edit_cache.dir
-/home/i12bapec/practicas/vision/practica6/delaBarreraPerez/build/CMakeFiles/test_bovw.dir
-/home/i12bapec/practicas/vision/practica6/delaBarreraPerez/build/CMakeFiles/train_bovw.dir

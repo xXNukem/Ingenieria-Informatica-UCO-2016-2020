@@ -1,3 +1,0 @@
-airplanes 800
-Motorbikes 798
-
