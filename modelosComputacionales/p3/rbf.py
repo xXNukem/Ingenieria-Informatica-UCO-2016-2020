@@ -20,8 +20,10 @@ from sklearn.cluster import KMeans
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
-
+from sklearn.metrics import accuracy_score, pairwise_distances
+from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.preprocessing import label_binarize
+from numpy import round
 @click.command()
 
 #Parametros obligatorios
@@ -111,6 +113,8 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
     
     matriz_r = calcular_matriz_r(distancias, radios)
 
+    #Para problemas de regresion se calcula la pseudoinversa
+    #Para problemas de clasificacion se utiliza regreison logistica
     if not classification:
         coeficientes = invertir_matriz_regresion(matriz_r, train_outputs)
     else:
@@ -120,7 +124,7 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
     TODO: Calcular las distancias de los centroides a los patrones de test
           y la matriz R de test
     """
-    distancias_test = calcular_distancias(test_inputs, centros, num_rbf)
+    distancias_test = distance.cdist(test_inputs, centros, metric='euclidean')
     matriz_r_test = calcular_matriz_r(distancias_test, radios)
 
     if not classification:
@@ -132,24 +136,27 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
         matriz_y_estimada_test = np.dot(matriz_r_test, coeficientes)
         train_mse = mean_squared_error(train_outputs, matriz_y_estimada_train)
         test_mse = mean_squared_error(test_outputs, matriz_y_estimada_test)
-        train_ccr = 0
-        test_ccr = 0
+
+        train_ccr = accuracy_score(matriz_y_estimada_train.round(), train_outputs.round())*100
+        test_ccr = accuracy_score(matriz_y_estimada_test.round(), test_outputs.round())*100
     else:
         """
         TODO: Obtener las predicciones de entrenamiento y de test y calcular
               el CCR. Calcular también el MSE, comparando las probabilidades 
               obtenidas y las probabilidades objetivo
         """
+        #CCR
         train_ccr = logreg.score(matriz_r, train_outputs) * 100
         test_ccr = logreg.score(matriz_r_test, test_outputs) * 100
 
-        train_predict = logreg.predict(matriz_r)
-        test_predict = logreg.predict(matriz_r_test)
-        train_mse = mean_squared_error(train_predict, train_outputs)
-        test_mse = mean_squared_error(test_predict, test_outputs)
+        #MSE
+        print(train_outputs)
+        print(matriz_r)
+        train_mse=mean_squared_error(label_binarize(train_outputs, classes=logreg.classes_), logreg.predict_proba(matriz_r))
+        test_mse=mean_squared_error(label_binarize(test_outputs, classes=logreg.classes_), logreg.predict_proba(matriz_r_test))
 
-        matriz_confusion = confusion_matrix(test_outputs, test_predict)
-        """print(matriz_confusion)"""
+        matriz_confusion = confusion_matrix(test_outputs, logreg.predict(matriz_r_test))
+        print(matriz_confusion)
 
     return train_mse, test_mse, train_ccr, test_ccr
 
@@ -199,26 +206,10 @@ def inicializar_centroides_clas(train_inputs, train_outputs, num_rbf):
     
     #TODO: Completar el código de la función
 
-    num_clases = np.unique(train_outputs).shape[0]
-    num_entradas = train_inputs.shape[1]
-    centroides = np.empty([num_rbf, num_entradas])
-    clases = np.empty([num_rbf])
-
-    for i in range(num_rbf):
-        j = i % num_clases
-        clases[i] = np.unique(train_outputs)[j]
-
-    for i in range(num_rbf):
-        # Metemos 'num_rbf' patrones en la matriz centroides
-        while 1:
-            rand = random.randint(0, train_outputs.shape[0] - 1)
-            if train_outputs[rand] == clases[i]:
-                centroides[i] = train_inputs[rand]
-                np.delete(train_inputs, [rand])
-                np.delete(train_outputs, [rand])
-                break
-
-    return centroides
+    # Particiones estratificadas de num_rbf/clases elementos
+    stratified_split = StratifiedShuffleSplit(n_splits=1, train_size=num_rbf, test_size=None)
+    splits = list(stratified_split.split(train_inputs, train_outputs))[0][0]
+    return train_inputs[splits]
 
 
 def clustering(clasificacion, train_inputs, train_outputs, num_rbf):
@@ -253,11 +244,11 @@ def clustering(clasificacion, train_inputs, train_outputs, num_rbf):
     centros = kmedias.cluster_centers_
 
     # Ahora vamos a calcular las distancias de cada patron a su cluster mas cercano
-    distancias = calcular_distancias(train_inputs, centros, num_rbf)
+    distancias = kmedias.fit_transform(train_inputs)
 
     return kmedias, distancias, centros
 
-
+"""
 def calcular_distancias(inputs, centros, num_rbf):
     distancias = np.empty([inputs.shape[0], num_rbf])
     for i in range(0, inputs.shape[0]):
@@ -265,7 +256,7 @@ def calcular_distancias(inputs, centros, num_rbf):
             # Calculamos la matriz distancia euclidea de cada patron para cada rbf
             distancias[i, j] = distance.euclidean(inputs[i, :], centros[j, :])
     return distancias
-
+"""
 
 def calcular_radios(centros, num_rbf):
     """ Calcula el valor de los radios tras el clustering.
@@ -278,16 +269,19 @@ def calcular_radios(centros, num_rbf):
 
     #TODO: Completar el código de la función
 
-    radios = np.empty(num_rbf)
-    aux = 0.0
-    # Para cada elemento de los radios calculamos el radio que será el sumatorio
-    for i in range(0, num_rbf):
-        for j in range(0, num_rbf):
-            if i != j:
-                aux += distance.euclidean(centros[i], centros[j])
-        radios[i] = aux / (2 * num_rbf - 1)
-        aux = 0.0
+    # Matriz de distancias, Este método toma una matriz de vectores o una
+    # matriz de distancias, y devuelve una matriz de distancias.
+    # Este método proporciona una forma segura de tomar una matriz de distancia
+    # como entrada, al tiempo que conserva la compatibilidad con muchos otros
+    # algoritmos que toman una matriz de vectores. Si se proporciona Y
+    # (el valor predeterminado es Ninguno),
+    # la matriz devuelta es la distancia por pares entre las matrices de X e Y.
+    distancias = pairwise_distances(centros, Y=None, metric="euclidean")
 
+    # Radios = suma de de todas las filas dividido entre dos por el numero de rbf -1:
+    # sum(filas)/ 2 * num_rbf-1
+
+    radios = distancias.sum(axis=1) / (2 * (num_rbf - 1))
     return radios
 
 def calcular_matriz_r(distancias, radios):
@@ -305,16 +299,14 @@ def calcular_matriz_r(distancias, radios):
     """
 
     #TODO: Completar el código de la función
-    #+1 es el sesgo, todo el sesogo se pone a 1
-    matriz_r = np.empty([distancias.shape[0], distancias.shape[1] + 1])
-    matriz_r[:, 0] = 1
+    # Vamos mirando cada distancia con el radio y asi vamos viendo
+    # Si la distancia es mayor que el radio entonces la salida de la neurona es 0
+    # Mientras que si la distancia es menor que el radio, la salida será 1
 
-    #Distancia>radio ->Salida 0
-    #Distancia<radio ->Salida 1
-
-    for i in range(0, matriz_r.shape[0]):
-        for j in range(0, matriz_r.shape[1] - 1):
-            matriz_r[i][j + 1] = math.exp(-(distancias[i][j] ** 2) / (2 * radios[j] ** 2))
+    sesgo = np.ones(distancias.shape[0])
+    matriz_r = np.exp(-np.square(distancias) / (np.square(radios) * 2))
+    # Añadimos el sesgo apilando en columna con column_stack
+    matriz_r = np.column_stack((matriz_r, sesgo))
 
     return matriz_r
 
@@ -335,10 +327,15 @@ def invertir_matriz_regresion(matriz_r, train_outputs):
 
     #TODO: Completar el código de la función
 
-    # Matriz de Moore-Penrose
-    moore = np.linalg.pinv(matriz_r)
+    # TODO:
+    # Compute the (Moore-Penrose) pseudo-inverse of a matrix.
+    # Calculate the generalized inverse of a matrix using its singular-value decomposition (SVD) and including all large singular values.
 
-    coeficientes = np.dot(moore, train_outputs)  # Esta operacion lo que nos da es la transpuesta
+    # TODO:
+    # Dot product of two arrays. Specifically
+    # This operation gives the transpose
+    coeficientes = np.dot(np.dot(np.linalg.pinv(np.dot(matriz_r.T, matriz_r)), matriz_r.T), train_outputs)
+
     return coeficientes
 
 def logreg_clasificacion(matriz_r, train_outputs, eta, l2):

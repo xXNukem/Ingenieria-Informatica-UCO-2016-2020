@@ -10,7 +10,9 @@ from scipy.stats import wilcoxon
 from os import listdir
 import numpy as np
 from scipy.stats import friedmanchisquare
-from scipy.stats import
+from scipy.stats import rankdata
+from scipy.stats import f
+
 
 #ejecutar con python2.7
 
@@ -68,6 +70,21 @@ for i in datasets:
 print('Test de Wilcoxon para SVM y KNN de todos los datasets')
 print(wilcoxon(x=scoreWilKNN, y=scoreWilSVM, zero_method='zsplit', correction=False))
 
-print('Rango de Friedman')
-print(friedmanchisquare(scoreWilKNN,scoreWilSVM,scoreWilTREE))#Minimo 3 argumentos
+print('Rango de Friedman KNN')
+ranking=rankdata(scoreWilKNN)
+print(ranking)
 
+print('Rango de Friedman SVM')
+ranking=rankdata(scoreWilSVM)
+print(ranking)
+
+print('Rango de Friedman TREE')
+ranking=rankdata(scoreWilTREE)
+print(ranking)
+
+print('Test de Iman Davenport')
+nDatasets=10
+kAlgoritms=3
+chi=friedmanchisquare(scoreWilTREE,scoreWilSVM,scoreWilKNN)
+F=((nDatasets-1)*chi[0])/(nDatasets*(kAlgoritms-1)-chi[0])
+print(f.sf(F))
