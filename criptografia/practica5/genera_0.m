@@ -27,7 +27,7 @@ function generador=genera_0(g,p)
             b = u
             int64(potencia(g, i, p));
             if find(B == b)
-                %Se sale porque esta repe
+                %Se sale porque esta repetido
                 generador = 0;
                 toc
                 return;
