@@ -31,7 +31,7 @@ from sklearn.preprocessing import label_binarize, OneHotEncoder
 @click.option('--ratio_rbf', '-rb', default=0.1, required=False,help=u'Indica la razon.')
 @click.option('--l2', '-l', is_flag=True, help=u'Boleano que se usa para la reguluzación L2.')
 @click.option('--outputs', '-o', default=1, required=False,help=u'Numero de salidas.')
-@click.option('--eta', '-e', default=(1 * math.exp(-2)), required=False, help=u'Ajuste del factor eta.')
+@click.option('--eta', '-e', default=(1 * math.exp(-5)), required=False, help=u'Ajuste del factor eta.')
 @click.option('--matrix_m', '-m', is_flag=True,help=u'Boleano que se usa para mostrar la matriz de confusion')
 # TODO incluir el resto de parámetros...
 
@@ -167,9 +167,9 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
         train_mse = mean_squared_error(y_true=train_outputs_binarized, y_pred=logreg.predict_proba(matriz_r))
         test_mse = mean_squared_error(y_true=test_outputs_binarized, y_pred=logreg.predict_proba(matriz_r_test))
         # Matriz de confusión
-        if matrix_m:
-            matrix_confusion = confusion_matrix(test_outputs, logreg.predict(matriz_r_test))
-            print(matrix_confusion)
+
+        matrix_confusion = confusion_matrix(test_outputs, logreg.predict(matriz_r_test))
+        print(matrix_confusion)
 
     return train_mse, test_mse, train_ccr, test_ccr
 
