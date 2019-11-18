@@ -1,0 +1,17 @@
+function doble=letra2numeros(texto)
+
+    for i=1:length(texto)
+        
+       n = num2str(letranumero(texto(i)));
+       
+       if length(n)==1
+        aux = strcat('0', n)
+       else
+        aux = n;
+       end
+       
+       doble=[aux,n]
+       
+    end
+    
+end
