@@ -5,15 +5,12 @@
 """
 
 # TODO Incluir todos los import necesarios
-import pickle
-import os
 import click
 import pandas as pd
 import numpy as np
 import math
 import time
-import random
-from click._compat import raw_input
+from sklearn.preprocessing import OneHotEncoder
 from scipy.spatial import distance
 from sklearn.cluster import KMeans
 from sklearn.metrics import accuracy_score, pairwise_distances
@@ -21,8 +18,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.preprocessing import label_binarize, OneHotEncoder
-
 
 @click.command()
 @click.option('--train_file', '-t', default=None, required=True,help=u'Fichero con los datos de entrenamiento.')
@@ -106,12 +101,11 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
               En el caso de regresión, devolvemos un cero.
     """
     train_inputs, train_outputs, test_inputs, test_outputs = lectura_datos(train_file, test_file, outputs)
-
-    num_rbf = int(np.size(train_inputs, 0) * ratio_rbf)
     # TODO: Obtener num_rbf a partir de ratio_rbf
+    num_rbf = int(np.size(train_inputs, 0) * ratio_rbf)
+
     print("Número de RBFs utilizadas: %d" % (num_rbf))
-    kmedias, distancias, centros = clustering(classification, train_inputs,
-                                              train_outputs, num_rbf)
+    kmedias, distancias, centros = clustering(classification, train_inputs, train_outputs, num_rbf)
 
     radios = calcular_radios(centros, num_rbf)
 
@@ -135,12 +129,12 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
     matriz_r_test = calcular_matriz_r(distancias_test, radios)
 
     if not classification:
-        # MSE en train y test
+        # MSE
         matriz_y_estimada_train = np.dot(matriz_r, coeficientes)
         matriz_y_estimada_test = np.dot(matriz_r_test, coeficientes)
         train_mse = mean_squared_error(train_outputs, matriz_y_estimada_train)
         test_mse = mean_squared_error(test_outputs, matriz_y_estimada_test)
-
+        #CCR
         train_ccr = accuracy_score(matriz_y_estimada_train.round(), train_outputs.round()) * 100
         test_ccr = accuracy_score(matriz_y_estimada_test.round(), test_outputs.round()) * 100
 
@@ -150,13 +144,12 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
               el CCR. Calcular también el MSE, comparando las probabilidades 
               obtenidas y las probabilidades objetivo
         """
-        # CCR en train y test
+        # CCR
         train_ccr = logreg.score(matriz_r, train_outputs) * 100
         test_ccr = logreg.score(matriz_r_test, test_outputs) * 100
 
         # MSE en train y test
-        # Notacion 1 de Q binarizando los label de test outputs con las clases de logreg
-        # Notacion 1 de Q binarizando los label de train outputs con las clases de logreg
+        #Binarizacion de resultados
         # Example: label_binarize(['yes', 'no', 'no', 'yes'], classes=['no', 'yes'])
         # Result array([[1],[0],[0], [1]])
 
@@ -166,8 +159,8 @@ def entrenar_rbf(train_file, test_file, classification, ratio_rbf, l2, eta, outp
 
         train_mse = mean_squared_error(y_true=train_outputs_binarized, y_pred=logreg.predict_proba(matriz_r))
         test_mse = mean_squared_error(y_true=test_outputs_binarized, y_pred=logreg.predict_proba(matriz_r_test))
-        # Matriz de confusión
 
+        # Matriz de confusión
         matrix_confusion = confusion_matrix(test_outputs, logreg.predict(matriz_r_test))
         print(matrix_confusion)
 
@@ -191,9 +184,11 @@ def lectura_datos(fichero_train, fichero_test, outputs):
             - test_outputs: matriz con las variables de salida de
               test.
     """
+    #añadir .to_numpy() para la lectura correcta
     train = pd.read_csv(fichero_train, header=None).to_numpy()
     test = pd.read_csv(fichero_test, header=None).to_numpy()
 
+    #Se utiliza la variable outputs para delimitar la lectura de los conjuntos
     return train[:, :-outputs], train[:, -outputs:], test[:, :-outputs], test[:, -outputs:]
 
 
@@ -212,7 +207,7 @@ def inicializar_centroides_clas(train_inputs, train_outputs, num_rbf):
                           (num_rbf x num_entradas).
     """
 
-    # Particiones estratificadas de num_rbf/clases elementos
+    # Particion estratificada e inicializacion con los primeos [0][0]
     stratified_split = StratifiedShuffleSplit(n_splits=1, train_size=num_rbf, test_size=None)
     splits = list(stratified_split.split(train_inputs, train_outputs))[0][0]
     return train_inputs[splits]
@@ -238,18 +233,19 @@ def clustering(clasificacion, train_inputs, train_outputs, num_rbf):
     """
 
     # TODO: Completar el código de la función
+    #La inicializacion tambien puede ser k-Means++
     if clasificacion == True:
         centros = inicializar_centroides_clas(train_inputs, train_outputs, num_rbf)
         kmedias = KMeans(n_clusters=num_rbf, init=centros, n_init=1, max_iter=300, n_jobs=-1)
     else:
-        # Obtenemos num_brf numeros aleatorios
         kmedias = KMeans(n_clusters=num_rbf, init='random', max_iter=300, n_jobs=-1)
 
-    # Aqui tenemos la matriz de distancias
+    # obtencion de la matriz de distancias
     distancias = kmedias.fit_transform(train_inputs)
 
-    # Aqui tenemos los centros
+    # Obtencion de los centros
     centros = kmedias.cluster_centers_
+
     return kmedias, distancias, centros
 
 
@@ -261,17 +257,12 @@ def calcular_radios(centros, num_rbf):
         Devuelve:
             - radios: vector (num_rbf) con el radio de cada RBF.
     """
-    # Matriz de distancias, Este método toma una matriz de vectores o una
-    # matriz de distancias, y devuelve una matriz de distancias.
-    # Este método proporciona una forma segura de tomar una matriz de distancia
-    # Si se proporciona Y (el valor predeterminado es Ninguno),
-    # la matriz devuelta es la distancia por pares entre las matrices de X e Y.
 
+    #Funcion que calcula la matriz de distancias con la distancia euclidea, por defecto Y=none
     matriz_distancias = pairwise_distances(centros, Y=None, metric="euclidean")
 
-    # Radios = suma de de todas las filas dividido entre dos por el numero de rbf -1:
-    # sum(filas)/ 2 * num_rbf-1
-    # axis=1 son las filas
+    #Aplicar sum(filas)/ 2 * num_rbf-1
+    # axis=1 filas
     radios = matriz_distancias.sum(axis=1) / (2 * (num_rbf - 1))
     return radios
 
@@ -289,13 +280,13 @@ def calcular_matriz_r(distancias, radios):
               al final, en la última columna, un vector con todos los
               valores a 1, que actuará como sesgo.
     """
-    # Vamos mirando cada distancia con el radio y asi vamos viendo
+
     # Si la distancia es mayor que el radio entonces la salida de la neurona es 0
-    # Mientras que si la distancia es menor que el radio, la salida será 1
+    # Si la distancia es menor que el radio, la salida de la neurona es 1
 
     sesgo = np.ones(distancias.shape[0])
     matriz_r = np.exp(-np.square(distancias) / (np.square(radios) * 2))
-    # Añadimos el sesgo apilando en columna con column_stack
+    # Añadimos el sesgo en columna con column_stack (apliando)
     matriz_r = np.column_stack((matriz_r, sesgo))
 
     return matriz_r
@@ -315,16 +306,7 @@ def invertir_matriz_regresion(matriz_r, train_outputs):
             - coeficientes: vector (num_rbf+1) con el valor del sesgo y del
               coeficiente de salida para cada rbf.
     """
-    # Step 3:
-    # Apply pseudo-inverse
-
-    # TODO:
-    # Compute the (Moore-Penrose) pseudo-inverse of a matrix.
-    # Calculate the generalized inverse of a matrix using its singular-value decomposition (SVD) and including all large singular values.
-
-    # TODO:
-    # Dot product of two arrays. Specifically
-    # This operation gives the transpose
+    #Calculo de la pseudoinversa (mirar la presentacion)
     coeficientes = np.dot(np.dot(np.linalg.pinv(np.dot(matriz_r.T, matriz_r)), matriz_r.T), train_outputs)
 
     return coeficientes
@@ -357,8 +339,7 @@ def logreg_clasificacion(matriz_r, train_outputs, eta, l2):
     else:
         logreg = LogisticRegression(penalty='l1', C=1 / eta, fit_intercept=False, multi_class='auto',
                                     solver='liblinear', max_iter=500)
-
-    # Entrenated model
+    #Entrenar
     if train_outputs.shape[1] == 1:
         train_outputs = np.ravel(train_outputs)
     logreg.fit(matriz_r, train_outputs)
