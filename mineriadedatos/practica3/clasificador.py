@@ -47,8 +47,8 @@ for i in datasets:
     svm.fit(X_train, Y_train)
     print('Porcentaje de bien clasificados SVM')
     print(svm.score(X_test, Y_test))
-    scoreWilSVM.append(knn.score(X_test, Y_test))
-    array = knn.predict([df.iloc[5, df.columns != 'class']])
+    scoreWilSVM.append(svm.score(X_test, Y_test))
+    array = svm.predict([df.iloc[5, df.columns != 'class']])
     print('Clase predicha SVM')
     print(array)
 
