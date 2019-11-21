@@ -79,7 +79,7 @@ for i in datasets:
 
 
 
-"""
+
 
 print('Algoritmo de BOOSTING: Classifier')
 
@@ -95,7 +95,7 @@ for i in datasets:
     model = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,max_depth=1, random_state=0)
     results = model_selection.cross_val_score(model,data,target,cv=kfold)
     print(results)
-
+"""
 print('Algoritmo de BOOSTING: Regressor')
 
 for i in datasets:
@@ -106,7 +106,7 @@ for i in datasets:
     data = df.iloc[:, df.columns != 'class']
     target = pd.factorize(df['class'])[0]
 
-    kfold = model_selection.KFold(n_splits=3)
+    kfold = model_selection.KFold(n_splits=10)
     model=GradientBoostingRegressor(n_estimators=100, learning_rate=0.1,max_depth=1, random_state=0, loss='ls')
     results=model_selection.cross_val_score(model,data,target,cv=kfold)
     print(results)
