@@ -13,7 +13,7 @@ import pandas as pd
 from sklearn import svm
 
 # Cargar el dataset
-data = pd.read_csv('dataset1.csv',header=None)
+data = pd.read_csv('./BasesDatos/csv/dataset1.csv',header=None)
 X = data.iloc[:,:-1].values
 y = data.iloc[:,-1].values
 
@@ -41,7 +41,7 @@ Z = svm_model.decision_function(np.c_[XX.ravel(), YY.ravel()])
 # Hacer un plot a color con los resultados
 Z = Z.reshape(XX.shape)
 plt.pcolormesh(XX, YY, Z > 0)
-plt.contour(XX, YY, Z, colors=['k', 'k', 'k'], linestyles=['--', '-', '--'],
+plt.contour(XX, YY, Z, colors=['k', 'k', 'k'],linestyles=['--', '-', '--'],
                 levels=[-.5, 0, .5])
 
 plt.show()
