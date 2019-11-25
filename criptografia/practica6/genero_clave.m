@@ -1,3 +1,9 @@
+% El programa debe pedir al usuario los valores de los primos p y q. 
+% Una sugerencia, para facilitar la introducción de estos valores, es pedirle 
+% al programa que muestre en primer lugar un listado de números primos hasta un cierto valor. 
+% Si los números anteriores son lo suficientemente grandes puede considerar ? = 1 + 224 = 65537, y
+% si no o bien solicitarlo al usuario o 
+% generar cualquier valor para e válido de la manera que consideréis más oportuna.
 function clave=genero_clave()
 
     disp('Mostrando primeros numeros primos ');

@@ -1,3 +1,9 @@
+% Función que convierte una cadena numérica en bloques de un tamaño dado, después convierte dichos bloques en números y los almacena en un vector. Si es necesario para completar el último bloque deberemos añadir varios 30’s y/o un 0. 
+% Entradas:   
+% tama: tamaño de los bloques. 
+% bloque: cadena numérica. 
+% Salida: blo: vector formado por los números que se corresponden con cada uno de los bloques. 
+ 
 function blo = prepa_num_cifrar (tama, bloque)
 
 if mod(length(bloque), tama) ~= 0
