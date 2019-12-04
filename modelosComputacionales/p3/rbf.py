@@ -285,6 +285,7 @@ def calcular_matriz_r(distancias, radios):
     # Si la distancia es menor que el radio, la salida de la neurona es 1
 
     sesgo = np.ones(distancias.shape[0])
+    #matriz de salidas
     matriz_r = np.exp(-np.square(distancias) / (np.square(radios) * 2))
     # Añadimos el sesgo en columna con column_stack (apliando)
     matriz_r = np.column_stack((matriz_r, sesgo))

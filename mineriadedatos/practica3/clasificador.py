@@ -5,10 +5,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
-from sklearn.metrics import mean_squared_error
 from scipy.stats import wilcoxon
 from os import listdir
-import numpy as np
 from scipy.stats import friedmanchisquare
 from scipy.stats import rankdata
 from scipy.stats import f
