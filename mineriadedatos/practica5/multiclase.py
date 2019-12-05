@@ -2,16 +2,8 @@
 from scipy.io import arff
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC
-from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
-from sklearn.metrics import mean_squared_error
-from scipy.stats import wilcoxon
 from os import listdir
-import numpy as np
-from scipy.stats import friedmanchisquare
-from scipy.stats import rankdata
-from scipy.stats import f
 from sklearn.svm import LinearSVC
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
@@ -23,7 +15,7 @@ datasets=listdir('./datasets')
 scoreWilKNN=[]
 scoreWilSVM=[]
 scoreWilTREE=[]
-"""
+
 print('CLASIFICADOR BASE LINEARSVC')
 for i in datasets:
 
@@ -35,7 +27,7 @@ for i in datasets:
     X_train, X_test, Y_train, Y_test = train_test_split(data, target, test_size=0.4)
 
     # llamada y entrenamiento algoritmo SVM
-    svc= LinearSVC(random_state=0, tol=1e-5,max_iter=9999)
+    svc= LinearSVC(random_state=0, tol=1e-5,max_iter=9999, multi_class='crammer_singer')
     svc.fit(X_train, Y_train)
     print('Porcentaje de bien clasificados LINEARSVC')
     print(svc.score(X_test, Y_test))
@@ -80,7 +72,7 @@ for i in datasets:
 
 print('--------------------------')
 print('Aplicando metodo multiclase ERROR CORRECTING OUTPUT CODES')
-"""
+
 for i in datasets:
 
     print('Base de datos: ' + str(i))

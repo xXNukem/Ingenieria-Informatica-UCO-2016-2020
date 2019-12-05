@@ -3,7 +3,6 @@
 from scipy.io import arff
 from sklearn.model_selection import train_test_split
 import pandas as pd
-from os import listdir
 from sklearn.cluster import KMeans
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics.cluster import homogeneity_score
