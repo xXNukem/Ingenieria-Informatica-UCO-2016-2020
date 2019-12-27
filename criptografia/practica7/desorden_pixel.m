@@ -41,8 +41,8 @@ function desorden_pixel(foto,A)
         
     end
     matrizCopia2=uint8(matrizCopia2);
-    subplot(1,2,1);imshow(foto);
+%     subplot(1,2,1);imshow(foto);
     imwrite(matrizCopia2,'pruebafoto.bmp');
-    subplot(1,2,2);imshow('pruebafoto.bmp');
-    %setappdata(gcf, 'imagenDesordenada', matrizCopia);
+%     subplot(1,2,2);imshow('pruebafoto.bmp'); %Hecho por la profe
+    setappdata(gcf, 'imagenDesordenada', matrizCopia);
 end

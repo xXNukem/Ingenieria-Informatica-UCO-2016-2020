@@ -26,7 +26,7 @@ kmeans=KMeans(n_clusters=num_clusters, random_state=0)
 results=kmeans.fit(data)
 print(results.labels_) # Imprimimos el Clustering realizado
 print('Puntuacion de homogeneidad:')
-print(homogeneity_score(data,kmeans.labels_))
+print(homogeneity_score(Y_test,kmeans.predict(X_test,Y_test)))
 
 
 
